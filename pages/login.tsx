@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import { Defile } from "../scripts/script";
-import { signIn } from "../lib/auth";
 import Router from "next/router";
 
 const Login = () => {
@@ -20,7 +19,6 @@ const Login = () => {
     console.log(user);
     setLoading(true);
     setInterval(() => setLoading(false), 5000);
-    // signIn(user).then(() => Router.push("/"));
   };
 
   return (
