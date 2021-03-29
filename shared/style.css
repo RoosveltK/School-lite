@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Roboto Medium";
-  src: url("../static/Roboto-Medium.ttf");
+  src: url("../public/Roboto-Medium.ttf");
 }
 
 @media (max-width: 576px) {

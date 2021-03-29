@@ -33,7 +33,7 @@ const Login = () => {
       <main>
         <div className="container-fluid p-0 over-hidden">
           <img
-            src="/static/image/background.jpg"
+            src="/static/background.jpg"
             className="pos-img-back hide-img-sm card-img over-hidden"
             alt="Image de fond"
           />
