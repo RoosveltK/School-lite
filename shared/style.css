@@ -1,6 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 @font-face {
   font-family: "Roboto Medium";
-  src: url("../public/Roboto-Medium.ttf");
+  src: url("/Roboto-Medium.ttf");
+}
+@font-face {
+  font-family: "proxima Bold";
+  src: url("/Proxima\ Nova\ Bold.otf");
+}
+
+@font-face {
+  font-family: "proxima Thin";
+  src: url("/Proxima\ Nova\ Thin.otf");
+}
+
+@font-face {
+  font-family: "proxima Regular";
+  src: url("/ProximaNova-Regular.otf");
 }
 
 @media (max-width: 576px) {
@@ -49,4 +69,65 @@ body {
 .over-hidden {
   overflow-x: hidden;
   overflow-y: hidden;
+}
+
+.row {
+  height: 100%;
+}
+.image {
+  border-radius: 50% !important;
+}
+
+.Trait {
+  margin-bottom: 1px !important;
+}
+
+.personalData {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: "Proxima Regular";
+  font-size: 14px;
+}
+
+.personalData-info {
+  border-bottom: 1px solid grey;
+  padding-top: 20px;
+}
+
+.personalData-info > span:first-child {
+  font-weight: bold;
+  font-family: "Proxima Bold";
+}
+
+.personalData-info > span:last-child {
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+.personalData > header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.personalData > header > button {
+  height: 35px;
+}
+.homeLink {
+  text-decoration: none !important;
+  color: #333333 !important;
+}
+
+.bouton {
+  border-radius: 0%;
+}
+.boutonE {
+  border-radius: 0%;
+  display: inline-block;
+  width: 150px !important;
+}
+
+.list-group-item{
+  padding: .75rem 1.25rem;
 }

@@ -8,9 +8,7 @@ var words = ["School Online"],
   forwards = true,
   skip_count = 0,
   skip_delay = 5;
-const speed = 100;
-
-export  const Defile= ()=> {
+export const Defile = () => {
   if (forwards) {
     if (offset >= words[i].length) {
       ++skip_count;
@@ -33,7 +31,7 @@ export  const Defile= ()=> {
     else offset--;
   }
   $(".text-apparition").text(part);
-}
+};
 // export const wordflick = () => {
 //   setInterval(, speed);
 // };

@@ -1,0 +1,237 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 767px) {
+  .rightSection {
+    display: none;
+  }
+
+  .leftSection {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .container {
+    background-color: #f4f4f4;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .leftSection .butt {
+    width: 150px;
+    font-size: 16px;
+  }
+}
+
+#wrapper {
+  overflow-x: hidden;
+  transition: margin 0.5s ease;
+}
+
+#sidebar-wrapper {
+  width: 250px;
+  min-height: 100vh;
+  margin-left: -15rem;
+  -webkit-transition: margin 0.25s ease-out;
+  -moz-transition: margin 0.25s ease-out;
+  -o-transition: margin 0.25s ease-out;
+  transition: margin 0.25s ease-out;
+  font-size: 12px;
+  font-family: "proxima Thin";
+  font-weight: bold;
+  background-color: white !important;
+}
+
+#sidebar-wrapper div a:hover {
+  background-color: #f4f4f4 !important;
+}
+.top {
+  border-top: 1px solid #cfcfcf !important;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 0.875rem 1.25rem;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: "proxima Regular";
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+}
+
+#page-content-wrapper {
+  min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+#page-content-wrapper .navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.topbar {
+  height: 40px;
+  width: 100%;
+  background-color: #198754;
+}
+
+.navbar {
+  height: 60px;
+  padding: 0 !important;
+}
+
+.logo-text {
+  display: flex;
+  flex: 6;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.logo-text span {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin-left: 25px;
+  font-size: 20px;
+  font-family: "proxima Regular";
+}
+
+.logo-menu {
+  display: flex;
+  flex: 1;
+  margin-left: 15px;
+  color: black;
+}
+
+.logo-menu:hover {
+  cursor: pointer;
+}
+
+.logo-menu i {
+  font-size: 1.4rem;
+}
+
+.profil {
+  display: flex;
+  flex: 1;
+}
+
+.main {
+  padding: 20px;
+  background-color: #f4f4f4;
+  overflow-y: scroll;
+}
+
+.mainCard {
+  height: auto;
+  background-color: white;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.header-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.header-card button {
+  height: 35px;
+  width: 100px;
+  font-size: 12px;
+  font-family: "Proxima Regular";
+}
+
+.header-card span {
+  font-family: "Proxima Bold";
+  font-size: 16px;
+}
+
+.header-card,
+.middle-card {
+  height: 50px;
+}
+
+.middle-card {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.middle-card input {
+  border-radius: 0px !important;
+  width: 50%;
+  border: 1px solid grey;
+  padding: 7px;
+  padding-right: 40px;
+}
+
+.middle-card i {
+  position: absolute;
+  top: 6px;
+  left: 44%;
+  font-size: 1.4rem;
+}
+
+.content-card {
+  height: auto;
+  margin-top: 10px;
+}
+
+thead tr {
+  background-color: #f4f4f4;
+}
+
+thead tr th {
+  font-size: 12px;
+  font-family: "Proxima Bold";
+}
+
+@media screen and (max-width: 768px) {
+  .middle-card i {
+    left: 43%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .middle-card i {
+    left: 41%;
+  }
+}
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -250px;
+  }
+
+  .profil {
+    margin-right: -40px;
+    margin-left: 100px;
+  }
+}

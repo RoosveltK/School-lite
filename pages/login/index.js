@@ -1,19 +1,27 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
-import { Defile } from "../scripts/script";
+import { Defile } from "../../scripts/script";
 import Router from "next/router";
 
 const Login = () => {
   const [email, setEmail] = useState(" ");
   const [password, setPassword] = useState(" ");
+  const [btn, setBtn] = useState(false);
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
-    const affiche = setInterval(Defile, 100);
+    const affiche = setInterval(Defile, 150);
     return () => {
       clearInterval(affiche);
     };
   });
-  const handleSubmit = (event: any) => {
+
+  useEffect(() => {
+    if (password !== "" && email !== "") setBtn(true);
+    else if (btn) setBtn(false);
+  }, [password, email, btn]);
+
+  const handleSubmit = (event) => {
     event.preventDefault();
     const user = { email, password };
     console.log(user);
@@ -49,7 +57,7 @@ const Login = () => {
                 <div className="form-floating border-1 mb-3 fs-5 col-10">
                   <input
                     type="email"
-                    className="border-0 border-dark none_border border-bottom border-1 form-control"
+                    className="border-0 border-dark none_border border-bottom border-1 form-control "
                     id="floatingInput"
                     placeholder="name@example.com"
                     required
@@ -69,13 +77,23 @@ const Login = () => {
                   <label htmlFor="floatingPassword">Password</label>
                 </div>
               </div>
-              <button
-                disabled={loading}
-                className="btn btn-success col-10 fw-bold"
-                type="submit"
-              >
-                {loading ? "Signing in..." : "Sign in"}
-              </button>
+              {btn === false ? (
+                <button
+                  disabled
+                  className="btn btn-success col-10 fw-bold"
+                  type="submit"
+                >
+                  Sign in
+                </button>
+              ) : (
+                <button
+                  disabled={loading}
+                  className="btn btn-success col-10 fw-bold"
+                  type="submit"
+                >
+                  {loading ? "Signing in..." : "Sign in"}
+                </button>
+              )}
               <p>
                 Mot de passe oublié ?{" "}
                 <a href="#" className="fw-bold text-decoration-none text-dark">
