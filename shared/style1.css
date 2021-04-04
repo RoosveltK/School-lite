@@ -1,7 +1,270 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-width: 730px;
+  height: 430px;
+  margin: auto;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 0 !important;
+}
+
+.myCard {
+  position: relative;
+  background: #fff;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  border-radius: 15px;
+  padding: 0 !important;
+  -webkit-box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+  box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+}
+
+.rightSection {
+  position: absolute;
+  display: flex;
+  min-width: 290px;
+  height: 105%;
+  top: -12px;
+  bottom: -12px;
+  left: -5px;
+  background-color: #6a4e77;
+  border-radius: 8px;
+  padding: 25px;
+  color: rgb(192, 192, 192);
+  font-size: 12px;
+  justify-content: center;
+}
+
+.leftSection {
+  margin-right: 30px;
+}
+
+.leftSection header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.FormContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.md-form {
+  position: relative;
+}
+
+.md-form input {
+  padding-left: 0 !important;
+  padding-top: 20px;
+  margin-top: 12px;
+  border-bottom: 1px solid grey;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-radius: 0;
+}
+
+.checkbox-input {
+  /*display: inline-flex;*/
+  align-self: flex-start;
+}
+
+.checkbox-input label input {
+  align-items: center;
+}
+
+.checkbox-input label {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkbox-input label small {
+  align-self: flex-end;
+  margin-left: 10px;
+}
+
+.form-label {
+  position: absolute;
+  display: block;
+  top: 25px;
+  left: 10px;
+  transition: transform 0.6s, font-size 0.6s;
+}
+
+.form-label-focused {
+  transform: translate(-10px, -20px);
+  font-size: 12px !important;
+}
+
+.form-label-focused-color {
+  color: #de3a99 !important;
+  text-decoration: #333333 im !important;
+}
+
+.md-form label {
+  font-family: "proxima Bold";
+  color: #cfcfcf;
+  font-size: 15px;
+}
+
+.md-form label.active {
+  color: #de3a99 !important;
+  font-size: 20px;
+  font-family: "proxima Regular";
+}
+
+.myForm input {
+  color: #333333;
+  font-family: "proxima Bold";
+}
+
+.md-form input[type="password"]:not(.browser-default):focus:not([readonly]),
+.md-form input[type="text"]:not(.browser-default):focus:not([readonly]) {
+  border-bottom: 1px solid #de3a99;
+  box-shadow: 0 1px 0 0 #de3a99;
+}
+
+.modal-form {
+  height: 400px;
+  overflow-y: scroll;
+}
+
+.leftSection header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #de3a99;
+  color: #de3a99;
+  font-family: "proxima Bold";
+  width: 100px;
+}
+
+.row {
+  height: 100%;
+}
+
+.rightSection header {
+  color: #fff;
+  font-size: 44px;
+}
+
+.box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
+}
+
+.box div {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.box p {
+  margin-top: 70px;
+  font-weight: bold;
+}
+
+.box .img-logo {
+  margin-top: 20px;
+  margin-bottom: 70px;
+}
+
+.leftSection .myInput:focus {
+  outline: none;
+}
+
+.myForm {
+  position: relative;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.FormFooter {
+  margin-top: 35px;
+  min-height: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.leftSection .butt {
+  background: #de3a99;
+  color: #fff;
+  width: 230px;
+  font-family: "proxima Bold";
+  border: none;
+  border-radius: 25px;
+  padding: 10px;
+  -webkit-box-shadow: 0px 10px 41px -11px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow: 0px 10px 41px -11px rgba(0, 0, 0, 0.7);
+  box-shadow: 0px 10px 20px -11px rgba(0, 0, 0, 0.4);
+}
+.butt:hover {
+  background-color: white !important;
+  border: 1px solid #de3a99 !important;
+  color: #de3a99 !important;
+}
+
+.FormFooter div:first-child {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-right: 15px;
+}
+
+.FormFooter div:last-child {
+  padding-bottom: 20px;
+}
+
+.FormFooter .passForgot {
+  color: #de3a99;
+  display: flex;
+  align-self: flex-end;
+  font-family: "proxima Bold";
+  text-decoration: underline;
+}
+
+.leftSection .butt:focus {
+  outline: none;
+}
+
+.leftSection .fas {
+  position: relative;
+  color: #bb36fd;
+  left: 36px;
+}
+
+.butt_out {
+  background: transparent;
+  color: #fff;
+  width: 120px;
+  border: 2px solid#fff;
+  border-radius: 25px;
+  padding: 10px;
+  -webkit-box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+  box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+}
+
+.butt_out:hover {
+  border: 2px solid#eecbff;
+}
+
+.butt_out:focus {
+  outline: none;
 }
 
 @media screen and (max-width: 767px) {
@@ -26,6 +289,9 @@
     font-size: 16px;
   }
 }
+body {
+  overflow: hidden;
+}
 
 #wrapper {
   overflow-x: hidden;
@@ -46,11 +312,12 @@
   background-color: white !important;
 }
 
-#sidebar-wrapper div a:hover {
-  background-color: #f4f4f4 !important;
+#sidebar-wrapper div Link {
+  background-color: white !important;
 }
-.top {
-  border-top: 1px solid #cfcfcf !important;
+
+#sidebar-wrapper div Link:hover {
+  background-color: #f4f4f4 !important;
 }
 
 #sidebar-wrapper .sidebar-heading {
@@ -59,10 +326,9 @@
   justify-content: center;
   padding: 0.875rem 1.25rem;
   font-size: 1rem;
-  font-weight: bold;
-  font-family: "proxima Regular";
+  font-family: "proxima Bold";
   font-size: 14px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 #sidebar-wrapper .list-group {
@@ -83,10 +349,10 @@
   justify-content: space-between;
 }
 
-.topbar {
+#navbarDropdown img {
+  width: 40px;
   height: 40px;
-  width: 100%;
-  background-color: #198754;
+  border-radius: 100%;
 }
 
 .navbar {
@@ -115,7 +381,6 @@
   display: flex;
   flex: 1;
   margin-left: 15px;
-  color: black;
 }
 
 .logo-menu:hover {

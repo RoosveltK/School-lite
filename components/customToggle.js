@@ -10,8 +10,11 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     }}
   >
     {children}
-    <span className="dropdown-icon">&#x25bc;</span>
+    <span className="dropdown-icon"></span>
   </a>
 ));
 
 export default CustomToggle;
+
+// Pour icon menu deroulant
+// &#x25bc;

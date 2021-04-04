@@ -7,10 +7,16 @@ import CustomToggle from "./customToggle";
 import Link from "next/link";
 
 class Layout extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { user: "" };
+  }
+
   componentDidMount() {
     responsbar();
     respons();
   }
+
   render() {
     return (
       <>
@@ -28,28 +34,36 @@ class Layout extends React.Component {
             <div className="bg-light border-right" id="sidebar-wrapper">
               <div className="sidebar-heading ">
                 <Link href="/">
-                  <a className="homeLink">SCHOOL ONLINE 🏫 </a>
+                  <a className="homeLink">SCHOOL ONLINE</a>
                 </Link>
               </div>
               <div className="list-group list-group-flush" id="menuLoading">
-                <Link href="/enseignant">
-                  <a className={`list-group-item list-group-item-action  top`}>
+                <Link href="/analyse/analytic">
+                  <a
+                    className={`list-group-item list-group-item-action bg-light top`}
+                  >
                     ENSEIGNANTS{" "}
                   </a>
                 </Link>
-                <Link href="/eleves">
-                  <a className={`list-group-item list-group-item-action  `}>
+                <Link href="/surv/surveillant">
+                  <a
+                    className={`list-group-item list-group-item-action bg-light `}
+                  >
                     ELEVES
                   </a>
                 </Link>
                 <Link href="/control/controleur">
-                  <a className={`list-group-item list-group-item-action  `}>
-                    CONTROLEURS
+                  <a
+                    className={`list-group-item list-group-item-action bg-light `}
+                  >
+                    TESTS
                   </a>
                 </Link>
                 <Link href="/salle/salleAllocation">
-                  <a className={`list-group-item list-group-item-action  `}>
-                    ALLOCATION DES SALLES
+                  <a
+                    className={`list-group-item list-group-item-action bg-light `}
+                  >
+                    STATISTIQUES
                   </a>
                 </Link>
               </div>
@@ -57,7 +71,7 @@ class Layout extends React.Component {
             <div className="flex-1" id="page-content-wrapper">
               <nav className="navbar navbar-expand-lg navbar-light border-bottom bg-col">
                 <div className="logo-menu" id="icon-menu">
-                  <i className="bi bi-justify"></i>
+                  <i className="bi bi-justify" />
                 </div>
 
                 <div className="logo-text">

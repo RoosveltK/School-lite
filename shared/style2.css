@@ -1,3 +1,70 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+}
+
+#wrapper {
+  overflow-x: hidden;
+  transition: margin 0.5s ease;
+}
+
+#sidebar-wrapper {
+  width: 250px;
+  min-height: 100vh;
+  margin-left: -15rem;
+  -webkit-transition: margin 0.25s ease-out;
+  -moz-transition: margin 0.25s ease-out;
+  -o-transition: margin 0.25s ease-out;
+  transition: margin 0.25s ease-out;
+  font-size: 12px;
+  font-family: "proxima Thin";
+  font-weight: bold;
+  background-color: white !important;
+}
+
+#sidebar-wrapper div a {
+  background-color: white !important;
+}
+
+#sidebar-wrapper div a:hover {
+  background-color: #f4f4f4 !important;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 0.875rem 1.25rem;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: "proxima Regular";
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+}
+
+#page-content-wrapper {
+  min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+#page-content-wrapper .navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 #navbarDropdown img {
   width: 40px;
   height: 40px;
@@ -5,10 +72,64 @@
   padding-left: 400px;
 }
 
+.topbar {
+  height: 40px;
+  width: 100%;
+  background-color: #198754;
+}
+
 .navbar {
   height: 60px;
   padding: 0 !important;
   background-color: white;
+}
+
+.logo-text {
+  display: flex;
+  flex: 6;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.logo-text span {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px !important;
+  font-size: 18px;
+  font-family: "proxima Regular";
+}
+
+.logo-menu {
+  display: flex;
+  flex: 1;
+  margin-left: 15px;
+}
+
+.logo-menu i:hover {
+  cursor: pointer;
+}
+
+.logo-menu i {
+  font-size: 1.4rem;
+}
+
+.profil {
+  display: flex;
+  flex: 1;
+}
+
+.main {
+  padding: 20px;
+  background-color: #f4f4f4;
+  overflow-y: scroll;
+}
+
+.mainCard {
+  height: auto;
+  background-color: white;
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
 .header-card {
@@ -132,10 +253,22 @@ tbody tr td {
     left: 41%;
   }
 }
-.profil {
-  margin-right: 30px !important;
-}
-.homeLink {
-  text-decoration: none !important;
-  color: #333333 !important;
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -250px;
+  }
+
+  .profil {
+    margin-right: 30px !important;
+  }
 }
