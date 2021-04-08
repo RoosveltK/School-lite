@@ -18,7 +18,7 @@ const Login = () => {
 
   useEffect(() => {
     if (password !== "" && email !== "") setBtn(true);
-    else if (btn) setBtn(false);
+    else if (btn === true) setBtn(false);
   }, [password, email, btn]);
 
   const handleSubmit = (event) => {
@@ -26,8 +26,8 @@ const Login = () => {
     const user = { email, password };
     console.log(user);
     setLoading(true);
-    setInterval(() => setLoading(false), 5000);
-    Router.push("/enseignant");
+    setTimeout(setLoading(false), 5000);
+    Router.push("enseignant");
   };
 
   return (
@@ -60,7 +60,6 @@ const Login = () => {
                     type="email"
                     className="border-0 border-dark none_border border-bottom border-1 form-control "
                     id="floatingInput"
-                    placeholder="name@example.com"
                     required
                     onChange={(e) => setEmail(e.target.value)}
                   />
@@ -79,16 +78,11 @@ const Login = () => {
                 </div>
               </div>
               {btn === false ? (
-                <button
-                  disabled
-                  className="btn btn-success col-10 fw-bold"
-                  type="submit"
-                >
+                <button disabled className="btn btn-success col-10 fw-bold">
                   Sign in
                 </button>
               ) : (
                 <button
-                  disabled={loading}
                   className="btn btn-success col-10 fw-bold"
                   type="submit"
                 >
@@ -97,7 +91,7 @@ const Login = () => {
               )}
               <p>
                 Mot de passe oublié ?{" "}
-                <a href="#" className="fw-bold text-decoration-none text-dark">
+                <a href="mailto:" className="fw-bold text-decoration-none text-dark">
                   cliquez ici
                 </a>
               </p>

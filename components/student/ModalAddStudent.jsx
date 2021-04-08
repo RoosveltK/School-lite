@@ -1,8 +1,8 @@
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 import Router from "next/router";
 
-export default class ModalAddTeacher extends React.Component {
+export default class ModalAddStudent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -55,7 +55,7 @@ export default class ModalAddTeacher extends React.Component {
           keyboard={false}
           className="modalSuppression"
         >
-          <Modal.Header className="color-titre-ajout" closeButton>
+          <Modal.Header closeButton className="color-titre-ajout">
             <Modal.Title className="colorTitre">{`Ajout d'un ${this.props.title}`}</Modal.Title>
           </Modal.Header>
           <Modal.Body>

@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../../components/Layout";
-import InfoPerso from "../../components/teacher/infoPerso";
+import InfoPerso from "../../components/student/infoPerso";
 import axios from "axios";
 
 function analyticPersonnel({ post }) {
@@ -53,7 +53,7 @@ export async function getStaticPaths() {
   const posts = res.data.data;
 
   try {
-    const paths = posts.map((post) => `/enseignant/${post.id}`);
+    const paths = posts.map((post) => `/eleve/${post.id}`);
     return { paths, fallback: false };
   } catch (err) {
     console.log(err);

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import InfoEnseignant from "../../components/teacher/infoEnseignant";
 import Layout from "../../components/Layout";
 import ModalAddTeacher from "../../components/teacher/ModalAddTeacher";
+import axios from "axios";
 
 const Enseignant = (props) => {
   const [enseignant, setEnseignant] = useState([]);
@@ -55,4 +56,14 @@ const Enseignant = (props) => {
   );
 };
 
+export async function getServerSideProps() {
+  try {
+    const res = await axios.get(`users/users/${params.id}`);
+    const post = res.data.data;
+    return { props: { post } };
+  } catch (err) {
+    console.log(err);
+    return { props: { post: [] } };
+  }
+}
 export default Enseignant;

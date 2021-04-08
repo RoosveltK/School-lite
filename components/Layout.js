@@ -3,6 +3,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { responsbar, respons } from "../scripts/form";
 import { Dropdown } from "react-bootstrap";
+import { AiOutlineMenu } from "react-icons/ai";
 import CustomToggle from "./customToggle";
 import Link from "next/link";
 
@@ -33,55 +34,50 @@ class Layout extends React.Component {
           <div className="d-flex" id="wrapper">
             <div className="bg-light border-right" id="sidebar-wrapper">
               <div className="sidebar-heading ">
-                <Link href="/">
+                <Link href="enseignant">
                   <a className="homeLink">SCHOOL ONLINE</a>
                 </Link>
               </div>
               <div className="list-group list-group-flush" id="menuLoading">
-                <Link href="/analyse/analytic">
+                <Link href="enseignant">
                   <a
                     className={`list-group-item list-group-item-action bg-light top`}
                   >
                     ENSEIGNANTS{" "}
                   </a>
                 </Link>
-                <Link href="/surv/surveillant">
+                <Link href="eleve">
                   <a
                     className={`list-group-item list-group-item-action bg-light `}
                   >
                     ELEVES
                   </a>
                 </Link>
-                <Link href="/control/controleur">
+                <Link href="cours">
                   <a
                     className={`list-group-item list-group-item-action bg-light `}
                   >
-                    TESTS
-                  </a>
-                </Link>
-                <Link href="/salle/salleAllocation">
-                  <a
-                    className={`list-group-item list-group-item-action bg-light `}
-                  >
-                    STATISTIQUES
+                    COURS
                   </a>
                 </Link>
               </div>
             </div>
             <div className="flex-1" id="page-content-wrapper">
               <nav className="navbar navbar-expand-lg navbar-light border-bottom bg-col">
-                <div className="logo-menu" id="icon-menu">
-                  <i className="bi bi-justify" />
-                </div>
-
-                <div className="logo-text">
-                  <img
-                    src="/static/university.png "
-                    alt="picture of uy1"
-                    width="40px"
-                    height="40"
-                  />
-                  <span>SCHOOL ONLINE</span>
+                <div className="logo-menu">
+                  <div id="icon-menu">
+                    <AiOutlineMenu />
+                  </div>
+                  <form role="search" class="menuSearch">
+                    <input
+                      type="text"
+                      placeholder="Search..."
+                      className="form-control"
+                    />
+                    <a href="enseignant">
+                      <i class="fa fa-search"></i>
+                    </a>
+                  </form>
                 </div>
                 <div className="logo-textL">
                   <Dropdown>

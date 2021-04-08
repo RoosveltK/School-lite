@@ -28,18 +28,14 @@ export default function ModalDelete(props) {
         .catch(() => toast.error("Erreur lors de la suppression "));
     }
   };
-
   return (
     <>
       <Dropdown.Item onClick={handleShow}>Supprimer</Dropdown.Item>
       <Modal show={show} onHide={handleClose} className="modalSuppression">
-        <Modal.Header closeButton className="color-titre-ajout">
-          <Modal.Title className="colorTitre">SUPPRESSION</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Etes vous certains de vouloir le supprimer ?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            No/Close
+        <Modal.Body>
+          Etes vous certains de vouloir le supprimer ?
+          <Button variant="primary" onClick={handleClose}>
+            NON
           </Button>
           <Button
             variant="danger"
@@ -48,9 +44,9 @@ export default function ModalDelete(props) {
               setShow(false);
             }}
           >
-            YES
+            OUI
           </Button>
-        </Modal.Footer>
+        </Modal.Body>
       </Modal>
     </>
   );

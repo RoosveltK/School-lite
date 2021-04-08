@@ -1,53 +1,56 @@
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
-import Router from "next/router";
+import { Modal, Button, Dropdown } from "react-bootstrap";
+import { toast } from "react-toastify";
 
-export default class ModalAddTeacher extends React.Component {
+export default class ModalEditStudent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       show: false,
-      first_name: "",
-      last_name: "",
-      matricule: "",
-      email: "",
-      born_at: null,
-      classe: [],
-      specialite: null,
-      password: "admin",
-      imageProfil: null,
-      classeDispo: [],
-      specialiteDispo: [],
+      first_name: this.props.enseignant.first_name,
+      last_name: this.props.enseignant.last_name,
+      matricule: this.props.enseignant.matricule,
+      email: this.props.enseignant.email,
+      born_at: this.props.enseignant.born_at,
+      classe: this.props.enseignant.classe,
+      specialite: this.props.enseignant.specialite,
+      imageProfil: this.props.enseignant.imageProfil,
     };
   }
   handleClose = () => this.setState({ show: false });
   handleShow = () => this.setState({ show: true });
 
-  handleCreate = async (event) => {
+  handleModif = async (event) => {
     event.preventDefault();
     const data = {
       first_name: this.state.first_name,
       last_name: this.state.last_name,
       matricule: this.state.matricule,
       email: this.state.email,
-      specialite: this.state.specialite,
       classe: this.state.classe,
-      image: this.state.imageProfil,
+      specialite: this.state.specialite,
+      imageProfil: this.state.imageProfil,
       born_at: this.state.born_at,
     };
+    axios
+      .put(`surveillance/supervisor/${this.props.enseignant.id}`, data)
+      .then(() => {
+        toast.success(
+          "Informations modifiés avec succès, veuillez recharchez la page"
+        );
+      })
+      .catch(() => {
+        toast.error(
+          "Erreur lors de la modification des informations de l'enseignant"
+        );
+      });
     this.setState({ show: false });
   };
 
   render() {
     return (
       <>
-        <Button
-          variant="dark"
-          className="btn boutonE"
-          onClick={this.handleShow}
-        >
-          NOUVEAU
-        </Button>
+        <Dropdown.Item onClick={this.handleShow}>Editer</Dropdown.Item>
         <Modal
           show={this.state.show}
           onHide={this.handleClose}
@@ -55,8 +58,8 @@ export default class ModalAddTeacher extends React.Component {
           keyboard={false}
           className="modalSuppression"
         >
-          <Modal.Header className="color-titre-ajout" closeButton>
-            <Modal.Title className="colorTitre">{`Ajout d'un ${this.props.title}`}</Modal.Title>
+          <Modal.Header closeButton className="color-titre-ajout">
+            <Modal.Title className="colorTitre">{`Modification d'un ${this.props.title}`}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="modal-form">
@@ -65,6 +68,7 @@ export default class ModalAddTeacher extends React.Component {
                   <label>Nom</label>
                   <input
                     type="text"
+                    value={this.state.first_name}
                     className="form-control"
                     placeholder=""
                     onChange={(e) =>
@@ -72,61 +76,66 @@ export default class ModalAddTeacher extends React.Component {
                     }
                   />
                 </div>
+
                 <div>
                   <label>Prénom</label>
                   <input
                     type="text"
+                    value={this.state.last_name}
                     className="form-control"
                     placeholder=""
                     onChange={(e) =>
                       this.setState({ last_name: e.target.value })
                     }
-                    required
                   />
                 </div>
-                <div>
-                  <label>Date de naissance</label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    onChange={(e) => this.setState({ born_at: e.target.value })}
-                    required
-                  />
-                </div>
-                <div>
-                  <label>Email</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder=""
-                    onChange={(e) => this.setState({ email: e.target.value })}
-                    required
-                  />
-                </div>
+
                 <div>
                   <label>Matricule</label>
                   <input
                     type="text"
+                    value={this.state.matricule}
                     className="form-control"
                     placeholder=""
                     onChange={(e) =>
                       this.setState({ matricule: e.target.value })
                     }
+                  />
+                </div>
+
+                <div>
+                  <label>Date de naissance</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={this.state.born_at}
+                    onChange={(e) => this.setState({ born_at: e.target.value })}
                     required
                   />
                 </div>
+
+                <div>
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    value={this.state.email}
+                    className="form-control"
+                    onChange={(e) => this.setState({ email: e.target.value })}
+                  />
+                </div>
+
                 <div>
                   <label>Classe</label>
                   <select
                     className="form-control"
                     onChange={(e) => this.setState({ classe: e.target.value })}
-                    defaultValue={this.state.classe}
                   >
-                    {this.state.classeDispo.map((salle) => {
+                    {this.state.salle.map((salle) => {
                       <option value={salle.id}>{salle.name}</option>;
                     })}
                   </select>
                 </div>
+
                 <div>
                   <label>Spécialité</label>
                   <select
@@ -136,11 +145,12 @@ export default class ModalAddTeacher extends React.Component {
                     }
                     defaultValue={this.state.specialite}
                   >
-                    {this.state.specialiteDispo.map((salle) => {
+                    {this.state.specialite.map((salle) => {
                       <option value={salle.id}>{salle.name}</option>;
                     })}
                   </select>
                 </div>
+
                 <div>
                   <label>Photo de profile</label>
                   <input
@@ -162,7 +172,7 @@ export default class ModalAddTeacher extends React.Component {
             <Button
               variant="primary"
               type="submit"
-              onClick={this.handleCreate}
+              onClick={this.handleModif}
               className="color-titre-ajout"
             >
               Valider
