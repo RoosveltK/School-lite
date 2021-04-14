@@ -20,7 +20,8 @@ class Layout extends React.Component {
   }
 
   logout = () => {
-    Router.push("/");
+    // Router.push("/");
+    console.log("DECONNEXION");
   };
   render() {
     return (

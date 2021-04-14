@@ -50,7 +50,7 @@ body {
   overflow-x: hidden;
   overflow-y: hidden;
 }
-/* .border-right {
+.border-right {
   border-right: 1px solid #dee2e6 !important;
 }
 
@@ -100,4 +100,7 @@ body {
   background-color: #313a46;
   border-radius: 0;
   margin: 5px;
-} */
+}
+.effetVoulu{
+  border-radius: 0;
+}
