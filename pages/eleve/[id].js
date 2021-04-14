@@ -23,6 +23,7 @@ function analyticPersonnel({ post }) {
                     borderCollapse: "collapse",
                     borderSpacing: 0,
                     width: "100%",
+                  
                   }}
                 >
                   <tbody>

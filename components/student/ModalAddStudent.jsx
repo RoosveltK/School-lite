@@ -9,9 +9,15 @@ export default class ModalAddStudent extends React.Component {
       show: false,
       first_name: "",
       last_name: "",
-      matricule: "",
       email: "",
+      phone: "",
+      password: "",
+      confirm_password: "",
+      matricule: "",
       born_at: null,
+      gender: "",
+      username: "",
+      role: "",
       classe: [],
       specialite: null,
       password: "admin",
@@ -70,6 +76,7 @@ export default class ModalAddStudent extends React.Component {
                     onChange={(e) =>
                       this.setState({ first_name: e.target.value })
                     }
+                    required
                   />
                 </div>
                 <div>

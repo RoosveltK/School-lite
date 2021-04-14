@@ -3,7 +3,6 @@ import Layout from "../../components/Layout";
 import ModalAddTeacher from "../../components/teacher/ModalAddTeacher";
 import ModalSelect from "../../components/ModalSelect";
 import axios from "axios";
-import { Table } from "react-bootstrap";
 import InfoCours from "../../components/infoCours";
 
 class Tests extends React.Component {
@@ -27,39 +26,44 @@ class Tests extends React.Component {
             <div className="mainCard">
               <header className="row">
                 <div className="col-12 header-card">
-                  <span>TESTS({this.state.tests.length})</span>
+                  <span></span>
                   <ModalAddTeacher title="Enseignant" />
                 </div>
+                <div className="col-12 titreCours">
+                  Matière :{this.state.matiere} <br />
+                </div>
+                <div className="col-4 titreCours">
+                  Spécialité :{this.state.specialite} <br />
+                </div>{" "}
+                <div className="col-4 titreCours">
+                  Niveau :{this.state.niveau} <br />
+                </div>
               </header>
+              <ModalSelect recuperation={this.getInfo} />
               <section className="row">
-                <ModalSelect recuperation={this.getInfo} />
-                <table className="table dt-responsive nowrap">
-                  <tbody>
-                    <tr>
-                      <th>Matière :</th>
-                      <td>{this.state.matiere}</td>
-                    </tr>
-                    <tr>
-                      <th>Spécialité :</th>
-                      <td>{this.state.specialite}</td>
-                    </tr>
-                    <tr>
-                      <th>Niveau :</th>
-                      <td>{this.state.niveau}</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <Table className="table dt-responsive nowrap">
-                  <thead>
-                    <th>N°</th>
-                    <th>Leçon</th>
-                    <th>Action</th>
-                    <th>Activer</th>
-                  </thead>
-                  <tbody>
-                    <InfoCours />
-                  </tbody>
-                </Table>
+                <div className="col-12 content-card">
+                  <table
+                    id="datatable"
+                    className="table-responsive-sm nowrap "
+                    style={{
+                      borderCollapse: "collapse",
+                      borderSpacing: 0,
+                      width: "100%",
+                    }}
+                  >
+                    <thead>
+                      <tr>
+                        <th>N°</th>
+                        <th>Leçon</th>
+                        <th>Action</th>
+                        <th>Activer</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <InfoCours />
+                    </tbody>
+                  </table>
+                </div>
               </section>
             </div>
           </div>

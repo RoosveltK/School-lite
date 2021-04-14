@@ -289,9 +289,6 @@
     font-size: 16px;
   }
 }
-body {
-  overflow: hidden;
-}
 
 #wrapper {
   overflow-x: hidden;

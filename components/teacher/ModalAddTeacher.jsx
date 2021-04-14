@@ -1,6 +1,8 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
+import axios from "axios";
 import Router from "next/router";
+import { toast } from "react-toastify";
 
 export default class ModalAddTeacher extends React.Component {
   constructor(props) {
@@ -9,15 +11,17 @@ export default class ModalAddTeacher extends React.Component {
       show: false,
       first_name: "",
       last_name: "",
-      matricule: "",
       email: "",
+      phone: "",
+      matricule: "",
       born_at: null,
+      gender: "masculin",
       classe: [],
-      specialite: null,
-      password: "admin",
+      matiereE: null,
       imageProfil: null,
       classeDispo: [],
-      specialiteDispo: [],
+      matiereEDispo: [],
+      password: "admin",
     };
   }
   handleClose = () => this.setState({ show: false });
@@ -28,13 +32,20 @@ export default class ModalAddTeacher extends React.Component {
     const data = {
       first_name: this.state.first_name,
       last_name: this.state.last_name,
-      matricule: this.state.matricule,
       email: this.state.email,
-      specialite: this.state.specialite,
+      phone: this.state.phone,
+      matricule: this.state.matricule,
+      born_at: this.state.born_at,
+      gender: this.state.gender,
+      matiereE: this.state.matiereE,
+      role: 1,
       classe: this.state.classe,
       image: this.state.imageProfil,
-      born_at: this.state.born_at,
     };
+    axios
+      .post("/users/signup", data)
+      .then(() => toast.success("Enseignant crée avec succèss "))
+      .catch(() => toast.error("Erreur lors de la création"));
     this.setState({ show: false });
   };
 
@@ -60,7 +71,7 @@ export default class ModalAddTeacher extends React.Component {
           </Modal.Header>
           <Modal.Body>
             <div className="modal-form">
-              <form>
+              <form onSubmit={this.handleCreate}>
                 <div>
                   <label>Nom</label>
                   <input
@@ -85,21 +96,25 @@ export default class ModalAddTeacher extends React.Component {
                   />
                 </div>
                 <div>
-                  <label>Date de naissance</label>
+                  <label>Email</label>
                   <input
-                    type="date"
+                    type="email"
                     className="form-control"
-                    onChange={(e) => this.setState({ born_at: e.target.value })}
+                    placeholder=""
+                    onChange={(e) => this.setState({ email: e.target.value })}
                     required
                   />
                 </div>
                 <div>
-                  <label>Email</label>
+                  <label>Numéro de téléphone</label>
                   <input
-                    type="text"
+                    type="tel"
+                    maxLength="9"
+                    minLength="9"
+                    pattern="[0-9]{9}"
                     className="form-control"
                     placeholder=""
-                    onChange={(e) => this.setState({ email: e.target.value })}
+                    onChange={(e) => this.setState({ phone: e.target.value })}
                     required
                   />
                 </div>
@@ -114,60 +129,88 @@ export default class ModalAddTeacher extends React.Component {
                     }
                     required
                   />
+                  <div>
+                    <label>Date de naissance</label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      onChange={(e) =>
+                        this.setState({ born_at: e.target.value })
+                      }
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label>Genre</label>
+                  <select
+                    className="form-control"
+                    onChange={(e) => this.setState({ gender: e.target.value })}
+                    value={this.state.gender}
+                    required
+                  >
+                    <option value="masculin">masculin</option>
+                    <option value="feminin">féminin</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Matière</label>
+                  <select
+                    className="form-control"
+                    onChange={(e) =>
+                      this.setState({ matiereE: e.target.value })
+                    }
+                    value={this.state.matiere}
+                  >
+                    {this.state.matiereEDispo.map((mat) => {
+                      <option value={mat.id}>{mat.name}</option>;
+                    })}
+                  </select>
                 </div>
                 <div>
                   <label>Classe</label>
                   <select
                     className="form-control"
-                    onChange={(e) => this.setState({ classe: e.target.value })}
-                    defaultValue={this.state.classe}
+                    onChange={(e) =>
+                      this.setState({
+                        classe: Array.from(e.target.selectedOptions).map(
+                          (option) => option.value
+                        ),
+                      })
+                    }
+                    value={this.state.classe}
+                    multiple
                   >
                     {this.state.classeDispo.map((salle) => {
                       <option value={salle.id}>{salle.name}</option>;
                     })}
                   </select>
                 </div>
-                <div>
-                  <label>Spécialité</label>
-                  <select
-                    className="form-control"
-                    onChange={(e) =>
-                      this.setState({ specialite: e.target.value })
-                    }
-                    defaultValue={this.state.specialite}
-                  >
-                    {this.state.specialiteDispo.map((salle) => {
-                      <option value={salle.id}>{salle.name}</option>;
-                    })}
-                  </select>
-                </div>
-                <div>
+                {/* <div>
                   <label>Photo de profile</label>
                   <input
-                    type="text"
+                    type="file"
                     className="form-control"
                     placeholder=""
                     onChange={(e) =>
                       this.setState({ imageProfil: e.target.value })
                     }
                   />
+                </div> */}
+                <div className="btnModal">
+                  <button
+                    className="btn btn-secondary"
+                    onClick={this.handleClose}
+                  >
+                    Fermer
+                  </button>
+                  <button type="submit" className="btn color-titre-ajout">
+                    Valider
+                  </button>
                 </div>
               </form>
             </div>
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
-              Fermer
-            </Button>
-            <Button
-              variant="primary"
-              type="submit"
-              onClick={this.handleCreate}
-              className="color-titre-ajout"
-            >
-              Valider
-            </Button>
-          </Modal.Footer>
         </Modal>
       </>
     );

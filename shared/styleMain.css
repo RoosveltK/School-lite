@@ -50,17 +50,20 @@ body {
   overflow-x: hidden;
   overflow-y: hidden;
 }
-.border-right {
+/* .border-right {
   border-right: 1px solid #dee2e6 !important;
 }
+
 .rechercheTop {
   justify-content: center;
   margin-top: 12px;
   margin-right: 12px;
 }
+
 .list-group-item {
   padding: 0.75rem 1.25rem;
 }
+
 .menuSearch .form-control,
 .app-search .form-control:focus {
   border: 1px solid #f2f2f2;
@@ -77,92 +80,24 @@ body {
   margin-left: 20px;
 }
 
-/* =============
-   Portlets
-============= */
-.portlet {
-  margin-bottom: 20px;
-  background: #fff;
-  position: relative;
-  transition: all 0.4s;
-  -moz-transition: all 0.4s;
-  -webkit-transition: all 0.4s;
-  -o-transition: all 0.4s;
+.btnModal {
+  display: flex;
+  position: end;
+  margin-left: 275px;
+}
+.btnModal button {
+  margin-left: 5px;
 }
 
-.portlet .portlet-heading {
-  padding: 20px 25px;
-  line-height: 38px;
-  min-height: 39px;
-  border-radius: 3px;
-  color: #fff;
+.titreCours {
+  margin: 10px;
+  font-size: 17px;
+  font-family: "proxima Bold";
 }
-
-.portlet .portlet-heading .portlet-title {
-  float: left;
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 0;
-  margin-top: 0;
-}
-
-.portlet .portlet-heading .portlet-widgets {
-  position: relative;
-  text-align: right;
-  float: right;
-  padding-left: 15px;
-  display: inline-block;
-  font-size: 15px;
-  line-height: 16px;
-}
-
-.portlet .portlet-body {
-  background: #fff;
-  padding: 20px;
-  -webkit-border-bottom-right-radius: 5px;
-  -webkit-border-bottom-left-radius: 5px;
-  -moz-border-radius-bottomright: 5px;
-  -moz-border-radius-bottomleft: 5px;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-}
-
-.portlet .portlet-heading .portlet-widgets .divider {
-  margin: 0 5px;
-}
-
-.portlet .portlet-heading.bg-purple a,
-.portlet .portlet-heading.bg-info a,
-.portlet .portlet-heading.bg-success a,
-.portlet .portlet-heading.bg-primary a,
-.portlet .portlet-heading.bg-danger a,
-.portlet .portlet-heading.bg-warning a,
-.portlet .portlet-heading.bg-inverse a,
-.portlet .portlet-heading.bg-pink a {
-  color: #fff;
-}
-
-.portlet .portlet-heading a {
-  color: #313a46;
-  font-size: 18px;
-}
-
-.portlet-disabled {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  border-radius: 5px;
-  background: rgba(49, 58, 70, 0.5);
-}
-
-.portlet-loader {
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin: -20px 0 0 -20px;
-  z-index: 1;
-}
+.boutonT {
+  width: 100px;
+  color: #f4f4f4;
+  background-color: #313a46;
+  border-radius: 0;
+  margin: 5px;
+} */

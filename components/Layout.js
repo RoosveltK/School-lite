@@ -6,6 +6,7 @@ import { Dropdown } from "react-bootstrap";
 import { AiOutlineMenu } from "react-icons/ai";
 import CustomToggle from "./customToggle";
 import Link from "next/link";
+import { Router } from "next/router";
 
 class Layout extends React.Component {
   constructor(props) {
@@ -18,6 +19,9 @@ class Layout extends React.Component {
     respons();
   }
 
+  logout = () => {
+    Router.push("/");
+  };
   render() {
     return (
       <>
@@ -98,7 +102,7 @@ class Layout extends React.Component {
                         </Link>
                       </Dropdown.Item>
                       <Dropdown.Divider />
-                      <Dropdown.Item onClick={() => this.logout()}>
+                      <Dropdown.Item onClick={this.logout()}>
                         Logout
                       </Dropdown.Item>
                     </Dropdown.Menu>
