@@ -1,11 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InfoEnseignant from "../../components/teacher/infoEnseignant";
 import Layout from "../../components/Layout";
 import ModalAddTeacher from "../../components/teacher/ModalAddTeacher";
 import axios from "axios";
+import $ from "jquery";
 
-const Enseignant = (props) => {
+const Enseignant = ({ teachers, clas, specialite }) => {
   const [enseignant, setEnseignant] = useState([]);
+
+  console.log(enseignant);
+  useEffect(() => {
+    setEnseignant(teachers);
+    $(document).ready(function () {
+      $("#datatable").DataTable({
+        searching: true,
+        paging: false,
+        info: false,
+        columnDefs: [{ orderable: false, targets: [1, 2, 3, 4] }],
+      });
+    });
+  }, [teachers]);
+
   return (
     <>
       <Layout title="Enseignant">
@@ -14,7 +29,11 @@ const Enseignant = (props) => {
             <header className="row">
               <div className="col-12 header-card">
                 <span>ENSEIGNANTS({enseignant.length})</span>
-                <ModalAddTeacher title="Enseignant" />
+                <ModalAddTeacher
+                  specialite={specialite}
+                  classes={clas}
+                  title="Enseignant"
+                />
               </div>
             </header>
             <section className="row">
@@ -34,17 +53,19 @@ const Enseignant = (props) => {
                       <th>Nom</th>
                       <th>Spécialité</th>
                       <th>Email</th>
+                      <th>Classes</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {/* {surveillant.map((teacher) => {
+                    {enseignant.map((teacher) => {
                       return (
                         <InfoEnseignant
                           dataEnseignant={teacher}
                           key={teacher.id}
                         />
                       );
-                    })} */}
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -56,11 +77,16 @@ const Enseignant = (props) => {
   );
 };
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   try {
-    const res = await axios.get(`users/users/${params.id}`);
-    const post = res.data.data;
-    return { props: { post } };
+    const teacher = await axios.get(`user`);
+    const classe = await axios.get(`school/classe`);
+    const special = await axios.get(`school/speciality`);
+
+    const specialite = special.data;
+    const clas = classe.data;
+    const teachers = teacher.data;
+    return { props: { teachers, clas, specialite } };
   } catch (err) {
     console.log(err);
     return { props: { post: [] } };

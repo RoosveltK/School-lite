@@ -8,21 +8,27 @@ import ModalEditTeacher from "./ModalEditTeacher";
 const InfoEnseignant = ({ dataEnseignant }) => {
   const {
     id,
-    last_name,
     first_name,
     email,
     matricule,
-    classe,
-    specialite,
+    classes,
+    departement,
   } = dataEnseignant;
 
   return (
     <>
       <tr>
         <td>{matricule}</td>
-        <td>{`${last_name.toUpperCase()} ${first_name.toUpperCase()}`}</td>
-        <td>{specialite}</td>
+        <td>{`${first_name.toUpperCase()}`}</td>
+        <td>{departement}</td>
         <td>{email}</td>
+        <td>
+          {classes.length !== 0
+            ? classes.map((clas) => {
+                clas.level + "/" + clas.speciality;
+              })
+            : null}
+        </td>
         <td className="contextual-menu survDropdown">
           <Link href={`/enseignant/${id}`} key={id}>
             <a>Afficher</a>

@@ -10,17 +10,17 @@ export default class ModalAddTeacher extends React.Component {
     this.state = {
       show: false,
       first_name: "",
-      last_name: "",
+      username: "",
       email: "",
-      phone: "",
+      // phone: "",
       matricule: "",
       born_at: null,
       gender: "masculin",
+      specialite: "",
       classe: [],
       matiereE: null,
-      imageProfil: null,
-      classeDispo: [],
-      matiereEDispo: [],
+      classeDispo: props.classes,
+      departementDispo: props.specialite,
       password: "admin",
     };
   }
@@ -31,25 +31,28 @@ export default class ModalAddTeacher extends React.Component {
     event.preventDefault();
     const data = {
       first_name: this.state.first_name,
-      last_name: this.state.last_name,
+      username: this.state.username,
       email: this.state.email,
-      phone: this.state.phone,
+      // phone: this.state.phone,
       matricule: this.state.matricule,
+      departement: this.state.specialite,
       born_at: this.state.born_at,
       gender: this.state.gender,
-      matiereE: this.state.matiereE,
-      role: 1,
-      classe: this.state.classe,
-      image: this.state.imageProfil,
+      role: 2,
+      classes: this.state.classe,
+      password: this.state.password,
+      // image: this.state.imageProfil,
     };
+    console.log(data);
     axios
-      .post("/users/signup", data)
+      .post("/user", data)
       .then(() => toast.success("Enseignant crée avec succèss "))
       .catch(() => toast.error("Erreur lors de la création"));
     this.setState({ show: false });
   };
 
   render() {
+    console.log(this.state.matiereE);
     return (
       <>
         <Button
@@ -90,7 +93,7 @@ export default class ModalAddTeacher extends React.Component {
                     className="form-control"
                     placeholder=""
                     onChange={(e) =>
-                      this.setState({ last_name: e.target.value })
+                      this.setState({ username: e.target.value })
                     }
                     required
                   />
@@ -105,7 +108,7 @@ export default class ModalAddTeacher extends React.Component {
                     required
                   />
                 </div>
-                <div>
+                {/* <div>
                   <label>Numéro de téléphone</label>
                   <input
                     type="tel"
@@ -117,7 +120,7 @@ export default class ModalAddTeacher extends React.Component {
                     onChange={(e) => this.setState({ phone: e.target.value })}
                     required
                   />
-                </div>
+                </div> */}
                 <div>
                   <label>Matricule</label>
                   <input
@@ -154,20 +157,6 @@ export default class ModalAddTeacher extends React.Component {
                   </select>
                 </div>
                 <div>
-                  <label>Matière</label>
-                  <select
-                    className="form-control"
-                    onChange={(e) =>
-                      this.setState({ matiereE: e.target.value })
-                    }
-                    value={this.state.matiere}
-                  >
-                    {this.state.matiereEDispo.map((mat) => {
-                      <option value={mat.id}>{mat.name}</option>;
-                    })}
-                  </select>
-                </div>
-                <div>
                   <label>Classe</label>
                   <select
                     className="form-control"
@@ -181,9 +170,26 @@ export default class ModalAddTeacher extends React.Component {
                     value={this.state.classe}
                     multiple
                   >
-                    {this.state.classeDispo.map((salle) => {
-                      <option value={salle.id}>{salle.name}</option>;
-                    })}
+                    {this.state.classeDispo.map((salle) => (
+                      <option value={salle.id}>
+                        {salle.level.describe}- {salle.speciality.describe}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label>Spécialité</label>
+                  <select
+                    className="form-control"
+                    onChange={(e) =>
+                      this.setState({ specialite: e.target.value })
+                    }
+                    value={this.state.specialite}
+                    required
+                  >
+                    {this.state.departementDispo.map((depart) => (
+                      <option value={depart.id}>{depart.describe}</option>
+                    ))}
                   </select>
                 </div>
                 {/* <div>

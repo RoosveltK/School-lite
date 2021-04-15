@@ -58,9 +58,9 @@ const Eleve = (props) => {
 
 export async function getServerSideProps() {
   try {
-    const res = await axios.get(`users/users/${params.id}`);
-    const post = res.data.data;
-    return { props: { post } };
+    const res = await axios.get(`user`);
+    const student = res.data.data;
+    return { props: { student } };
   } catch (err) {
     console.log(err);
     return { props: { post: [] } };

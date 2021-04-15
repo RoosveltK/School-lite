@@ -7,7 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
 
-axios.defaults.baseURL = "";
+axios.defaults.baseURL = "http://192.168.43.38:8000/api";
+axios.defaults.withCredentials = true;
 
 function MyApp({ Component, pageProps }) {
   return (

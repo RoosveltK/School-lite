@@ -3,8 +3,9 @@ import Head from "next/head";
 import { Defile } from "../scripts/script";
 import { form } from "../scripts/form";
 import Router from "next/router";
-import API from "../api/api";
 import { toast } from "react-toastify";
+// import axios from "../Axios/Login";
+import axios from "axios";
 
 const Login = () => {
   const [email, setEmail] = useState(" ");
@@ -24,14 +25,26 @@ const Login = () => {
     else if (btn === true) setBtn(false);
   }, [password, email, btn]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const user = { email, password };
+    const user = {
+      client_id: "roosvelt",
+      client_secret: "roosvelt12345",
+      grant_type: "password",
+      username: email,
+      password: password,
+    };
     console.log(user);
 
-    API.post("/users/signin", user)
-      .then(() => Router.push("enseignant"))
-      .catch(() => toast.error("Erreur lors de la connexion"));
+    await axios
+      .post(`auth/token/`, user)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Erreur lors de la connexion");
+      });
   };
 
   return (
@@ -41,7 +54,7 @@ const Login = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Login</title>
       </Head>
-      <body>
+      <main>
         <div className="container-fluid p-0 over-hidden">
           <img
             src="/static/background.jpg"
@@ -105,7 +118,7 @@ const Login = () => {
             </form>
           </div>
         </div>
-      </body>
+      </main>
     </>
   );
 };
