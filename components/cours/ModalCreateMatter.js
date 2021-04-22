@@ -1,57 +1,68 @@
 import React from "react";
-import { Modal, Button, Dropdown } from "react-bootstrap";
-import { toast } from "react-toastify";
+import { Button, Modal, Dropdown } from "react-bootstrap";
 import axios from "axios";
+import Router from "next/router";
+import { toast } from "react-toastify";
 
-export default class ModalEditTeacher extends React.Component {
+export default class ModalCreateMatter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       show: false,
-      first_name: this.props.enseignant.first_name,
-      username: this.props.enseignant.username,
-      matricule: this.props.enseignant.matricule,
-      email: this.props.enseignant.email,
-      born_at: this.props.enseignant.born_at,
-      classe: this.props.enseignant.classes,
-      gender: this.props.enseignant.gender,
-      specialites: this.props.enseignant.departement,
+      first_name: "",
+      username: "",
+      email: "",
+      // phone: "",
+      matricule: "",
+      born_at: null,
+      gender: "M",
+      specialite: 1,
+      classe: [],
+      matiereE: null,
+      classeDispo: props.classes,
+      departementDispo: props.specialite,
+      password: "admin",
     };
   }
   handleClose = () => this.setState({ show: false });
   handleShow = () => this.setState({ show: true });
 
-  handleModif = async (event) => {
+  handleCreate = async (event) => {
     event.preventDefault();
     const data = {
       first_name: this.state.first_name,
       username: this.state.username,
-      matricule: this.state.matricule,
       email: this.state.email,
-      classes: this.state.classe,
-      departement: this.state.specialites,
+      matricule: this.state.matricule,
+      dep: parseInt(this.state.specialite),
       born_at: this.state.born_at,
+      gender: this.state.gender,
+      role: 2,
+      classes: this.state.classe,
+      password: this.state.password,
     };
-    axios
-      .put(`api/user/${this.props.enseignant.id}`, data)
-      .then(() => {
-        toast.success(
-          "Informations modifiés avec succès, veuillez recharchez la page"
-        );
-      })
-      .catch(() => {
-        toast.error(
-          "Erreur lors de la modification des informations de l'enseignant"
-        );
-      });
     console.log(data);
+    axios
+      .post("api/user/", data)
+      .then(() => toast.success("Enseignant crée avec succèss "))
+      .catch((errr) => {
+        console.log(errr);
+        toast.error("Erreur lors de la création");
+      });
     this.setState({ show: false });
   };
 
   render() {
+    console.log(this.state.matiereE);
     return (
       <>
-        <Dropdown.Item onClick={this.handleShow}>Editer</Dropdown.Item>
+        <Dropdown.Item
+          variant="dark"
+          className="btn boutonE"
+          onClick={this.handleShow}
+        >
+          NOUVEAU
+        </Dropdown.Item>
         <Modal
           show={this.state.show}
           onHide={this.handleClose}
@@ -59,19 +70,18 @@ export default class ModalEditTeacher extends React.Component {
           keyboard={false}
           className="modalSuppression"
         >
-          <Modal.Header closeButton className="color-titre-ajout">
+          <Modal.Header className="color-titre-ajout" closeButton>
             <Modal.Title className="colorTitre">
-              Modification d'un Enseignant
+              Ajout d'une Matière
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="modal-form">
-              <form>
+              <form onSubmit={this.handleCreate}>
                 <div>
                   <label>Nom</label>
                   <input
                     type="text"
-                    value={this.state.first_name}
                     className="form-control"
                     placeholder=""
                     onChange={(e) =>
@@ -79,70 +89,79 @@ export default class ModalEditTeacher extends React.Component {
                     }
                   />
                 </div>
-
                 <div>
                   <label>Prénom</label>
                   <input
                     type="text"
-                    value={this.state.username}
                     className="form-control"
                     placeholder=""
                     onChange={(e) =>
                       this.setState({ username: e.target.value })
                     }
+                    required
                   />
                 </div>
-
+                <div>
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    placeholder=""
+                    onChange={(e) => this.setState({ email: e.target.value })}
+                    required
+                  />
+                </div>
+                {/* <div>
+                  <label>Numéro de téléphone</label>
+                  <input
+                    type="tel"
+                    maxLength="9"
+                    minLength="9"
+                    pattern="[0-9]{9}"
+                    className="form-control"
+                    placeholder=""
+                    onChange={(e) => this.setState({ phone: e.target.value })}
+                    required
+                  />
+                </div> */}
                 <div>
                   <label>Matricule</label>
                   <input
                     type="text"
-                    value={this.state.matricule}
                     className="form-control"
                     placeholder=""
                     onChange={(e) =>
                       this.setState({ matricule: e.target.value })
                     }
-                  />
-                </div>
-
-                <div>
-                  <label>Date de naissance</label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    value={this.state.born_at}
-                    onChange={(e) => this.setState({ born_at: e.target.value })}
                     required
                   />
+                  <div>
+                    <label>Date de naissance</label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      onChange={(e) =>
+                        this.setState({ born_at: e.target.value })
+                      }
+                      required
+                    />
+                  </div>
                 </div>
                 <div>
                   <label>Genre</label>
                   <select
                     className="form-control"
                     onChange={(e) => this.setState({ gender: e.target.value })}
-                    value={this.state.gender}
                     required
                   >
-                    <option value="M">masculin</option>
-                    <option value="F">féminin</option>
+                    <option value={`M`}>masculin</option>
+                    <option value={`F`}>féminin</option>
                   </select>
                 </div>
-                <div>
-                  <label>Email</label>
-                  <input
-                    type="email"
-                    value={this.state.email}
-                    className="form-control"
-                    onChange={(e) => this.setState({ email: e.target.value })}
-                  />
-                </div>
-
                 <div>
                   <label>Classe</label>
                   <select
                     className="form-control"
-                    value={this.state.classe}
                     onChange={(e) =>
                       this.setState({
                         classe: Array.from(e.target.selectedOptions).map(
@@ -150,10 +169,9 @@ export default class ModalEditTeacher extends React.Component {
                         ),
                       })
                     }
-                    value={this.state.classe}
                     multiple
                   >
-                    {this.props.classe.map((salle) => (
+                    {this.state.classeDispo.map((salle) => (
                       <option value={salle.id}>
                         {salle.level.describe}- {salle.speciality.describe}
                       </option>
@@ -168,29 +186,26 @@ export default class ModalEditTeacher extends React.Component {
                       this.setState({ specialite: e.target.value })
                     }
                     required
-                    value={this.state.specialites}
                   >
-                    {this.props.specialite.map((depart) => (
+                    {this.state.departementDispo.map((depart) => (
                       <option value={depart.id}>{depart.describe}</option>
                     ))}
                   </select>
                 </div>
+                <div className="btnModal">
+                  <button
+                    className="btn btn-secondary"
+                    onClick={this.handleClose}
+                  >
+                    Fermer
+                  </button>
+                  <button type="submit" className="btn color-titre-ajout">
+                    Valider
+                  </button>
+                </div>
               </form>
             </div>
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
-              Fermer
-            </Button>
-            <Button
-              variant="primary"
-              type="submit"
-              onClick={this.handleModif}
-              className="color-titre-ajout"
-            >
-              Valider
-            </Button>
-          </Modal.Footer>
         </Modal>
       </>
     );

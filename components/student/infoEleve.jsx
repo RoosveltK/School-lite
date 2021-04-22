@@ -9,23 +9,29 @@ import ModalAddStudent from "./ModalAddStudent";
 const InfoEleve = ({ dataEleve }) => {
   const {
     id,
-    last_name,
+    username,
     first_name,
     email,
     matricule,
-    classe,
+    classes,
     specialite,
+    departement,
   } = dataEleve;
 
   return (
     <>
       <tr>
         <td>{matricule}</td>
-        <td>{`${last_name.toUpperCase()} ${first_name.toUpperCase()}`}</td>
+        <td>{`${username.toUpperCase()} ${first_name.toUpperCase()}`}</td>
         <td>{specialite}</td>
         <td>{email}</td>
+        <td>
+          {classes.length !== 0
+            ? classes.map((clas) => clas.level + "/" + clas.speciality)
+            : null}
+        </td>
         <td className="contextual-menu survDropdown">
-          <Link href={`/enseignant/${id}`} key={id}>
+          <Link href={`/eleve/${id}`} key={id}>
             <a>Afficher</a>
           </Link>
           <Dropdown>
@@ -33,7 +39,7 @@ const InfoEleve = ({ dataEleve }) => {
               <i className="bi bi-three-dots-vertical options-icon" />
             </Dropdown.Toggle>
             <Dropdown.Menu className="options">
-              <ModalAddStudent eleve={dataEleve} />
+              <ModalEditStudent eleve={dataEleve} />
               <Dropdown.Divider />
               <ModalDelete id={id} titre={"eleve"} />
             </Dropdown.Menu>

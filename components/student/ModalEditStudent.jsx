@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal, Button, Dropdown } from "react-bootstrap";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 export default class ModalEditStudent extends React.Component {
   constructor(props) {
@@ -8,13 +9,13 @@ export default class ModalEditStudent extends React.Component {
     this.state = {
       show: false,
       first_name: this.props.enseignant.first_name,
-      last_name: this.props.enseignant.last_name,
+      username: this.props.enseignant.username,
       matricule: this.props.enseignant.matricule,
       email: this.props.enseignant.email,
       born_at: this.props.enseignant.born_at,
-      classe: this.props.enseignant.classe,
-      specialite: this.props.enseignant.specialite,
-      imageProfil: this.props.enseignant.imageProfil,
+      classe: this.props.enseignant.classes,
+      gender: this.props.enseignant.gender,
+      specialites: this.props.enseignant.departement,
     };
   }
   handleClose = () => this.setState({ show: false });
@@ -24,16 +25,15 @@ export default class ModalEditStudent extends React.Component {
     event.preventDefault();
     const data = {
       first_name: this.state.first_name,
-      last_name: this.state.last_name,
+      username: this.state.username,
       matricule: this.state.matricule,
       email: this.state.email,
-      classe: this.state.classe,
-      specialite: this.state.specialite,
-      imageProfil: this.state.imageProfil,
+      classes: Array.from(this.state.classe),
+      departement: this.state.specialites,
       born_at: this.state.born_at,
     };
     axios
-      .put(`surveillance/supervisor/${this.props.enseignant.id}`, data)
+      .put(`api/user/${this.props.enseignant.id}`, data)
       .then(() => {
         toast.success(
           "Informations modifiés avec succès, veuillez recharchez la page"
@@ -41,9 +41,10 @@ export default class ModalEditStudent extends React.Component {
       })
       .catch(() => {
         toast.error(
-          "Erreur lors de la modification des informations de l'enseignant"
+          "Erreur lors de la modification des informations de l'élève"
         );
       });
+    console.log(data);
     this.setState({ show: false });
   };
 
@@ -59,7 +60,9 @@ export default class ModalEditStudent extends React.Component {
           className="modalSuppression"
         >
           <Modal.Header closeButton className="color-titre-ajout">
-            <Modal.Title className="colorTitre">{`Modification d'un ${this.props.title}`}</Modal.Title>
+            <Modal.Title className="colorTitre">
+              Modification d'un Elève
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="modal-form">
@@ -81,11 +84,11 @@ export default class ModalEditStudent extends React.Component {
                   <label>Prénom</label>
                   <input
                     type="text"
-                    value={this.state.last_name}
+                    value={this.state.username}
                     className="form-control"
                     placeholder=""
                     onChange={(e) =>
-                      this.setState({ last_name: e.target.value })
+                      this.setState({ username: e.target.value })
                     }
                   />
                 </div>
@@ -113,7 +116,18 @@ export default class ModalEditStudent extends React.Component {
                     required
                   />
                 </div>
-
+                <div>
+                  <label>Genre</label>
+                  <select
+                    className="form-control"
+                    onChange={(e) => this.setState({ gender: e.target.value })}
+                    value={this.state.gender}
+                    required
+                  >
+                    <option value="M">masculin</option>
+                    <option value="F">féminin</option>
+                  </select>
+                </div>
                 <div>
                   <label>Email</label>
                   <input
@@ -128,14 +142,21 @@ export default class ModalEditStudent extends React.Component {
                   <label>Classe</label>
                   <select
                     className="form-control"
-                    onChange={(e) => this.setState({ classe: e.target.value })}
+                    value={this.state.classe}
+                    onChange={(e) =>
+                      this.setState({
+                        classe: e.target.value,
+                      })
+                    }
+                    value={this.state.classe}
                   >
-                    {this.state.salle.map((salle) => {
-                      <option value={salle.id}>{salle.name}</option>;
-                    })}
+                    {this.props.classe.map((salle) => (
+                      <option value={salle.id}>
+                        {salle.level.describe}- {salle.speciality.describe}
+                      </option>
+                    ))}
                   </select>
                 </div>
-
                 <div>
                   <label>Spécialité</label>
                   <select
@@ -143,24 +164,13 @@ export default class ModalEditStudent extends React.Component {
                     onChange={(e) =>
                       this.setState({ specialite: e.target.value })
                     }
-                    defaultValue={this.state.specialite}
+                    required
+                    value={this.state.specialites}
                   >
-                    {this.state.specialite.map((salle) => {
-                      <option value={salle.id}>{salle.name}</option>;
-                    })}
+                    {this.props.specialite.map((depart) => (
+                      <option value={depart.id}>{depart.describe}</option>
+                    ))}
                   </select>
-                </div>
-
-                <div>
-                  <label>Photo de profile</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder=""
-                    onChange={(e) =>
-                      this.setState({ imageProfil: e.target.value })
-                    }
-                  />
                 </div>
               </form>
             </div>

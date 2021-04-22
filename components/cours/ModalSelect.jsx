@@ -24,7 +24,7 @@ export default function ModalSelect({ recuperation }) {
           <Modal.Title>Selection Niveau</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={handleSubmit}>
+          <form>
             <div className="form-group">
               <label htmlFor="matiere">Matière</label>
               <select
@@ -66,10 +66,15 @@ export default function ModalSelect({ recuperation }) {
                 <option>Latin</option>
               </select>
             </div>
-            <button type="submit" className="btn btn-secondary">
-              Sélectionner
-            </button>
           </form>
+          <Modal.Footer>
+            <Button className="btn btn-secondary" onClick={handleClose}>
+              Fermer
+            </Button>
+            <Button className="btn color-titre-ajout" onClick={handleSubmit}>
+              Soumettre
+            </Button>
+          </Modal.Footer>
         </Modal.Body>
       </Modal>
     </>

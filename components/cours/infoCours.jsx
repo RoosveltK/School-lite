@@ -1,6 +1,6 @@
 import React from "react";
 import { Dropdown, Button } from "react-bootstrap";
-import CustomToggle from "./customToggle";
+import CustomToggle from "../customToggle";
 import Link from "next/link";
 
 const InfoCours = () => {

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal, Button, Dropdown } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Router from "next/router";
+import axios from "axios";
 
 export default function ModalDelete(props) {
   const [show, setShow] = useState(false);
@@ -11,7 +12,7 @@ export default function ModalDelete(props) {
   const handleDelete = (survid) => {
     if (props.titre == "enseignant") {
       axios
-        .delete(`users/users/${survid}`)
+        .delete(`api/user/${survid}`)
         .then(() => {
           toast.success("Enseignant supprimmé ");
           setTimeout(() => Router.reload(), 2000);
@@ -20,7 +21,7 @@ export default function ModalDelete(props) {
     }
     if (props.titre == "eleve") {
       axios
-        .delete(`surveillance/supervisor/${survid}`)
+        .delete(`api/user/${survid}`)
         .then(() => {
           toast.success("Elève supprimmé ");
           setTimeout(() => Router.reload(), 2000);

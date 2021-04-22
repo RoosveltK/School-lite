@@ -31,7 +31,7 @@
   background-color: #f4f4f4 !important;
 }
 
-#sidebar-wrapper .sidebar-heading {
+/* #sidebar-wrapper .sidebar-heading {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -41,7 +41,7 @@
   font-family: "proxima Regular";
   font-size: 14px;
   margin-bottom: 20px;
-}
+} */
 
 #sidebar-wrapper .list-group {
   width: 15rem;

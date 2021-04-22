@@ -5,10 +5,11 @@ import Link from "next/link";
 import ModalDelete from "../ModalDelete";
 import ModalEditTeacher from "./ModalEditTeacher";
 
-const InfoEnseignant = ({ dataEnseignant }) => {
+const InfoEnseignant = ({ dataEnseignant, specialite, classe }) => {
   const {
     id,
     first_name,
+    username,
     email,
     matricule,
     classes,
@@ -24,9 +25,7 @@ const InfoEnseignant = ({ dataEnseignant }) => {
         <td>{email}</td>
         <td>
           {classes.length !== 0
-            ? classes.map((clas) => {
-                clas.level + "/" + clas.speciality;
-              })
+            ? classes.map((clas) => clas.level + "/" + clas.speciality)
             : null}
         </td>
         <td className="contextual-menu survDropdown">
@@ -35,10 +34,14 @@ const InfoEnseignant = ({ dataEnseignant }) => {
           </Link>
           <Dropdown>
             <Dropdown.Toggle as={CustomToggle}>
-              <i className="bi bi-three-dots-vertical options-icon" />
+              <i className="bi bi-three-dots-vertical options-icon">loj </i>
             </Dropdown.Toggle>
             <Dropdown.Menu className="options">
-              <ModalEditTeacher enseignant={dataEnseignant} />
+              <ModalEditTeacher
+                enseignant={dataEnseignant}
+                specialite={specialite}
+                classe={classe}
+              />
               <Dropdown.Divider />
               <ModalDelete id={id} titre={"enseignant"} />
             </Dropdown.Menu>

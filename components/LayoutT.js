@@ -4,6 +4,10 @@ import Image from "next/image";
 import { responsbar, respons } from "../scripts/form";
 import { Dropdown } from "react-bootstrap";
 import { AiOutlineMenu } from "react-icons/ai";
+import { IoMailOutline } from "react-icons/io5";
+import { IoIosNotificationsOutline } from "react-icons/io";
+import { CgLogOut } from "react-icons/cg";
+import { MdSupervisorAccount } from "react-icons/md";
 import CustomToggle from "./customToggle";
 import Link from "next/link";
 import { Router } from "next/router";
@@ -30,30 +34,41 @@ class Layout extends React.Component {
           <div className="d-flex" id="wrapper">
             <div className="bg-light border-right" id="sidebar-wrapper">
               <div className="sidebar-heading ">
-                <Link href="enseignant">
-                  <a className="homeLink">SCHOOL ONLINE</a>
+                <Link href="/">
+                  <a className="homeLink">
+                    <Image
+                      className=""
+                      src="/static/school.png"
+                      alt="pic profile"
+                      width={30}
+                      height={30}
+                    />
+                  </a>
                 </Link>
+                <div className="bar"></div>
+                <span className="devise">Discipline - Travail - Succès</span>
               </div>
               <div className="list-group list-group-flush" id="menuLoading">
                 <Link href="enseignant">
                   <a
                     className={`list-group-item list-group-item-action bg-light top`}
                   >
-                    ENSEIGNANTS{" "}
+                    TEST{" "}
                   </a>
                 </Link>
                 <Link href="eleve">
                   <a
                     className={`list-group-item list-group-item-action bg-light `}
                   >
-                    ELEVES
+                    COURS
                   </a>
                 </Link>
                 <Link href="cours">
                   <a
-                    className={`list-group-item list-group-item-action bg-light `}
+                    className={`list-group-item list-group-item-action bg-light lastLink`}
+                    
                   >
-                    COURS
+                    EVALUATION
                   </a>
                 </Link>
               </div>
@@ -76,6 +91,12 @@ class Layout extends React.Component {
                   </form>
                 </div>
                 <div className="logo-textL">
+                  <a className="nav-link cercleNavbar">
+                    <IoMailOutline size="100px" />
+                  </a>
+                  <a className="nav-link cercleNavbar">
+                    <IoIosNotificationsOutline size="30px" />
+                  </a>
                   <Dropdown>
                     <Dropdown.Toggle as={CustomToggle}>
                       <Image
@@ -86,17 +107,24 @@ class Layout extends React.Component {
                         height={40}
                       />
                     </Dropdown.Toggle>
-
                     <Dropdown.Menu>
                       <Dropdown.Item>
                         <Link href="/compte">
-                          <a>Compte</a>
+                          <a>
+                            <MdSupervisorAccount size="20px" />
+                            Compte
+                          </a>
                         </Link>
                       </Dropdown.Item>
                       <Dropdown.Divider />
-                      <Dropdown.Item>Déconnexion</Dropdown.Item>
+                      <Dropdown.Item>
+                        {" "}
+                        <CgLogOut size="20px" />
+                        Déconnexion
+                      </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
+                  <span>Kenne</span>
                 </div>
               </nav>
               <div className="main" id="interface">

@@ -39,8 +39,8 @@ function analyticPersonnel({ post }) {
 }
 export async function getStaticProps({ params }) {
   try {
-    const res = await axios.get(`user/${params.id}`);
-    const post = res.data.data;
+    const res = await axios.get(`api/user/${params.id}`);
+    const post = res.data;
     return { props: { post } };
   } catch (err) {
     console.log(err);
@@ -49,8 +49,8 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const res = await axios.get(`user`);
-  const posts = res.data.data;
+  const res = await axios.get(`api/user`);
+  const posts = res.data;
 
   try {
     const paths = posts.map((post) => `/enseignant/${post.id}`);

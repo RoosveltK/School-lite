@@ -15,8 +15,8 @@ export default class ModalAddTeacher extends React.Component {
       // phone: "",
       matricule: "",
       born_at: null,
-      gender: "masculin",
-      specialite: "",
+      gender: "M",
+      specialite: 1,
       classe: [],
       matiereE: null,
       classeDispo: props.classes,
@@ -33,21 +33,22 @@ export default class ModalAddTeacher extends React.Component {
       first_name: this.state.first_name,
       username: this.state.username,
       email: this.state.email,
-      // phone: this.state.phone,
       matricule: this.state.matricule,
-      departement: this.state.specialite,
+      dep: parseInt(this.state.specialite),
       born_at: this.state.born_at,
       gender: this.state.gender,
       role: 2,
       classes: this.state.classe,
       password: this.state.password,
-      // image: this.state.imageProfil,
     };
     console.log(data);
     axios
-      .post("/user", data)
+      .post("api/user/", data)
       .then(() => toast.success("Enseignant crée avec succèss "))
-      .catch(() => toast.error("Erreur lors de la création"));
+      .catch((errr) => {
+        console.log(errr);
+        toast.error("Erreur lors de la création");
+      });
     this.setState({ show: false });
   };
 
@@ -70,7 +71,9 @@ export default class ModalAddTeacher extends React.Component {
           className="modalSuppression"
         >
           <Modal.Header className="color-titre-ajout" closeButton>
-            <Modal.Title className="colorTitre">{`Ajout d'un ${this.props.title}`}</Modal.Title>
+            <Modal.Title className="colorTitre">
+              Ajout d'un Enseignant
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="modal-form">
@@ -149,11 +152,10 @@ export default class ModalAddTeacher extends React.Component {
                   <select
                     className="form-control"
                     onChange={(e) => this.setState({ gender: e.target.value })}
-                    value={this.state.gender}
                     required
                   >
-                    <option value="masculin">masculin</option>
-                    <option value="feminin">féminin</option>
+                    <option value={`M`}>masculin</option>
+                    <option value={`F`}>féminin</option>
                   </select>
                 </div>
                 <div>
@@ -167,7 +169,6 @@ export default class ModalAddTeacher extends React.Component {
                         ),
                       })
                     }
-                    value={this.state.classe}
                     multiple
                   >
                     {this.state.classeDispo.map((salle) => (
@@ -184,7 +185,6 @@ export default class ModalAddTeacher extends React.Component {
                     onChange={(e) =>
                       this.setState({ specialite: e.target.value })
                     }
-                    value={this.state.specialite}
                     required
                   >
                     {this.state.departementDispo.map((depart) => (
@@ -192,17 +192,6 @@ export default class ModalAddTeacher extends React.Component {
                     ))}
                   </select>
                 </div>
-                {/* <div>
-                  <label>Photo de profile</label>
-                  <input
-                    type="file"
-                    className="form-control"
-                    placeholder=""
-                    onChange={(e) =>
-                      this.setState({ imageProfil: e.target.value })
-                    }
-                  />
-                </div> */}
                 <div className="btnModal">
                   <button
                     className="btn btn-secondary"

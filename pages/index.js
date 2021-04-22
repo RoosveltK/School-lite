@@ -4,8 +4,7 @@ import { Defile } from "../scripts/script";
 import { form } from "../scripts/form";
 import Router from "next/router";
 import { toast } from "react-toastify";
-// import axios from "../Axios/Login";
-import axios from "axios";
+import axiosInstance from "../api/Login";
 
 const Login = () => {
   const [email, setEmail] = useState(" ");
@@ -22,7 +21,7 @@ const Login = () => {
 
   useEffect(() => {
     if (password !== "" && email !== "") setBtn(true);
-    else if (btn === true) setBtn(false);
+    else if (btn) setBtn(false);
   }, [password, email, btn]);
 
   const handleSubmit = async (event) => {
@@ -36,10 +35,13 @@ const Login = () => {
     };
     console.log(user);
 
-    await axios
+    await axiosInstance
       .post(`auth/token/`, user)
       .then((res) => {
+        localStorage.setItem("access_token", res.data.access_token);
+        localStorage.setItem("refresh_token", res.data.refresh_token);
         console.log(res);
+        Router.push("enseignant");
       })
       .catch((err) => {
         console.log(err);
@@ -95,10 +97,7 @@ const Login = () => {
                 </div>
               </div>
               {btn ? (
-                <button
-                  className="btn btn-success col-10 fw-bold"
-                  type="submit"
-                >
+                <button className="btn btn-success col-10 fw-bold">
                   Sign In
                 </button>
               ) : (

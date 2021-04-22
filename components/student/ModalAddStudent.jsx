@@ -1,6 +1,8 @@
 import React from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
+import axios from "axios";
 import Router from "next/router";
+import { toast } from "react-toastify";
 
 export default class ModalAddStudent extends React.Component {
   constructor(props) {
@@ -8,22 +10,18 @@ export default class ModalAddStudent extends React.Component {
     this.state = {
       show: false,
       first_name: "",
-      last_name: "",
+      username: "",
       email: "",
-      phone: "",
-      password: "",
-      confirm_password: "",
+      // phone: "",
       matricule: "",
       born_at: null,
-      gender: "",
-      username: "",
-      role: "",
+      gender: "M",
+      specialite: 1,
       classe: [],
-      specialite: null,
+      matiereE: null,
+      classeDispo: props.classes,
+      departementDispo: props.specialite,
       password: "admin",
-      imageProfil: null,
-      classeDispo: [],
-      specialiteDispo: [],
     };
   }
   handleClose = () => this.setState({ show: false });
@@ -33,18 +31,29 @@ export default class ModalAddStudent extends React.Component {
     event.preventDefault();
     const data = {
       first_name: this.state.first_name,
-      last_name: this.state.last_name,
-      matricule: this.state.matricule,
+      username: this.state.username,
       email: this.state.email,
-      specialite: this.state.specialite,
-      classe: this.state.classe,
-      image: this.state.imageProfil,
+      matricule: this.state.matricule,
+      dep: parseInt(this.state.specialite),
       born_at: this.state.born_at,
+      gender: this.state.gender,
+      role: 2,
+      classes: Array.from(this.state.classe),
+      password: this.state.password,
     };
+    console.log(data);
+    axios
+      .post("api/user/", data)
+      .then(() => toast.success("Elève crée avec succèss "))
+      .catch((errr) => {
+        console.log(errr);
+        toast.error("Erreur lors de la création");
+      });
     this.setState({ show: false });
   };
 
   render() {
+    console.log(this.state.matiereE);
     return (
       <>
         <Button
@@ -61,12 +70,12 @@ export default class ModalAddStudent extends React.Component {
           keyboard={false}
           className="modalSuppression"
         >
-          <Modal.Header closeButton className="color-titre-ajout">
-            <Modal.Title className="colorTitre">{`Ajout d'un ${this.props.title}`}</Modal.Title>
+          <Modal.Header className="color-titre-ajout" closeButton>
+            <Modal.Title className="colorTitre">Ajout d'un Elève</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="modal-form">
-              <form>
+              <form onSubmit={this.handleCreate}>
                 <div>
                   <label>Nom</label>
                   <input
@@ -76,7 +85,6 @@ export default class ModalAddStudent extends React.Component {
                     onChange={(e) =>
                       this.setState({ first_name: e.target.value })
                     }
-                    required
                   />
                 </div>
                 <div>
@@ -86,30 +94,34 @@ export default class ModalAddStudent extends React.Component {
                     className="form-control"
                     placeholder=""
                     onChange={(e) =>
-                      this.setState({ last_name: e.target.value })
+                      this.setState({ username: e.target.value })
                     }
-                    required
-                  />
-                </div>
-                <div>
-                  <label>Date de naissance</label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    onChange={(e) => this.setState({ born_at: e.target.value })}
                     required
                   />
                 </div>
                 <div>
                   <label>Email</label>
                   <input
-                    type="text"
+                    type="email"
                     className="form-control"
                     placeholder=""
                     onChange={(e) => this.setState({ email: e.target.value })}
                     required
                   />
                 </div>
+                {/* <div>
+                  <label>Numéro de téléphone</label>
+                  <input
+                    type="tel"
+                    maxLength="9"
+                    minLength="9"
+                    pattern="[0-9]{9}"
+                    className="form-control"
+                    placeholder=""
+                    onChange={(e) => this.setState({ phone: e.target.value })}
+                    required
+                  />
+                </div> */}
                 <div>
                   <label>Matricule</label>
                   <input
@@ -121,17 +133,45 @@ export default class ModalAddStudent extends React.Component {
                     }
                     required
                   />
+                  <div>
+                    <label>Date de naissance</label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      onChange={(e) =>
+                        this.setState({ born_at: e.target.value })
+                      }
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label>Genre</label>
+                  <select
+                    className="form-control"
+                    onChange={(e) => this.setState({ gender: e.target.value })}
+                    required
+                  >
+                    <option value={`M`}>masculin</option>
+                    <option value={`F`}>féminin</option>
+                  </select>
                 </div>
                 <div>
                   <label>Classe</label>
                   <select
                     className="form-control"
-                    onChange={(e) => this.setState({ classe: e.target.value })}
-                    defaultValue={this.state.classe}
+                    onChange={(e) =>
+                      this.setState({
+                        classe: e.target.value,
+                      })
+                    }
+                    multiple
                   >
-                    {this.state.classeDispo.map((salle) => {
-                      <option value={salle.id}>{salle.name}</option>;
-                    })}
+                    {this.state.classeDispo.map((salle) => (
+                      <option value={salle.id}>
+                        {salle.level.describe}- {salle.speciality.describe}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div>
@@ -141,40 +181,27 @@ export default class ModalAddStudent extends React.Component {
                     onChange={(e) =>
                       this.setState({ specialite: e.target.value })
                     }
-                    defaultValue={this.state.specialite}
+                    required
                   >
-                    {this.state.specialiteDispo.map((salle) => {
-                      <option value={salle.id}>{salle.name}</option>;
-                    })}
+                    {this.state.departementDispo.map((depart) => (
+                      <option value={depart.id}>{depart.describe}</option>
+                    ))}
                   </select>
                 </div>
-                <div>
-                  <label>Photo de profile</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder=""
-                    onChange={(e) =>
-                      this.setState({ imageProfil: e.target.value })
-                    }
-                  />
+                <div className="btnModal">
+                  <button
+                    className="btn btn-secondary"
+                    onClick={this.handleClose}
+                  >
+                    Fermer
+                  </button>
+                  <button type="submit" className="btn color-titre-ajout">
+                    Valider
+                  </button>
                 </div>
               </form>
             </div>
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
-              Fermer
-            </Button>
-            <Button
-              variant="primary"
-              type="submit"
-              onClick={this.handleCreate}
-              className="color-titre-ajout"
-            >
-              Valider
-            </Button>
-          </Modal.Footer>
         </Modal>
       </>
     );
