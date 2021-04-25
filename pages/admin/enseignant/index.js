@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import InfoEnseignant from "../../components/teacher/infoEnseignant";
-import Layout from "../../components/Layout";
-import ModalAddTeacher from "../../components/teacher/ModalAddTeacher";
-import axiosInstance from "../axios";
+import React from "react";
+import InfoEnseignant from "../../../components/teacher/infoEnseignant";
+import Layout from "../../../components/Layout";
+import ModalAddTeacher from "../../../components/teacher/ModalAddTeacher";
+import axiosInstance from "../../axios";
 import Router from "next/router";
 import "jquery/dist/jquery.min.js";
 import "datatables.net-dt/js/dataTables.dataTables";
@@ -18,9 +18,9 @@ class Enseignant extends React.Component {
   }
 
   componentDidMount() {
-    if (localStorage.getItem("access_token") == null) {
-      Router.push("/");
-    }
+    // if (localStorage.getItem("access_token") == null) {
+    //   Router.push("/");
+    // }
     $(document).ready(function () {
       $("#datatable").DataTable({
         searching: true,

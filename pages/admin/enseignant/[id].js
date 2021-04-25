@@ -1,6 +1,6 @@
 import React from "react";
-import Layout from "../../components/Layout";
-import InfoPerso from "../../components/teacher/infoPerso";
+import Layout from "../../../components/Layout";
+import InfoPerso from "../../../components/teacher/infoPerso";
 import axios from "axios";
 
 function analyticPersonnel({ post }) {

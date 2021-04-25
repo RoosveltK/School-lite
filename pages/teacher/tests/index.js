@@ -1,17 +1,17 @@
 import React from "react";
-import LayoutT from "../../../../components/LayoutT";
+import LayoutT from "../../../components/LayoutT";
 import { SiGoogleclassroom } from "react-icons/si";
 
-class Cours extends React.Component {
+class Tests extends React.Component {
   render() {
     return (
-      <LayoutT title="Cours">
+      <LayoutT title="Tests">
         <div className="panneauStyle">
           <div className="panneauClasse">
             <SiGoogleclassroom size="20px" /> CLASSE 5
           </div>
           <div id="triangle"></div>
-          <span style={{ flex: "end;" }}>Matiere: </span>
+          {/* <span className="centrer">Matiere: </span> */}
         </div>
         <div className="container-fluid">
           <div className="mainCard">
@@ -26,4 +26,4 @@ class Cours extends React.Component {
     );
   }
 }
-export default Cours;
+export default Tests;

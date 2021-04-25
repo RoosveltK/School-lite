@@ -49,6 +49,13 @@ class Layout extends React.Component {
                     ELEVES
                   </a>
                 </Link>
+                <Link href="tests">
+                  <a
+                    className={`list-group-item list-group-item-action bg-light `}
+                  >
+                    TESTS
+                  </a>
+                </Link>
                 <Link href="cours">
                   <a
                     className={`list-group-item list-group-item-action bg-light `}
@@ -89,7 +96,7 @@ class Layout extends React.Component {
 
                     <Dropdown.Menu>
                       <Dropdown.Item>
-                        <Link href="/compte">
+                        <Link href="/admin/compte">
                           <a>Compte</a>
                         </Link>
                       </Dropdown.Item>

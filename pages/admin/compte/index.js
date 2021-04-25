@@ -1,8 +1,8 @@
-import Layout from "../../components/Layout";
+import Layout from "../../../components/Layout";
 import React from "react";
 import axios from "axios";
 import Router from "next/router";
-import Loader from "../loader";
+import Loader from "../../loader";
 
 export default class Account extends React.Component {
   constructor() {

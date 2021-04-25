@@ -49,24 +49,23 @@ class Layout extends React.Component {
                 <span className="devise">Discipline - Travail - Succès</span>
               </div>
               <div className="list-group list-group-flush" id="menuLoading">
-                <Link href="enseignant">
+                <Link href="tests">
                   <a
                     className={`list-group-item list-group-item-action bg-light top`}
                   >
-                    TEST{" "}
+                    TESTS{" "}
                   </a>
                 </Link>
-                <Link href="eleve">
+                <Link href="cours">
                   <a
                     className={`list-group-item list-group-item-action bg-light `}
                   >
                     COURS
                   </a>
                 </Link>
-                <Link href="cours">
+                <Link href="evaluation">
                   <a
                     className={`list-group-item list-group-item-action bg-light lastLink`}
-                    
                   >
                     EVALUATION
                   </a>
@@ -92,7 +91,7 @@ class Layout extends React.Component {
                 </div>
                 <div className="logo-textL">
                   <a className="nav-link cercleNavbar">
-                    <IoMailOutline size="100px" />
+                    <IoMailOutline size="30px" />
                   </a>
                   <a className="nav-link cercleNavbar">
                     <IoIosNotificationsOutline size="30px" />
@@ -124,7 +123,6 @@ class Layout extends React.Component {
                       </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
-                  <span>Kenne</span>
                 </div>
               </nav>
               <div className="main" id="interface">

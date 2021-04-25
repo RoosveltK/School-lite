@@ -162,11 +162,8 @@ body {
 .centrer {
   justify-content: center;
 }
-.lastLink{
-  
-}
-Link[href="cours"]{
-  border-bottom: 1px solid #cfcfcf;
+.list-group-flush > .list-group-item:last-child {
+  border-bottom-width: 1px;
 }
 /* Badge */
 .badge {

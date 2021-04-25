@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import InfoEnseignant from "../../components/student/infoEleve";
-import Layout from "../../components/Layout";
-import ModalAddStudent from "../../components/student/ModalAddStudent";
-import axiosInstance from "../axios";
+import InfoEnseignant from "../../../components/student/infoEleve";
+import Layout from "../../../components/Layout";
+import ModalAddStudent from "../../../components/student/ModalAddStudent";
+import axiosInstance from "../../axios";
 
 class Eleve extends React.Component {
   constructor(props) {
