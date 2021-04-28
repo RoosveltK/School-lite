@@ -71,7 +71,7 @@ class Layout extends React.Component {
                   <div id="icon-menu">
                     <AiOutlineMenu />
                   </div>
-                  <form role="search" class="menuSearch">
+                  <form role="search" className="menuSearch">
                     <input
                       type="text"
                       placeholder="Rechercher..."

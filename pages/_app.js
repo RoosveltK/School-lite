@@ -10,6 +10,7 @@ import axios from "axios";
 import Head from "next/head";
 import { IconContext } from "react-icons";
 
+
 axios.defaults.baseURL = "http://192.168.43.249:8000/";
 
 function MyApp({ Component, pageProps }) {
