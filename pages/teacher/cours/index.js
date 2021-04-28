@@ -26,7 +26,7 @@ class Cours extends React.Component {
       <LayoutT title="Cours">
         <div className="panneauStyle">
           <div className="panneauClasse">
-            <SiGoogleclassroom size="20px" /> Classe
+            <SiGoogleclassroom size="20px" /> <span>Classe</span>
           </div>
           <div id="triangle"></div>
           <h3>

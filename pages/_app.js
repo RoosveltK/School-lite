@@ -11,7 +11,7 @@ import Head from "next/head";
 import { IconContext } from "react-icons";
 
 
-axios.defaults.baseURL = "http://192.168.43.249:8000/";
+axios.defaults.baseURL = "http://192.168.1.101:8000/";
 
 function MyApp({ Component, pageProps }) {
   return (

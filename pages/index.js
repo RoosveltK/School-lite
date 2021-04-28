@@ -5,6 +5,7 @@ import { form } from "../scripts/form";
 import Router from "next/router";
 import { toast } from "react-toastify";
 import axiosInstance from "../api/Login";
+// import axios from "axios";
 
 const Login = () => {
   const [email, setEmail] = useState(" ");
@@ -34,19 +35,22 @@ const Login = () => {
       password: password,
     };
     console.log(user);
+    Router.push("admin/enseignant");
 
-    await axiosInstance
-      .post(`auth/token/`, user)
-      .then((res) => {
-        localStorage.setItem("access_token", res.data.access_token);
-        localStorage.setItem("refresh_token", res.data.refresh_token);
-        console.log(res);
-        Router.push("enseignant");
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Erreur lors de la connexion");
-      });
+    // await axiosInstance
+    //   .post(`auth/token/`, user)
+    //   .then((res) => {
+    //     console.log(user);
+    //     localStorage.setItem("access_token", res.data.access_token);
+    //     localStorage.setItem("refresh_token", res.data.refresh_token);
+    //     console.log(res);
+    //     Router.push("enseignant");
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     console.log(user);
+    //     toast.error("Erreur lors de la connexion");
+    //   });
   };
 
   return (

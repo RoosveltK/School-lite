@@ -132,7 +132,6 @@ body {
   color: white;
   text-align: center;
   font-weight: 500;
-  box-shadow: rgba(0 0 0 / 8%);
 }
 #triangle {
   margin-top: -20px;
@@ -190,4 +189,39 @@ body {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3) !important;
   font-size: 15px;
   padding: 5px;
+}
+
+.panneauClasse span {
+  margin: 0 0 0 20px;
+}
+/*Form test*/
+.questionTest {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.questionTest label {
+  margin-right: 10px;
+}
+.row form {
+  font-family: "proxima Regular";
+  font-size: 20px;
+}
+.questionTest input {
+  width: 70%;
+}
+.groupeReponse {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.groupeReponse input[type="text"] {
+  width: 35%;
+  margin: 0 5px;
+}
+.taille{
+  width: 8%;
+  margin: 5px;
 }
