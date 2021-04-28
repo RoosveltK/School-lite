@@ -50,8 +50,13 @@ class Tests extends React.Component {
             <SiGoogleclassroom size="20px" /> <span>Classe 5</span>
           </div>
           <div id="triangle"></div>
-          <h3>
-            Titre : <input type="text" required />
+          <h3 className="form-group">
+            Titre :{" "}
+            <select className="form-select">
+              <option>Equations</option>
+              <option>.</option>
+              <option>..</option>
+            </select>
           </h3>
         </div>
         <div className="container-fluid">
@@ -83,7 +88,7 @@ class Tests extends React.Component {
                   handleInputChange={this.handleInputChange}
                   handleSave={this.handleSave}
                 />
-                {/* <Form
+                <Form
                   numberQuestion={`2`}
                   handleInputChange={this.handleInputChange}
                   handleSave={this.handleSave}
@@ -97,8 +102,7 @@ class Tests extends React.Component {
                   numberQuestion={`4`}
                   handleInputChange={this.handleInputChange}
                   handleSave={this.handleSave}
-                /> */}
-
+                />{" "}
                 <div className="col-12 header-card">
                   <span></span>
                   <button type="submit" className="btn boutonT">

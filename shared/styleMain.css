@@ -189,7 +189,16 @@ body {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3) !important;
   font-size: 15px;
   padding: 5px;
+   color: white;
+   font-weight: 700;
 }
+
+.header-card button:hover{
+  background-color: #fff;
+  border : 1px solid #198754;
+  color: #198754;
+}
+
 
 .panneauClasse span {
   margin: 0 0 0 20px;
@@ -221,7 +230,38 @@ body {
   width: 35%;
   margin: 0 5px;
 }
-.taille{
+.taille {
   width: 8%;
   margin: 5px;
+}
+.content-cardAccount {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-family: "proxima Regular";
+  /* justify-content: space-between; */
+}
+.infoCompte {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 0 50px;
+}
+.infoCompte span:last-child {
+  width: 50%;
+}
+
+.boutonStat{
+    font-family: "proxima Regular";
+  border-radius:0;
+  width: 25%;
+  padding: 5px;
+   background-color: #198754;
+   margin: 10px;
+   color: white;
+   font-weight: 700;
+}
+.boutonStat:hover{
+  background-color: #fff;
+  border : 1px solid #198754;
+  color: #198754;
 }

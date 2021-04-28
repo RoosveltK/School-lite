@@ -29,14 +29,13 @@ class Cours extends React.Component {
             <SiGoogleclassroom size="20px" /> <span>Classe</span>
           </div>
           <div id="triangle"></div>
-          <h3>
+          <h3 className="form-group">
             Titre :{" "}
-            <input
-              type="text"
-              value={this.state.titre}
-              onChange={(e) => this.setState({ titre: e.target.value })}
-              required
-            />
+            <select className="form-select">
+              <option>Equations</option>
+              <option>.</option>
+              <option>..</option>
+            </select>
           </h3>
         </div>
         <div className="container-fluid">

@@ -3,38 +3,44 @@ import InputQuestion from "./inputQuestion";
 
 class Form extends React.Component {
   state = {
-    question: "",
-    reponseRecup: "",
-    valeurRecup: false,
-    block: null,
-  };
-  //   handleChange = (e) => {
-  //     this.props.handleInputChange(e.target.value);
-  //   };
-
-  handleRecupReponse = (quest) => {
-    this.setState({
-     reponseRecup: quest,
-    });
-  };
-  handleRecupStatut = (val) => {
-    this.setState({
-      valeurRecup: val,
-    });
+    reponseRecup1: "",
+    valeurRecup1: false,
+    block1: null,
+    reponseRecup2: "",
+    valeurRecup2: false,
+    block2: null,
+    reponseRecup3: "",
+    valeurRecup3: false,
+    block3: null,
+    reponseRecup4: "",
+    valeurRecup4: false,
+    block4: null,
   };
 
+  handleRecupReponse = (name, quest) => {
+    this.setState({
+      [name]: quest,
+    });
+  };
+  handleRecupStatut = (name, val) => {
+    this.setState({
+      [name]: val,
+    });
+  };
+  handleAddBlock = () => {
+    const datas = {
+      rep: this.state.reponseRecup,
+      val: this.state.valeurRecup,
+    };
+    this.setState({
+      block: datas,
+    });
+  };
   componentDidUpdate(prevProps, prevState) {
     if (
       (this.state.reponseRecup !== prevState.reponseRecup) |
       (this.state.valeurRecup !== prevState.valeurRecup)
     ) {
-      const datas = {
-        rep: this.state.reponseRecup,
-        val: this.state.valeurRecup,
-      };
-      this.setState({
-        block: datas,
-      });
     }
   }
 
@@ -44,19 +50,6 @@ class Form extends React.Component {
     return (
       <>
         <React.Fragment>
-          <div className="questionTest">
-            <label>Question {this.props.numberQuestion} : </label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder={`Veuillez saisir la question`}
-              onChange={(e) => {
-                this.setState({ question: e.target.value });
-              }}
-              name={`question`}
-            />
-          </div>
-
           <div className="form-group ">
             <label>Réponses</label>
             <div class="groupeReponse">
@@ -66,22 +59,36 @@ class Form extends React.Component {
                 handleRecupStatut={this.handleRecupStatut}
                 reponse={reponse}
                 valeur={valeur}
+                reponseRecup="reponseRecup1"
+                valeurRecup="valeurRecup1"
               />
-              {/* <InputQuestion
+              <InputQuestion
                 placeholder={`Réponse 2`}
                 handleRecupReponse={this.handleRecupReponse}
                 handleRecupStatut={this.handleRecupStatut}
+                reponse={reponse}
+                valeur={valeur}
+                reponseRecup="reponseRecup2"
+                valeurRecup="valeurRecup2"
               />
               <InputQuestion
                 placeholder={`Réponse 3`}
                 handleRecupReponse={this.handleRecupReponse}
                 handleRecupStatut={this.handleRecupStatut}
+                reponse={reponse}
+                valeur={valeur}
+                reponseRecup="reponseRecup3"
+                valeurRecup="valeurRecup3"
               />
               <InputQuestion
                 placeholder={`Réponse 4`}
                 handleRecupReponse={this.handleRecupReponse}
                 handleRecupStatut={this.handleRecupStatut}
-              /> */}
+                reponse={reponse}
+                valeur={valeur}
+                reponseRecup="reponseRecup4"
+                valeurRecup="valeurRecup4"
+              />
             </div>
           </div>
           <hr />

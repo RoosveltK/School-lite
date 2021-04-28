@@ -62,6 +62,13 @@ class Layout extends React.Component {
                   >
                     COURS
                   </a>
+                </Link>{" "}
+                <Link href="presence">
+                  <a
+                    className={`list-group-item list-group-item-action bg-light `}
+                  >
+                    PRESENCE
+                  </a>
                 </Link>
                 <Link href="evaluation">
                   <a
@@ -108,7 +115,7 @@ class Layout extends React.Component {
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       <Dropdown.Item>
-                        <Link href="/compte">
+                        <Link href="compte">
                           <a>
                             <MdSupervisorAccount size="20px" />
                             Compte
