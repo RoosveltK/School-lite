@@ -271,3 +271,9 @@ body {
   border: 1px solid #198754;
   color: #198754;
 }
+.activeLink{
+      background-color: #198754;
+      color: #fff;
+      font-weight:700;
+
+}

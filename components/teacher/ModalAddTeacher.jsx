@@ -150,7 +150,7 @@ export default class ModalAddTeacher extends React.Component {
                 <div>
                   <label>Genre</label>
                   <select
-                    className="form-control"
+                    className="form-select"
                     onChange={(e) => this.setState({ gender: e.target.value })}
                     required
                   >
@@ -161,7 +161,7 @@ export default class ModalAddTeacher extends React.Component {
                 <div>
                   <label>Classe</label>
                   <select
-                    className="form-control"
+                    className="form-select"
                     onChange={(e) =>
                       this.setState({
                         classe: Array.from(e.target.selectedOptions).map(
@@ -181,7 +181,7 @@ export default class ModalAddTeacher extends React.Component {
                 <div>
                   <label>Spécialité</label>
                   <select
-                    className="form-control"
+                    className="form-select"
                     onChange={(e) =>
                       this.setState({ specialite: e.target.value })
                     }

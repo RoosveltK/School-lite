@@ -11,16 +11,19 @@ import { MdSupervisorAccount } from "react-icons/md";
 import CustomToggle from "./customToggle";
 import Link from "next/link";
 import { Router } from "next/router";
-
+const menuItems = ["COURS", "EVALUATION", "PRESENCE", "TESTS"];
 class Layout extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { user: "" };
+    this.state = { user: "", active: "" };
   }
 
   componentDidMount() {
     responsbar();
     respons();
+  }
+  _handleClick(menuItem) {
+    this.setState({ active: menuItem });
   }
 
   render() {
@@ -49,9 +52,9 @@ class Layout extends React.Component {
                 <span className="devise">Discipline - Travail - Succès</span>
               </div>
               <div className="list-group list-group-flush" id="menuLoading">
-                <Link href="tests">
+                <Link href="tests" onClick={this._handleClick}>
                   <a
-                    className={`list-group-item list-group-item-action bg-light top`}
+                    className={`list-group-item list-group-item-action bg-light `}
                   >
                     TESTS{" "}
                   </a>

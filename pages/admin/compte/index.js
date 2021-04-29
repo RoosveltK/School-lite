@@ -1,6 +1,6 @@
 import Layout from "../../../components/Layout";
 import React from "react";
-import axios from "axios";
+import axiosInstance from "../../axios";
 import Router from "next/router";
 import Loader from "../../loader";
 
@@ -21,7 +21,7 @@ export default class Account extends React.Component {
 
   async componentDidMount() {
     try {
-      const res = await axios.get("users/currentuser");
+      const res = await axiosInstance.get("users/currentuser");
       const { username, first_name, email, phone, role } = res.data.data;
       const user = {
         username: username.toUpperCase(),

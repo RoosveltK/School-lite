@@ -150,7 +150,7 @@ export default class ModalCreateMatter extends React.Component {
                 <div>
                   <label>Genre</label>
                   <select
-                    className="form-control"
+                    className="form-select"
                     onChange={(e) => this.setState({ gender: e.target.value })}
                     required
                   >
@@ -161,7 +161,7 @@ export default class ModalCreateMatter extends React.Component {
                 <div>
                   <label>Classe</label>
                   <select
-                    className="form-control"
+                    className="form-select"
                     onChange={(e) =>
                       this.setState({
                         classe: Array.from(e.target.selectedOptions).map(

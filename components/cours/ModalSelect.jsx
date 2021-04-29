@@ -28,7 +28,7 @@ export default function ModalSelect({ recuperation }) {
             <div className="form-group">
               <label htmlFor="matiere">Matière</label>
               <select
-                className="form-control"
+                className="form-select"
                 onChange={(e) => setMatiere(e.target.value)}
                 id="matiere"
               >
@@ -42,7 +42,7 @@ export default function ModalSelect({ recuperation }) {
             <div className="form-group">
               <label htmlFor="niveau">Niveau</label>
               <select
-                className="form-control"
+                className="form-select"
                 onChange={(e) => setNiveau(e.target.value)}
                 id="niveau"
               >
@@ -56,7 +56,7 @@ export default function ModalSelect({ recuperation }) {
             <div className="form-group">
               <label htmlFor="specialite">Spécialité</label>
               <select
-                className="form-control"
+                className="form-select"
                 onChange={(e) => setSpecialite(e.target.value)}
                 id="specialite"
               >

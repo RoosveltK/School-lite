@@ -148,7 +148,7 @@ export default class ModalAddStudent extends React.Component {
                 <div>
                   <label>Genre</label>
                   <select
-                    className="form-control"
+                    className="form-select"
                     onChange={(e) => this.setState({ gender: e.target.value })}
                     required
                   >

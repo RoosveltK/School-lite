@@ -119,7 +119,7 @@ export default class ModalEditStudent extends React.Component {
                 <div>
                   <label>Genre</label>
                   <select
-                    className="form-control"
+                    className="form-select"
                     onChange={(e) => this.setState({ gender: e.target.value })}
                     value={this.state.gender}
                     required
@@ -141,7 +141,7 @@ export default class ModalEditStudent extends React.Component {
                 <div>
                   <label>Classe</label>
                   <select
-                    className="form-control"
+                    className="form-select"
                     value={this.state.classe}
                     onChange={(e) =>
                       this.setState({
@@ -160,7 +160,7 @@ export default class ModalEditStudent extends React.Component {
                 <div>
                   <label>Spécialité</label>
                   <select
-                    className="form-control"
+                    className="form-select"
                     onChange={(e) =>
                       this.setState({ specialite: e.target.value })
                     }

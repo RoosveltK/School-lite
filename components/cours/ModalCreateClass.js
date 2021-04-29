@@ -59,7 +59,7 @@ export default class ModalCreateSpeciality extends React.Component {
               <div className="form-group">
                 <label>Niveau</label>
                 <select
-                  className="form-control"
+                  className="form-select"
                   onChange={(e) => this.setState({ level: e.target.value })}
                   required
                 >
@@ -71,7 +71,7 @@ export default class ModalCreateSpeciality extends React.Component {
               <div className="form-group">
                 <label>Spécialité</label>
                 <select
-                  className="form-control"
+                  className="form-select"
                   onChange={(e) =>
                     this.setState({
                       speciality: Array.from(e.target.selectedOptions).map(
