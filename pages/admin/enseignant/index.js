@@ -21,9 +21,10 @@ class Enseignant extends React.Component {
     // if (localStorage.getItem("access_token") == null) {
     //   Router.push("/");
     // }
-    axiosInstance.get(`api/user/current_user`)
-    .then((res)=>console.log(res))
-    .catch((err)=>console.log(err));
+    axiosInstance
+      .get(`api/user/current_user`)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
     $(document).ready(function () {
       $("#datatable").DataTable({
         searching: true,

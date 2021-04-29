@@ -181,6 +181,13 @@ body {
 
 .panneauStyle h3 {
   margin-left: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.panneauStyle .form-select{
+  width: 400px;
+  margin: 0 0 0 5px;
 }
 
 .header-card button {
@@ -189,16 +196,15 @@ body {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3) !important;
   font-size: 15px;
   padding: 5px;
-   color: white;
-   font-weight: 700;
+  color: white;
+  font-weight: 700;
 }
 
-.header-card button:hover{
+.header-card button:hover {
   background-color: #fff;
-  border : 1px solid #198754;
+  border: 1px solid #198754;
   color: #198754;
 }
-
 
 .panneauClasse span {
   margin: 0 0 0 20px;
@@ -250,18 +256,18 @@ body {
   width: 50%;
 }
 
-.boutonStat{
-    font-family: "proxima Regular";
-  border-radius:0;
+.boutonStat {
+  font-family: "proxima Regular";
+  border-radius: 0;
   width: 25%;
   padding: 5px;
-   background-color: #198754;
-   margin: 10px;
-   color: white;
-   font-weight: 700;
+  background-color: #198754;
+  margin: 10px;
+  color: white;
+  font-weight: 700;
 }
-.boutonStat:hover{
+.boutonStat:hover {
   background-color: #fff;
-  border : 1px solid #198754;
+  border: 1px solid #198754;
   color: #198754;
 }

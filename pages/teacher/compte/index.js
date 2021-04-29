@@ -31,6 +31,7 @@ class Compte extends React.Component {
                     Roosvelt
                   </h3>
                   <span>Roosvelt.kenne@gmail.com</span>
+                  <span>29/04/2000</span>
                   <span>19K2782</span>
                   <span className="badge rounded-pill bg-success">
                     Informatique
