@@ -32,7 +32,7 @@ class Compte extends React.Component {
                   </h3>
                   <span>Roosvelt.kenne@gmail.com</span>
                   <span>19K2782</span>
-                  <span class="badge rounded-pill bg-success">
+                  <span className="badge rounded-pill bg-success">
                     Informatique
                   </span>
                 </div>

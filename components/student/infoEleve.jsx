@@ -31,9 +31,9 @@ const InfoEleve = ({ dataEleve }) => {
             : null}
         </td>
         <td className="contextual-menu survDropdown">
-          <Link href={`/eleve/${id}`} key={id}>
+          {/* <Link href={`/eleve/${id}`} key={id}>
             <a>Afficher</a>
-          </Link>
+          </Link> */}
           <Dropdown>
             <Dropdown.Toggle as={CustomToggle}>
               <i className="bi bi-three-dots-vertical options-icon" />

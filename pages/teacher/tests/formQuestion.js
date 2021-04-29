@@ -52,7 +52,7 @@ class Form extends React.Component {
         <React.Fragment>
           <div className="form-group ">
             <label>Réponses</label>
-            <div class="groupeReponse">
+            <div className="groupeReponse">
               <InputQuestion
                 placeholder={`Réponse 1`}
                 handleRecupReponse={this.handleRecupReponse}
