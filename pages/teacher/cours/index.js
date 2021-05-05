@@ -60,7 +60,7 @@ class Cours extends React.Component {
                   <br />
                   <div className="col-12 header-card">
                     <span></span>
-                    <button type="submit" className="btn boutonT">
+                    <button type="submit" className="btn boutonT bntTeacher">
                       Publier
                     </button>
                   </div>

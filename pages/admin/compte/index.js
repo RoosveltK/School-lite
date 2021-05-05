@@ -18,7 +18,13 @@ export default class Account extends React.Component {
       isloading: true,
     };
   }
-
+  user = {
+    username: "",
+    first_name: "",
+    email: "",
+    phone: 0,
+    role: 0,
+  };
   async componentDidMount() {
     try {
       const res = await axiosInstance.get("users/currentuser");

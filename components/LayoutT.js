@@ -22,9 +22,9 @@ class Layout extends React.Component {
     responsbar();
     respons();
   }
-  _handleClick(menuItem) {
-    this.setState({ active: menuItem });
-  }
+  // _handleClick(menuItem) {
+  //   this.setState({ active: menuItem });
+  // }
 
   render() {
     return (
@@ -52,9 +52,9 @@ class Layout extends React.Component {
                 <span className="devise">Discipline - Travail - Succès</span>
               </div>
               <div className="list-group list-group-flush" id="menuLoading">
-                <Link href="tests" onClick={this._handleClick}>
+                <Link href="tests">
                   <a
-                    className={`list-group-item list-group-item-action bg-light `}
+                    className={`list-group-item list-group-item-action bg-light top`}
                   >
                     TESTS{" "}
                   </a>

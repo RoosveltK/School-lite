@@ -1,7 +1,7 @@
 import axios from "axios";
 import Router from "next/router";
 
-const baseURL = "http://192.168.43.249:8000/api/";
+const baseURL = "http://192.168.8.100:8000/";
 
 const axiosInstance = axios.create({
   baseURL: baseURL,
@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
     accept: "application/json",
-    Bearer: localStorage.getItem("access_token"),
+    // Authorization: `Bearer ${localStorage.getItem("access_token")}`,
   },
 });
 

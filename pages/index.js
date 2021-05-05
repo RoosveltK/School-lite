@@ -4,8 +4,7 @@ import { Defile } from "../scripts/script";
 import { form } from "../scripts/form";
 import Router from "next/router";
 import { toast } from "react-toastify";
-import axiosInstance from "../api/Login";
-// import axios from "axios";
+import axios from "axios";
 
 const Login = () => {
   const [email, setEmail] = useState(" ");
@@ -34,23 +33,18 @@ const Login = () => {
       username: email,
       password: password,
     };
-    console.log(user);
-    Router.push("admin/enseignant");
 
-    // await axiosInstance
-    //   .post(`auth/token/`, user)
-    //   .then((res) => {
-    //     console.log(user);
-    //     localStorage.setItem("access_token", res.data.access_token);
-    //     localStorage.setItem("refresh_token", res.data.refresh_token);
-    //     console.log(res);
-    //     Router.push("enseignant");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     console.log(user);
-    //     toast.error("Erreur lors de la connexion");
-    //   });
+    axios
+      .post(`auth/token/`, user)
+      .then((res) => {
+        console.log(`Reussie`);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(`Erreur ===============================${err}`);
+        console.log(user);
+        toast.error("Erreur lors de la connexion");
+      });
   };
 
   return (
@@ -100,12 +94,19 @@ const Login = () => {
                   <label htmlFor="floatingPassword">Password</label>
                 </div>
               </div>
-              {btn ? (
-                <button className="btn btn-success col-10 fw-bold">
+              {btn === true ? (
+                <button
+                  type="submit"
+                  className="btn btn-success col-10 fw-bold"
+                >
                   Sign In
                 </button>
               ) : (
-                <button className="btn btn-success col-10 fw-bold" disabled>
+                <button
+                  type="submit"
+                  className="btn btn-success col-10 fw-bold"
+                  disabled
+                >
                   Sign In
                 </button>
               )}

@@ -3,28 +3,26 @@ import LayoutT from "../../../components/LayoutT";
 import ModalAddTest from "../../../components/user/teacher/ModalAddTest";
 import { SiGoogleclassroom } from "react-icons/si";
 
+const templateReponse = {
+  rep: "",
+  valeur: false,
+};
 const templateQuestion = {
-  num: "",
+  num: 0,
   reponses: [
-    {
-      rep: "",
-      value: false,
-    },
-    {
-      rep: "",
-      value: false,
-    },
-    {
-      rep: "",
-      value: false,
-    },
-    {
-      rep: "",
-      value: false,
-    },
+    templateReponse,
+    templateReponse,
+    templateReponse,
+    templateReponse,
   ],
 };
 
+var aideRecupValue = [
+  templateQuestion,
+  templateQuestion,
+  templateQuestion,
+  templateQuestion,
+];
 class Tests extends React.Component {
   state = {
     tabQuestion: [
@@ -35,66 +33,19 @@ class Tests extends React.Component {
     ],
     numQuestion: 4,
   };
-  reponses = {
-    rep: "",
-    value: false,
-  };
-
-  tabReponses = [
-    {
-      rep: "",
-      value: false,
-    },
-    {
-      rep: "",
-      value: false,
-    },
-    {
-      rep: "",
-      value: false,
-    },
-    {
-      rep: "",
-      value: false,
-    },
-  ];
-
-  question = {
-    numQuestion: 0,
-    reponses: [
-      {
-        rep: "",
-        value: false,
-      },
-      {
-        rep: "",
-        value: false,
-      },
-      {
-        rep: "",
-        value: false,
-      },
-      {
-        rep: "",
-        value: false,
-      },
-    ],
-  };
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.numQuestion !== prevState.numQuestion) {
       let tab = this.state.tabQuestion.slice();
+      let i = 0;
       if (this.state.numQuestion > prevState.numQuestion) {
-        tab = [];
-        this.setState({ tabQuestion: tab });
-        let i = 0;
-        while (i != this.state.numQuestion) {
+        i = 0;
+        while (i != this.state.numQuestion - prevState.numQuestion) {
           tab.push(templateQuestion);
           i += 1;
         }
       } else if (this.state.numQuestion < prevState.numQuestion) {
-        let i = 0;
-
+        i = 0;
         while (i != prevState.numQuestion - this.state.numQuestion) {
           tab.pop();
           i += 1;
@@ -104,24 +55,35 @@ class Tests extends React.Component {
         tabQuestion: tab,
       });
     }
+    if (this.state.tabQuestion !== prevState.tabQuestion) {
+      aideRecupValue = this.state.tabQuestion.slice();
+      console.log(aideRecupValue);
+    }
   }
   handleInputChange = (event) => {
     const target = event.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
+    const valeur = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
+    const num = this.state.tabQuestion[index].num;
+    const rep = this.state.tabQuestion[index].reponses[i].rep;
+    const val = this.state.tabQuestion[index].reponses[i].valeur;
 
     this.setState({
       [name]: value,
     });
   };
-  handleRelaod = () => {};
+  handleNumQuestion = (valeur, index) => {
+    let tabCpy = [...this.state.tabQuestion];
+    tabCpy[index].num = valeur;
+    this.setState({ tabQuestion: tabCpy });
+  };
+
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state.question);
-    const datas = {
-      question: "",
-      responses: [],
-    };
+    // console.log(this.state.question);
+    // const datas = this.state.tabQuestion.slice();
+    // console.log(datas);
+    console.log(aideRecupValue);
   };
 
   render() {
@@ -165,37 +127,55 @@ class Tests extends React.Component {
             </header>
             <section className="row">
               <form onSubmit={this.handleSubmit}>
-                {this.state.tabQuestion.map((question, index) => (
-                  <React.Fragment>
+                {this.state.tabQuestion.map((question, index) => {
+                  return (
                     <React.Fragment>
-                      <label>Question {index + 1}:</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder={`Veuillez saisir la question`}
-                        onChange={(e) => {
-                          this.setState({ question: e.target.value });
-                        }}
-                        name={`question`}
-                      />
-                    </React.Fragment>
-                    <div className="form-group ">
-                      <label>Réponses</label>
-                      <div className="groupeReponse">
-                        {question.reponses.map((valeur, index) => (
-                          <React.Fragment>
-                            <input
-                              type="text"
-                              className="form-control"
-                              placeholder={`Reponse  ${index + 1}`}
-                            />
-                            <input type="checkbox" />
-                          </React.Fragment>
-                        ))}
+                      <React.Fragment>
+                        <label>Question {index + 1}:</label>
+                        <input
+                          type="text"
+                          key={index}
+                          // value={this.state.tabQuestion[index].num}
+                          className="form-control"
+                          placeholder={`Veuillez saisir la question`}
+                          // onChange={(e) =>
+                          //   this.handleNumQuestion(e.target.value, index)
+                          // }
+                          onChange={(e) =>
+                            (aideRecupValue[index].num = e.target.value)
+                          }
+                        />
+                      </React.Fragment>
+                      <div className="form-group ">
+                        <label>Réponses</label>
+                        <div className="groupeReponse">
+                          {question.reponses.map((valeur, i) => (
+                            <React.Fragment>
+                              <input
+                                type="text"
+                                className="form-control"
+                                onChange={(e) => {
+                                  aideRecupValue[index].reponses[i].rep =
+                                    e.target.value;
+                                }}
+                                placeholder={`Reponse  ${i + 1}`}
+                                name="reponse"
+                              />
+                              <input
+                                name="reponseValue"
+                                type="checkbox"
+                                onChange={(e) => {
+                                  aideRecupValue[index].reponses[i].valeur =
+                                    e.target.checked;
+                                }}
+                              />
+                            </React.Fragment>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  </React.Fragment>
-                ))}
+                    </React.Fragment>
+                  );
+                })}
 
                 <div className="col-12 header-card">
                   <span></span>

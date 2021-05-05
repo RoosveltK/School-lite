@@ -29,24 +29,31 @@ class Layout extends React.Component {
           <div className="topbar"></div>
           <div className="d-flex" id="wrapper">
             <div className="bg-light border-right" id="sidebar-wrapper">
-              <div className="sidebar-heading ">
+              <div className="sidebar-heading">
                 <Link href="enseignant">
                   <a className="homeLink">SCHOOL ONLINE</a>
                 </Link>
               </div>
               <div className="list-group list-group-flush" id="menuLoading">
-                <Link href="enseignant">
+                <Link href="cours">
                   <a
                     className={`list-group-item list-group-item-action bg-light top`}
                   >
-                    ENSEIGNANTS{" "}
+                    COURS
                   </a>
-                </Link>
+                </Link>{" "}
                 <Link href="eleve">
                   <a
                     className={`list-group-item list-group-item-action bg-light `}
                   >
                     ELEVES
+                  </a>
+                </Link>
+                <Link href="enseignant">
+                  <a
+                    className={`list-group-item list-group-item-action bg-light `}
+                  >
+                    ENSEIGNANTS{" "}
                   </a>
                 </Link>
                 <Link href="tests">
@@ -56,11 +63,11 @@ class Layout extends React.Component {
                     TESTS
                   </a>
                 </Link>
-                <Link href="cours">
+                <Link href="programme">
                   <a
                     className={`list-group-item list-group-item-action bg-light `}
                   >
-                    COURS
+                    PROGRAMMES
                   </a>
                 </Link>
               </div>

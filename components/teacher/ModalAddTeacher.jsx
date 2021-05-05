@@ -58,7 +58,7 @@ export default class ModalAddTeacher extends React.Component {
       <>
         <Button
           variant="dark"
-          className="btn boutonE"
+          className="btn boutonE "
           onClick={this.handleShow}
         >
           NOUVEAU
@@ -111,19 +111,6 @@ export default class ModalAddTeacher extends React.Component {
                     required
                   />
                 </div>
-                {/* <div>
-                  <label>Numéro de téléphone</label>
-                  <input
-                    type="tel"
-                    maxLength="9"
-                    minLength="9"
-                    pattern="[0-9]{9}"
-                    className="form-control"
-                    placeholder=""
-                    onChange={(e) => this.setState({ phone: e.target.value })}
-                    required
-                  />
-                </div> */}
                 <div>
                   <label>Matricule</label>
                   <input

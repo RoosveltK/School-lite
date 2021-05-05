@@ -10,8 +10,8 @@ import axios from "axios";
 import Head from "next/head";
 import { IconContext } from "react-icons";
 
-
-axios.defaults.baseURL = "http://192.168.1.101:8000/";
+axios.defaults.baseURL = "http://192.168.8.100:8000/";
+axios.defaults.withCredentials = true;
 
 function MyApp({ Component, pageProps }) {
   return (

@@ -185,12 +185,12 @@ body {
   flex-direction: row;
   align-items: center;
 }
-.panneauStyle .form-select{
+.panneauStyle .form-select {
   width: 400px;
   margin: 0 0 0 5px;
 }
 
-.header-card button {
+.bntTeacher {
   width: 200px;
   background-color: #198754;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3) !important;
@@ -200,10 +200,22 @@ body {
   font-weight: 700;
 }
 
-.header-card button:hover {
+.bntTeacher:hover {
   background-color: #fff;
   border: 1px solid #198754;
   color: #198754;
+}
+
+.boutonE:hover{
+   background-color: #fff;
+  border: 1px solid #212529;
+  color: #212529;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.formPorgram div {
+  margin: 10px 0;
 }
 
 .panneauClasse span {
@@ -271,9 +283,8 @@ body {
   border: 1px solid #198754;
   color: #198754;
 }
-.activeLink{
-      background-color: #198754;
-      color: #fff;
-      font-weight:700;
-
+.activeLink {
+  background-color: #198754;
+  color: #fff;
+  font-weight: 700;
 }

@@ -8,7 +8,6 @@ import ModalSelect from "../../../components/cours/ModalSelect";
 import CustomToggle from "../../../components/customToggle";
 import axiosInstance from "../../axios";
 import InfoCours from "../../../components/cours/infoCours";
-import "jquery/dist/jquery.min.js";
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $ from "jquery";
@@ -23,16 +22,16 @@ class Tests extends React.Component {
     specialite: null,
   };
 
-  // componentDidMount() {
-  //   $(document).ready(function () {
-  //     $("#datatable").DataTable({
-  //       searching: true,
-  //       paging: false,
-  //       info: false,
-  //       columnDefs: [{ orderable: false, targets: [0, 3, 5] }],
-  //     });
-  //   });
-  // }
+  componentDidMount() {
+    $(document).ready(function () {
+      $("#datatable").DataTable({
+        searching: true,
+        paging: false,
+        info: false,
+        columnDefs: [{ orderable: false, targets: [0, 3, 5] }],
+      });
+    });
+  }
   getInfo = (matiere, niveau, specialite) => {
     this.setState({ matiere: matiere });
     this.setState({ niveau: niveau });

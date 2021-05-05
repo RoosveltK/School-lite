@@ -3,6 +3,9 @@ import InfoEnseignant from "../../../components/student/infoEleve";
 import Layout from "../../../components/Layout";
 import ModalAddStudent from "../../../components/student/ModalAddStudent";
 import axiosInstance from "../../axios";
+import "datatables.net-dt/js/dataTables.dataTables";
+import "datatables.net-dt/css/jquery.dataTables.min.css";
+import $ from "jquery";
 
 class Eleve extends React.Component {
   constructor(props) {
@@ -10,6 +13,16 @@ class Eleve extends React.Component {
     this.state = {
       eleve: this.props.students,
     };
+  }
+  componentDidMount() {
+    $(document).ready(function () {
+      $("#datatable").DataTable({
+        searching: true,
+        paging: false,
+        info: false,
+        columnDefs: [{ orderable: false, targets: [0, 3, 5] }],
+      });
+    });
   }
   render() {
     return (
@@ -48,14 +61,11 @@ class Eleve extends React.Component {
                       </tr>
                     </thead>
                     <tbody>
-                      {/* {this.state.eleve.map((student) => {
-                      return (
-                        <InfoEleve
-                          dataEleve={student}
-                          key={student.id}
-                        />
-                      );
-                    })} */}
+                      {this.state.eleve.map((student) => {
+                        return (
+                          <InfoEleve dataEleve={student} key={student.id} />
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>
@@ -70,9 +80,9 @@ class Eleve extends React.Component {
 
 export async function getServerSideProps() {
   try {
-    const student = await axiosInstance.get(`user`);
-    const classe = await axiosInstance.get(`school/classe`);
-    const special = await axiosInstance.get(`school/speciality`);
+    const student = await axiosInstance.get(`api/user`);
+    const classe = await axiosInstance.get(`api/school/classe`);
+    const special = await axiosInstance.get(`api/school/speciality`);
     // const users= await axiosInstance.get(`user:`)
     const specialite = special.data;
     const clas = classe.data;

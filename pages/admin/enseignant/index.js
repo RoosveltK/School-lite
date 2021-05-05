@@ -4,7 +4,6 @@ import Layout from "../../../components/Layout";
 import ModalAddTeacher from "../../../components/teacher/ModalAddTeacher";
 import axiosInstance from "../../axios";
 import Router from "next/router";
-import "jquery/dist/jquery.min.js";
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $ from "jquery";
@@ -18,13 +17,6 @@ class Enseignant extends React.Component {
   }
 
   componentDidMount() {
-    // if (localStorage.getItem("access_token") == null) {
-    //   Router.push("/");
-    // }
-    axiosInstance
-      .get(`api/user/current_user`)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
     $(document).ready(function () {
       $("#datatable").DataTable({
         searching: true,
@@ -34,11 +26,11 @@ class Enseignant extends React.Component {
       });
     });
   }
-  componentDidUpdate(prevState, prevProps) {
-    if (this.state.enseignant !== prevProps.teachers) {
-      $("#datatable").DataTable().ajax.reload();
-    }
-  }
+  // componentDidUpdate(prevState, prevProps) {
+  //   if (this.state.enseignant !== prevProps.teachers) {
+  //     $("#datatable").DataTable().ajax.reload();
+  //   }
+  // }
 
   render() {
     return (
@@ -101,10 +93,9 @@ class Enseignant extends React.Component {
 
 export async function getServerSideProps() {
   try {
-    const teacher = await axiosInstance.get(`user`);
-    const classe = await axiosInstance.get(`school/classe`);
-    const special = await axiosInstance.get(`school/speciality`);
-    // const users= await axiosInstance.get(`user:`)
+    const teacher = await axiosInstance.get(`api/user`);
+    const classe = await axiosInstance.get(`api/school/classe`);
+    const special = await axiosInstance.get(`api/school/speciality`);
     const specialite = special.data;
     const clas = classe.data;
     const teachers = teacher.data;
