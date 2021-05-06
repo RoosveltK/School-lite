@@ -4,6 +4,7 @@ import CustomToggle from "../customToggle";
 import Link from "next/link";
 import ModalDelete from "../ModalDelete";
 import ModalEditTeacher from "./ModalEditTeacher";
+import { BiDotsVertical } from "react-icons/bi";
 
 const InfoEnseignant = ({ dataEnseignant, specialite, classe }) => {
   const {
@@ -29,12 +30,12 @@ const InfoEnseignant = ({ dataEnseignant, specialite, classe }) => {
             : null}
         </td>
         <td className="contextual-menu survDropdown">
-          {/* <Link href={`/enseignant/${id}`} key={id}>
+          <Link href={`/enseignant/${id}`} key={id}>
             <a>Afficher</a>
-          </Link> */}
+          </Link>
           <Dropdown>
             <Dropdown.Toggle as={CustomToggle}>
-              <i className="bi bi-three-dots-vertical options-icon">loj </i>
+              <BiDotsVertical />
             </Dropdown.Toggle>
             <Dropdown.Menu className="options">
               <ModalEditTeacher

@@ -10,13 +10,14 @@ import axios from "axios";
 import Head from "next/head";
 import { IconContext } from "react-icons";
 
-axios.defaults.baseURL = "http://192.168.8.100:8000/";
+axios.defaults.baseURL = "http://192.168.8.101:8000/";
 axios.defaults.withCredentials = true;
 
 function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
+        {/* You can use the head tag, just not for setting <title> as it leads to unexpected behavior */}
         <link
           rel="shortcut icon"
           type="image/png"
@@ -28,6 +29,10 @@ function MyApp({ Component, pageProps }) {
           type="image/png"
           sizes="192x192"
           href="/icon/icon-192x192.png"
+        />
+        <meta
+          name="description"
+          content="A website to manage a school online"
         />
       </Head>
       <Component {...pageProps} />

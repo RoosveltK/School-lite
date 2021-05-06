@@ -16,6 +16,10 @@ import { Dropdown } from "react-bootstrap";
 
 class Tests extends React.Component {
   state = {
+    teachers:[],
+    classe:[],
+    special:[],
+    niv:[],
     tests: [],
     matiere: null,
     niveau: null,

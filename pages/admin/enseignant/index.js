@@ -2,7 +2,7 @@ import React from "react";
 import InfoEnseignant from "../../../components/teacher/infoEnseignant";
 import Layout from "../../../components/Layout";
 import ModalAddTeacher from "../../../components/teacher/ModalAddTeacher";
-import axiosInstance from "../../axios";
+import axios from "axios";
 import Router from "next/router";
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
@@ -15,7 +15,6 @@ class Enseignant extends React.Component {
       enseignant: this.props.teachers,
     };
   }
-
   componentDidMount() {
     $(document).ready(function () {
       $("#datatable").DataTable({
@@ -26,12 +25,6 @@ class Enseignant extends React.Component {
       });
     });
   }
-  // componentDidUpdate(prevState, prevProps) {
-  //   if (this.state.enseignant !== prevProps.teachers) {
-  //     $("#datatable").DataTable().ajax.reload();
-  //   }
-  // }
-
   render() {
     return (
       <>
@@ -93,9 +86,9 @@ class Enseignant extends React.Component {
 
 export async function getServerSideProps() {
   try {
-    const teacher = await axiosInstance.get(`api/user`);
-    const classe = await axiosInstance.get(`api/school/classe`);
-    const special = await axiosInstance.get(`api/school/speciality`);
+    const teacher = await axios.get(`api/user`);
+    const classe = await axios.get(`api/school/classe`);
+    const special = await axios.get(`api/school/speciality`);
     const specialite = special.data;
     const clas = classe.data;
     const teachers = teacher.data;
