@@ -56,13 +56,6 @@ class Layout extends React.Component {
                     ENSEIGNANTS{" "}
                   </a>
                 </Link>
-                <Link href="tests">
-                  <a
-                    className={`list-group-item list-group-item-action bg-light `}
-                  >
-                    TESTS
-                  </a>
-                </Link>
                 <Link href="programme">
                   <a
                     className={`list-group-item list-group-item-action bg-light `}

@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-const Loader = ({ loadingMsg, styling }) => {
+const Loaders = ({ loadingMsg, styling }) => {
   return (
     <Fragment>
       <div className="loader"></div>
@@ -9,4 +9,4 @@ const Loader = ({ loadingMsg, styling }) => {
   );
 };
 
-export default Loader;
+export default Loaders;

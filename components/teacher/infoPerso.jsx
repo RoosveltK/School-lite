@@ -1,16 +1,15 @@
 import React from "react";
-import Head from "next/head";
 import { Dropdown } from "react-bootstrap";
 
-const InfoPerso = ({ datas }) => {
+const InfoPerso = ({ datas, departements }) => {
   const {
     first_name,
     classes,
     email,
     matricule,
-    departement,
     username,
     born_at,
+    departement,
   } = datas;
 
   return (
@@ -33,14 +32,18 @@ const InfoPerso = ({ datas }) => {
       </tr>
       <tr>
         <th>Spécialité</th>
-        <td>{departement}</td>
+        <td>
+          {departements.map((depts) => {
+            if (depts.id == departement) return depts.name;
+          })}
+        </td>
       </tr>
       <tr>
         <th>Details</th>
         <td>
           <ul>
             {classes.map((clas) => (
-              <li>{clas.level + "/" + clas.speciality}</li>
+              <li>{clas.level + "" + clas.speciality}</li>
             ))}
           </ul>
         </td>
@@ -48,5 +51,13 @@ const InfoPerso = ({ datas }) => {
     </>
   );
 };
+export async function getServerSideProps() {
+  try {
+    const departs = axios.get(`api/user/departement`);
+    departement = derparts.data;
+  } catch {
+    return { props: {} };
+  }
+}
 
 export default InfoPerso;

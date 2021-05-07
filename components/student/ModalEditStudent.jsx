@@ -8,14 +8,14 @@ export default class ModalEditStudent extends React.Component {
     super(props);
     this.state = {
       show: false,
-      first_name: this.props.enseignant.first_name,
-      username: this.props.enseignant.username,
-      matricule: this.props.enseignant.matricule,
-      email: this.props.enseignant.email,
-      born_at: this.props.enseignant.born_at,
-      classe: this.props.enseignant.classes,
-      gender: this.props.enseignant.gender,
-      specialites: this.props.enseignant.departement,
+      first_name: this.props.eleve.first_name,
+      username: this.props.eleve.username,
+      matricule: this.props.eleve.matricule,
+      email: this.props.eleve.email,
+      born_at: this.props.eleve.born_at,
+      classe: this.props.eleve.classes,
+      gender: this.props.eleve.gender,
+      specialites: this.props.eleve.departement,
     };
   }
   handleClose = () => this.setState({ show: false });
@@ -33,7 +33,7 @@ export default class ModalEditStudent extends React.Component {
       born_at: this.state.born_at,
     };
     axios
-      .put(`api/user/${this.props.enseignant.id}`, data)
+      .put(`api/user/${this.props.eleve.id}`, data)
       .then(() => {
         toast.success(
           "Informations modifiés avec succès, veuillez recharchez la page"
@@ -150,7 +150,7 @@ export default class ModalEditStudent extends React.Component {
                     }
                     value={this.state.classe}
                   >
-                    {this.props.classe.map((salle) => (
+                    {this.props.eleve.classes.map((salle) => (
                       <option value={salle.id}>
                         {salle.level.describe}- {salle.speciality.describe}
                       </option>
@@ -167,7 +167,7 @@ export default class ModalEditStudent extends React.Component {
                     required
                     value={this.state.specialites}
                   >
-                    {this.props.specialite.map((depart) => (
+                    {this.props.eleve.departement.map((depart) => (
                       <option value={depart.id}>{depart.describe}</option>
                     ))}
                   </select>

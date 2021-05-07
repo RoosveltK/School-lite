@@ -33,7 +33,9 @@ export default class ModalEditTeacher extends React.Component {
       born_at: this.state.born_at,
     };
     axios
-      .put(`api/user/${this.props.enseignant.id}`, data)
+      .put(`api/user/${this.props.enseignant.id}`, data, {
+        headers: { "Access-Control-Allow-Origin": "*" },
+      })
       .then(() => {
         toast.success(
           "Informations modifiés avec succès, veuillez recharchez la page"
@@ -44,7 +46,6 @@ export default class ModalEditTeacher extends React.Component {
           "Erreur lors de la modification des informations de l'enseignant"
         );
       });
-    console.log(data);
     this.setState({ show: false });
   };
 

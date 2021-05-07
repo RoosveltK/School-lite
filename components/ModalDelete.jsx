@@ -14,7 +14,7 @@ export default function ModalDelete(props) {
       axios
         .delete(`api/user/${survid}`)
         .then(() => {
-          toast.success("Enseignant supprimmé ");
+          toast.success("Enseignant supprimmé");
           setTimeout(() => Router.reload(), 2000);
         })
         .catch(() => toast.error("Erreur lors de la suppression"));

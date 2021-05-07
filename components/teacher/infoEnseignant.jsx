@@ -6,15 +6,19 @@ import ModalDelete from "../ModalDelete";
 import ModalEditTeacher from "./ModalEditTeacher";
 import { BiDotsVertical } from "react-icons/bi";
 
-const InfoEnseignant = ({ dataEnseignant, specialite, classe }) => {
+const InfoEnseignant = ({
+  dataEnseignant,
+  specialite,
+  classe,
+  departementPerso,
+}) => {
   const {
     id,
     first_name,
-    username,
     email,
     matricule,
-    classes,
     departement,
+    classes,
   } = dataEnseignant;
 
   return (
@@ -22,7 +26,11 @@ const InfoEnseignant = ({ dataEnseignant, specialite, classe }) => {
       <tr>
         <td>{matricule}</td>
         <td>{`${first_name.toUpperCase()}`}</td>
-        <td>{departement}</td>
+        <td>
+          {departementPerso.map((dept) => {
+            if (dept.id == departement) return dept.name;
+          })}
+        </td>
         <td>{email}</td>
         <td>
           {classes.length !== 0
@@ -30,7 +38,7 @@ const InfoEnseignant = ({ dataEnseignant, specialite, classe }) => {
             : null}
         </td>
         <td className="contextual-menu survDropdown">
-          <Link href={`/enseignant/${id}`} key={id}>
+          <Link href={`/admin/enseignant/${id}`} key={id}>
             <a>Afficher</a>
           </Link>
           <Dropdown>

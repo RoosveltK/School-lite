@@ -1,0 +1,44 @@
+@font-face {
+  font-family: "proxima Bold";
+  src: url("/Proxima\ Nova\ Bold.otf");
+}
+
+.loader {
+  border: 10px solid #eae8e8;
+  border-radius: 50%;
+  border-top: 10px solid #198754;
+  width: 200px;
+  height: 200px;
+  -webkit-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
+  margin: 40px auto 20px;
+}
+
+.loaderText {
+  text-align: center;
+  color: var(--white-color);
+}
+.titreLoader {
+  font-family: "proxima Bold";
+  margin-top: 50px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

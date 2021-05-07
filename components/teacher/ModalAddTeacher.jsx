@@ -12,15 +12,14 @@ export default class ModalAddTeacher extends React.Component {
       first_name: "",
       username: "",
       email: "",
-      // phone: "",
       matricule: "",
       born_at: null,
       gender: "M",
       specialite: 1,
       classe: [],
       matiereE: null,
-      classeDispo: props.classes,
-      departementDispo: props.specialite,
+      classeDispo: this.props.classes,
+      departementDispo: this.props.specialite,
       password: "admin",
     };
   }
@@ -41,24 +40,22 @@ export default class ModalAddTeacher extends React.Component {
       classes: this.state.classe,
       password: this.state.password,
     };
-    console.log(data);
     axios
       .post("api/user/", data)
-      .then(() => toast.success("Enseignant crée avec succèss "))
-      .catch((errr) => {
-        console.log(errr);
-        toast.error("Erreur lors de la création");
-      });
+      .then(() => {
+        toast.success("Enseignant crée avec succèss ");
+        setTimeout(() => Router.reload(), 2000);
+      })
+      .catch((errr) => toast.error("Erreur lors de la création"));
     this.setState({ show: false });
   };
 
   render() {
-    console.log(this.state.matiereE);
     return (
       <>
         <Button
           variant="dark"
-          className="btn boutonE "
+          className="btn boutonE"
           onClick={this.handleShow}
         >
           NOUVEAU

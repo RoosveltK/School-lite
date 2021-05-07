@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Layout from "../../../components/Layout";
 import ModalCreateMatter from "../../../components/cours/ModalCreateMatter";
 import ModalCreateSpeciality from "../../../components/cours/ModalCreateSpeciality";
@@ -6,33 +6,41 @@ import ModalCreateLevel from "../../../components/cours/ModalCreationLevel";
 import ModalCreateClass from "../../../components/cours/ModalCreateClass";
 import ModalSelect from "../../../components/cours/ModalSelect";
 import CustomToggle from "../../../components/customToggle";
-import axiosInstance from "../../axios";
+import axios from "axios";
 import InfoCours from "../../../components/cours/infoCours";
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $ from "jquery";
 import { AiOutlineException } from "react-icons/ai";
 import { Dropdown } from "react-bootstrap";
+import Loader from "../../../components/Loader/LoaderWait";
+import Router from "next/router";
+import Head from "next/head";
 
-class Tests extends React.Component {
+class Cours extends React.Component {
   state = {
-    teachers:[],
-    classe:[],
-    special:[],
-    niv:[],
+    teachers: [],
+    classe: [],
+    special: [],
+    niv: [],
     tests: [],
     matiere: null,
     niveau: null,
     specialite: null,
+    user: null,
   };
 
   componentDidMount() {
+    axios
+      .get(`api/user/currentuser`)
+      .then((res) => this.setState({ user: res.data }))
+      .catch((err) => Router.push("/"));
     $(document).ready(function () {
       $("#datatable").DataTable({
         searching: true,
         paging: false,
         info: false,
-        columnDefs: [{ orderable: false, targets: [0, 3, 5] }],
+        columnDefs: [{ orderable: false, targets: [2, 3] }],
       });
     });
   }
@@ -44,78 +52,101 @@ class Tests extends React.Component {
   render() {
     return (
       <>
-        <Layout title="Tests">
-          <div className="container-fluid">
-            <div className="mainCard">
-              <header className="row">
-                <div className="col-12 header-card">
-                  <span></span>
-                  <Dropdown>
-                    <Dropdown.Toggle as={CustomToggle}>
-                      <button className="btn boutonT"> AJOUTER &#x25bc;</button>
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu className="options">
-                      <ModalCreateSpeciality />
-                      <Dropdown.Divider />
-                      <ModalCreateLevel />
-                      <Dropdown.Divider />
-                      <ModalCreateClass
-                        niveau={this.props.niveau}
-                        specialite={this.props.specialite}
-                      />
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </div>
-                <div className="col-12 titreCours">
-                  Matière :{this.state.matiere} <br />
-                </div>
-                <div className="col-4 titreCours">
-                  Spécialité :{this.state.specialite} <br />
-                </div>{" "}
-                <div className="col-4 titreCours">
-                  Niveau :{this.state.niveau} <br />
-                </div>
-              </header>
-              <ModalSelect recuperation={this.getInfo} />
-              <section className="row">
-                <div className="col-12 content-card">
-                  <table
-                    id="datatable"
-                    className="table-responsive-sm nowrap "
-                    style={{
-                      borderCollapse: "collapse",
-                      borderSpacing: 0,
-                      width: "100%",
-                    }}
-                  >
-                    <thead>
-                      <tr>
-                        <th>N°</th>
-                        <th>Leçon</th>
-                        <th>Action</th>
-                        <th>Activer</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <InfoCours />
-                    </tbody>
-                  </table>
-                </div>
-              </section>
+        {this.state.user === null ? (
+          <React.Fragment>
+            <Head>
+              <title>School online</title>
+            </Head>
+            <Loader />
+          </React.Fragment>
+        ) : (
+          <Layout title="Cours">
+            <div className="container-fluid">
+              <div className="mainCard">
+                <header className="row">
+                  <div className="col-12 header-card">
+                    <span></span>
+                    <Dropdown>
+                      <Dropdown.Toggle as={CustomToggle}>
+                        <button className="btn boutonT boutonE">
+                          {" "}
+                          AJOUTER &#x25bc;
+                        </button>
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu className="options">
+                        <ModalCreateSpeciality />
+                        <Dropdown.Divider />
+                        <ModalCreateLevel />
+                        <Dropdown.Divider />
+                        <ModalCreateClass
+                          niveau={this.props.niveau}
+                          specialite={this.props.specialite}
+                        />
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </div>
+                  <div className="col-12 titreCours">
+                    Matière :{this.state.matiere} <br />
+                  </div>
+                  <div className="col-4 titreCours">
+                    Spécialité :{this.state.specialite} <br />
+                  </div>{" "}
+                  <div className="col-4 titreCours">
+                    Niveau :{this.state.niveau} <br />
+                  </div>
+                </header>
+                <ModalSelect recuperation={this.getInfo} />
+                <section className="row">
+                  <div className="col-12 content-card">
+                    <table
+                      id="datatable"
+                      className="table table-responsive table-striped  "
+                      style={{
+                        borderCollapse: "collapse",
+                        borderSpacing: 0,
+                        width: "100%",
+                      }}
+                    >
+                      <thead>
+                        <tr>
+                          <th width="10%">N°</th>
+                          <th width="60%">Leçon</th>
+                          <th width="10%">Activer</th>
+                          <th width="20%">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <InfoCours />
+                        <InfoCours />
+                        <InfoCours />
+                        <InfoCours />
+                        <InfoCours />
+                        <InfoCours />
+                        <InfoCours />
+                        <InfoCours />
+                        <InfoCours />
+                        <InfoCours />
+                        <InfoCours />
+                        <InfoCours />
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
+              </div>
             </div>
-          </div>
-        </Layout>
+          </Layout>
+        )}
       </>
     );
   }
 }
 export async function getServerSideProps() {
   try {
-    const teacher = await axiosInstance.get(`user`);
-    const classe = await axiosInstance.get(`school/classe`);
-    const special = await axiosInstance.get(`school/speciality`);
-    const niv = await axiosInstance.get(`school/level`);
-    // const users= await axiosInstance.get(`user:`)
+    const teacher = await axios.get(`api/user`);
+    const classe = await axios.get(`api/school/classe`);
+    const special = await axios.get(`api/school/speciality`);
+    const niv = await axios.get(`api/school/level`);
+
     const specialite = special.data;
     const clas = classe.data;
     const teachers = teacher.data;
@@ -127,4 +158,4 @@ export async function getServerSideProps() {
   }
 }
 
-export default Tests;
+export default Cours;

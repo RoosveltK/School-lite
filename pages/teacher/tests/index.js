@@ -1,6 +1,6 @@
 import React from "react";
 import LayoutT from "../../../components/LayoutT";
-import ModalAddTest from "../../../components/user/teacher/ModalAddTest";
+import ModalSelectTest from "../../../components/tests/ModalSelectTest";
 import { SiGoogleclassroom } from "react-icons/si";
 
 const templateReponse = {
@@ -85,13 +85,17 @@ class Tests extends React.Component {
     // console.log(datas);
     console.log(aideRecupValue);
   };
-
+  getInfo = (matiere, niveau, specialite) => {
+    this.setState({ matiere: matiere });
+    this.setState({ niveau: niveau });
+    this.setState({ specialite: specialite });
+  };
   render() {
     return (
       <LayoutT title="Tests">
         <div className="panneauStyle">
           <div className="panneauClasse">
-            <SiGoogleclassroom size="20px" /> <span>Classe 5</span>
+            <SiGoogleclassroom size="20px" /> <span>{this.state.niveau}</span>
           </div>
           <div id="triangle"></div>
           <h3 className="form-group">
@@ -103,6 +107,7 @@ class Tests extends React.Component {
             </select>
           </h3>
         </div>
+        <ModalSelectTest recuperation={this.getInfo} />
         <div className="container-fluid">
           <div className="mainCard">
             <header className="row">

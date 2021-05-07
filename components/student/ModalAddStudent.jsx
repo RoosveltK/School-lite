@@ -12,16 +12,14 @@ export default class ModalAddStudent extends React.Component {
       first_name: "",
       username: "",
       email: "",
-      // phone: "",
       matricule: "",
       born_at: null,
       gender: "M",
-      specialite: 1,
-      classe: [],
+      classe: null,
       matiereE: null,
-      classeDispo: props.classes,
-      departementDispo: props.specialite,
-      password: "admin",
+      classeDispo: this.props.classes,
+      departementDispo: this.props.specialite,
+      password: "student",
     };
   }
   handleClose = () => this.setState({ show: false });
@@ -34,26 +32,25 @@ export default class ModalAddStudent extends React.Component {
       username: this.state.username,
       email: this.state.email,
       matricule: this.state.matricule,
-      dep: parseInt(this.state.specialite),
       born_at: this.state.born_at,
       gender: this.state.gender,
       role: 2,
-      classes: Array.from(this.state.classe),
+      classes: this.state.classe,
       password: this.state.password,
     };
-    console.log(data);
     axios
       .post("api/user/", data)
-      .then(() => toast.success("Elève crée avec succèss "))
+      .then(() => {
+        toast.success("Elève crée avec succèss ");
+        setTimeout(() => Router.reload(), 2000);
+      })
       .catch((errr) => {
-        console.log(errr);
         toast.error("Erreur lors de la création");
       });
     this.setState({ show: false });
   };
 
   render() {
-    console.log(this.state.matiereE);
     return (
       <>
         <Button
@@ -109,19 +106,6 @@ export default class ModalAddStudent extends React.Component {
                     required
                   />
                 </div>
-                {/* <div>
-                  <label>Numéro de téléphone</label>
-                  <input
-                    type="tel"
-                    maxLength="9"
-                    minLength="9"
-                    pattern="[0-9]{9}"
-                    className="form-control"
-                    placeholder=""
-                    onChange={(e) => this.setState({ phone: e.target.value })}
-                    required
-                  />
-                </div> */}
                 <div>
                   <label>Matricule</label>
                   <input
@@ -149,6 +133,7 @@ export default class ModalAddStudent extends React.Component {
                   <label>Genre</label>
                   <select
                     className="form-select"
+                    value={this.state.gender}
                     onChange={(e) => this.setState({ gender: e.target.value })}
                     required
                   >
@@ -160,6 +145,7 @@ export default class ModalAddStudent extends React.Component {
                   <label>Classe</label>
                   <select
                     className="form-select"
+                    value={this.state.classe}
                     onChange={(e) =>
                       this.setState({
                         classe: e.target.value,
@@ -174,9 +160,10 @@ export default class ModalAddStudent extends React.Component {
                   </select>
                 </div>
                 <div>
-                  <label>Spécialité</label>
+                  <label>Série</label>
                   <select
                     className="form-select"
+                    value={this.state.specialite}
                     onChange={(e) =>
                       this.setState({ specialite: e.target.value })
                     }

@@ -101,6 +101,16 @@ body {
   border-radius: 0;
   margin: 5px;
 }
+.badgeCours {
+  font-size: inherit;
+  text-decoration: none;
+}
+.badgeCours:hover {
+  background-color: white !important;
+  color: #198754;
+  border: 1px solid #198754;
+}
+
 .effetVoulu {
   border-radius: 0;
 }

@@ -4,7 +4,7 @@ import { Modal, Button, Dropdown } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Router from "next/router";
 
-export default function ModalSelect({ recuperation }) {
+export default function ModalSelectTest({ recuperation }) {
   const [show, setShow] = useState(true);
   const [matiere, setMatiere] = useState("");
   const [niveau, setNiveau] = useState("");

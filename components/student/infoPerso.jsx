@@ -35,16 +35,9 @@ const InfoPerso = ({ datas }) => {
       </tr>
       <tr>
         <th>Details</th>
-        <td>
-          <ul>
-            {classes.map((clas) => (
-              <li>{clas.level + "/" + clas.speciality}</li>
-            ))}
-          </ul>
-        </td>
+        <td>{classes}</td>
       </tr>
     </>
   );
 };
-
 export default InfoPerso;
