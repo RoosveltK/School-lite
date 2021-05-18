@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "../../../components/Layout";
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
-import ModalSelect from "../../../components/cours/ModalSelect";
+import ModalSelectP from "../../../components/cours/ModalSelectP";
 import $ from "jquery";
 import axios from "axios";
 import { Button } from "react-bootstrap";
@@ -14,23 +14,21 @@ import { toast } from "react-toastify";
 class Programme extends React.Component {
   state = {
     titre: "",
+    titre1: "",
     description: "",
     dateLimite: "",
     duree: 0,
     temps: 0,
-    matiere: "",
-    matiereDispo: [],
-    matiereP: null,
-    niveauP: null,
-    specialiteP: null,
-    user: null,
+    matiere: null,
+    user: 0,
   };
 
   componentDidMount() {
-    axios
-      .get(`api/user/currentuser`)
-      .then((res) => this.setState({ user: res.data }))
-      .catch((err) => Router.push("/"));
+    if (localStorage.getItem("access_token") != null) {
+      this.setState({ user: 1 });
+    } else {
+      Router.push("/");
+    }
   }
   handleSubmit = (e) => {
     e.preventDefault();
@@ -39,26 +37,24 @@ class Programme extends React.Component {
       describe: this.state.description,
       limit_day: this.state.dateLimite,
       begin_time: this.state.temps,
-      duration: this.state.duree,
-      matter: 1,
+      duration: parseInt(this.state.duree),
+      matter: parseInt(this.state.matiere),
     };
     console.log(dataProgram);
     axios
       .post(`api/school/program`, dataProgram)
-      .then((res) => toast.success("Programme mis à jour"))
-      .catch((err) =>
-        toast.error("Erreur lors de la mise à jour du programme")
-      );
+      .then(() => toast.success("Programme mis à jour"))
+      .catch(() => toast.error("Erreur lors de la mise à jour du programme"));
   };
-  getInfo = (matiere, niveau, specialite) => {
-    this.setState({ matiereP: matiere });
-    this.setState({ niveauP: niveau });
-    this.setState({ specialiteP: specialite });
+  getInfo = (matiere) => {
+    this.setState({
+      matiere: matiere,
+    });
   };
   render() {
     return (
       <>
-        {this.state.user === null ? (
+        {this.state.user === 0 ? (
           <React.Fragment>
             <Head>
               <title>School online</title>
@@ -72,11 +68,14 @@ class Programme extends React.Component {
                 <header className="row">
                   <div className="panneauStyle">
                     <h3 className="form-group">
-                      Matière : {this.state.matiereP}
+                      {/* Matière : {this.state.titre1} */}
                     </h3>
                   </div>
                 </header>
-                <ModalSelect recuperation={this.getInfo} />
+                <ModalSelectP
+                  recuperation={this.getInfo}
+                  matiereNiveau={this.props.matter}
+                />
                 <section className="row">
                   <div className="col-12 content-card">
                     <form onSubmit={this.handleSubmit} className="formPorgram">
@@ -105,7 +104,7 @@ class Programme extends React.Component {
                           <input
                             type="text"
                             className="form-control"
-                            placeholder="Durée"
+                            placeholder="Durée: 3"
                             onChange={(e) =>
                               this.setState({ duree: e.target.value })
                             }
@@ -113,7 +112,7 @@ class Programme extends React.Component {
                         </div>
                         <div className="col">
                           <input
-                            type="text"
+                            type="time"
                             className="form-control"
                             placeholder="Heure de début"
                             onChange={(e) =>
@@ -156,19 +155,12 @@ class Programme extends React.Component {
 
 export async function getServerSideProps() {
   try {
-    const teacher = await axios.get(`api/user`);
-    const classe = await axios.get(`api/school/classe`);
-    const special = await axios.get(`api/school/speciality`);
-    const niv = await axios.get(`api/school/level`);
-
-    const specialite = special.data;
-    const clas = classe.data;
-    const teachers = teacher.data;
-    const niveau = niv.data;
-    return { props: { teachers, clas, specialite, niveau } };
+    const mat = await axios.get(`api/school/matter`);
+    const matter = mat.data;
+    return { props: { matter } };
   } catch (err) {
     console.log(err);
-    return { props: { teachers: [], clas: [], specialite: [], niveau: [] } };
+    return { props: { matter: [] } };
   }
 }
 

@@ -3,119 +3,43 @@ import LayoutT from "../../../components/LayoutT";
 import ModalSelectTest from "../../../components/tests/ModalSelectTest";
 import { SiGoogleclassroom } from "react-icons/si";
 
+var nombreIdQuestion = 0;
+const templateReponse = {
+  rep: "",
+  valeur: false,
+};
+
+const templateQuestion = {
+  question: "",
+  reponses: [
+    templateReponse,
+    templateReponse,
+    templateReponse,
+    templateReponse,
+  ],
+};
+
+var aideRecupValue = [
+  templateQuestion,
+  templateQuestion,
+  templateQuestion,
+  templateQuestion,
+];
 class Tests extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      testQuestion: [],
-      tabQuestion: [
-        {
-          id: 1,
-          question: "",
-          reponses: [
-            {
-              id: 1,
-              rep: "",
-              valeur: false,
-            },
-            {
-              id: 2,
-              rep: "",
-              valeur: false,
-            },
-            {
-              id: 3,
-              rep: "",
-              valeur: false,
-            },
-            {
-              id: 4,
-              rep: "",
-              valeur: false,
-            },
-          ],
-        },
-        {
-          id: 2,
-          question: "",
-          reponses: [
-            {
-              id: 5,
-              rep: "",
-              valeur: false,
-            },
-            {
-              id: 6,
-              rep: "",
-              valeur: false,
-            },
-            {
-              id: 7,
-              rep: "",
-              valeur: false,
-            },
-            {
-              id: 8,
-              rep: "",
-              valeur: false,
-            },
-          ],
-        },
-        {
-          id: 3,
-          question: "",
-          reponses: [
-            {
-              id: 9,
-              rep: "",
-              valeur: false,
-            },
-            {
-              id: 10,
-              rep: "",
-              valeur: false,
-            },
-            {
-              id: 11,
-              rep: "",
-              valeur: false,
-            },
-            {
-              id: 12,
-              rep: "",
-              valeur: false,
-            },
-          ],
-        },
-        {
-          id: 4,
-          question: "",
-          reponses: [
-            {
-              id: 13,
-              rep: "",
-              valeur: false,
-            },
-            {
-              id: 14,
-              rep: "",
-              valeur: false,
-            },
-            {
-              id: 15,
-              rep: "",
-              valeur: false,
-            },
-            {
-              id: 16,
-              rep: "",
-              valeur: false,
-            },
-          ],
-        },
-      ],
-      numQuestion: 4,
-    };
+  state = {
+    testQuestion: [],
+
+    tabQuestion: [
+      templateQuestion,
+      templateQuestion,
+      templateQuestion,
+      templateQuestion,
+    ],
+    numQuestion: 4,
+  };
+
+  componentDidMount() {
+    this.state.tabQuestion.forEach((element, index) => console.log("element"));
   }
   componentDidUpdate(prevProps, prevState) {
     if (this.state.numQuestion !== prevState.numQuestion) {
@@ -123,38 +47,9 @@ class Tests extends React.Component {
       let i = 0;
       if (this.state.numQuestion > prevState.numQuestion) {
         i = 0;
-        let id = prevState.numQuestion + 1;
-        let idRep = this.state.tabQuestion.length * 4;
         while (i != this.state.numQuestion - prevState.numQuestion) {
-          let template = {
-            id: id,
-            question: "",
-            reponses: [
-              {
-                id: (idRep += 1),
-                rep: "",
-                valeur: false,
-              },
-              {
-                id: (idRep += 1),
-                rep: "",
-                valeur: false,
-              },
-              {
-                id: (idRep += 1),
-                rep: "",
-                valeur: false,
-              },
-              {
-                id: (idRep += 1),
-                rep: "",
-                valeur: false,
-              },
-            ],
-          };
-          tab.push(template);
+          tab.push(templateQuestion);
           i += 1;
-          id += 1;
         }
       } else if (this.state.numQuestion < prevState.numQuestion) {
         i = 0;
@@ -167,29 +62,42 @@ class Tests extends React.Component {
         tabQuestion: tab,
       });
     }
+    if (this.state.tabQuestion !== prevState.tabQuestion) {
+      aideRecupValue = this.state.tabQuestion.slice();
+      console.log(aideRecupValue);
+    }
   }
-
-  handleQuestion = (event, index) => {
-    let tabCpy = [...this.state.tabQuestion];
-    tabCpy[index].question = event.target.value;
-    this.setState({ tabQuestion: tabCpy });
+  handleInputChange1 = (event, index) => {
+    const valeur = event.target.value;
+    let tabQuestion = [...this.state.testQuestion];
+    tabQuestion.push(valeur);
+    this.setState({
+      testQuestion: tabQuestion,
+    });
   };
-
-  handleReponse = (event, index, i) => {
-    let tabCpy = [...this.state.tabQuestion];
+  handleInputChange2 = (event, index, i) => {
     const target = event.target;
     const valeur = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
     if (valeur === target.checked) {
-      tabCpy[index].reponses[i].valeur = valeur;
+      const val = this.state.tabQuestion[index].reponses[i].valeur;
     } else {
-      tabCpy[index].reponses[i].rep = valeur;
+      const val = this.state.tabQuestion[index].reponses[i].rep;
     }
+
+    this.setState({
+      [val]: valeur,
+    });
+  };
+  handleNumQuestion = (valeur, index) => {
+    let tabCpy = [...this.state.tabQuestion];
+    tabCpy[index].num = valeur;
     this.setState({ tabQuestion: tabCpy });
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state.tabQuestion);
+    console.log(this.state.testQuestion);
   };
   getInfo = (matiere, niveau, specialite) => {
     this.setState({ matiere: matiere });
@@ -245,10 +153,11 @@ class Tests extends React.Component {
                         <label>Question {index + 1}:</label>
                         <input
                           type="text"
-                          key={this.state.tabQuestion[index].id}
+                          key={index}
+                          // value={this.state.tabQuestion[index].num}
                           className="form-control"
                           placeholder={`Veuillez saisir la question`}
-                          onChange={(e) => this.handleQuestion(e, index)}
+                          onChange={(e) => this.handleInputChange1(e, index)}
                         />
                       </React.Fragment>
                       <div className="form-group ">
@@ -257,25 +166,27 @@ class Tests extends React.Component {
                           {question.reponses.map((valeur, i) => (
                             <React.Fragment>
                               <input
-                                key={
-                                  this.state.tabQuestion[index].reponses[i].id
-                                }
                                 type="text"
                                 className="form-control"
+                                // onChange={(e) => {
+                                //   aideRecupValue[index].reponses[i].rep =
+                                //     e.target.value;
+                                // }}
                                 onChange={(e) =>
-                                  this.handleReponse(e, index, i)
+                                  this.handleInputChange2(e, index, i)
                                 }
                                 placeholder={`Reponse  ${i + 1}`}
                                 name="reponse"
                               />
                               <input
-                                key={
-                                  this.state.tabQuestion[index].reponses[i].id
-                                }
                                 name="reponseValue"
                                 type="checkbox"
+                                // onChange={(e) => {
+                                //   aideRecupValue[index].reponses[i].valeur =
+                                //     e.target.checked;
+                                // }}
                                 onChange={(e) =>
-                                  this.handleReponse(e, index, i)
+                                  this.handleInputChange2(e, index, i)
                                 }
                               />
                             </React.Fragment>

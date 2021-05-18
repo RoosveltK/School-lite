@@ -15,15 +15,15 @@ class Enseignant extends React.Component {
     super(props);
     this.state = {
       enseignant: this.props.teachers,
-      user: null,
+      user: 0,
     };
   }
   componentDidMount() {
-    axios
-      .get(`api/user/currentuser`)
-      .then((res) => this.setState({ user: res.data }))
-      .catch((err) => Router.push("/"));
-
+    if (localStorage.getItem("access_token") != null) {
+      this.setState({ user: 1 });
+    } else {
+      Router.push("/");
+    }
     $(document).ready(function () {
       $("#datatable").DataTable({
         searching: true,
@@ -36,7 +36,7 @@ class Enseignant extends React.Component {
   render() {
     return (
       <>
-        {this.state.user === null ? (
+        {this.state.user === 0 ? (
           <React.Fragment>
             <Head>
               <title>School online</title>

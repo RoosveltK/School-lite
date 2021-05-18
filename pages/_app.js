@@ -10,15 +10,15 @@ import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import Head from "next/head";
 import { IconContext } from "react-icons";
+import "react-toastify/dist/ReactToastify.css";
+import NextNprogress from "nextjs-progressbar";
 
-axios.defaults.baseURL = "http://192.168.8.100:8000/";
-axios.defaults.withCredentials = true;
+axios.defaults.baseURL = "http://192.168.1.100:8000/";
 
 function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        {/* You can use the head tag, just not for setting <title> as it leads to unexpected behavior */}
         <link
           rel="shortcut icon"
           type="image/png"
@@ -38,6 +38,12 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <Component {...pageProps} />
       <ToastContainer />
+      <NextNprogress
+        color="#333"
+        startPosition={0.3}
+        stopDelayMs={200}
+        height="5"
+      />
     </>
   );
 }

@@ -18,7 +18,6 @@ export default class ModalAddStudent extends React.Component {
       classe: null,
       matiereE: null,
       classeDispo: this.props.classes,
-      departementDispo: this.props.specialite,
       password: "student",
     };
   }
@@ -156,21 +155,6 @@ export default class ModalAddStudent extends React.Component {
                       <option value={salle.id}>
                         {salle.level.describe}- {salle.speciality.describe}
                       </option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label>Série</label>
-                  <select
-                    className="form-select"
-                    value={this.state.specialite}
-                    onChange={(e) =>
-                      this.setState({ specialite: e.target.value })
-                    }
-                    required
-                  >
-                    {this.state.departementDispo.map((depart) => (
-                      <option value={depart.id}>{depart.describe}</option>
                     ))}
                   </select>
                 </div>

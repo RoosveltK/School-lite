@@ -30,7 +30,11 @@ export default class Account extends React.Component {
   };
   async componentDidMount() {
     axios
-      .get(`api/user/currentuser`)
+      .get(`api/user/current_user`, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("access_token"),
+        },
+      })
       .then((res) => this.setState({ allUser: res.data }))
       .catch((err) => Router.push("/"));
     try {

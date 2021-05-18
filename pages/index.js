@@ -36,13 +36,26 @@ const Login = () => {
 
     axios
       .post(`auth/token/`, user)
-      .then((res) => {
+      .then(async (res) => {
+        localStorage.setItem("access_token", res.data.access_token);
+        localStorage.setItem("refresh_token", res.data.refresh_token);
+        await axios
+          .get(`api/user/current_user`, {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("access_token"),
+            },
+          })
+          .then((res) => {
+            console.log(res.data);
+            if (res.data.role === 1) Router.push(`teacher/cours`);
+            if (res.data.role === 2) Router.push(`admin/cours`);
+            if (res.data.role === 3) Router.push(`student/cours`);
+          })
+          .catch((err) => console.log(err));
         console.log(`Reussie`);
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(`Erreur ===============================${err}`);
-        console.log(user);
         toast.error("Erreur lors de la connexion");
       });
   };

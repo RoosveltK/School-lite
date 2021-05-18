@@ -1,8 +1,8 @@
 import React from "react";
 import LayoutT from "../../../components/LayoutT";
 import { SiGoogleclassroom } from "react-icons/si";
-import InfoPresence from "../../../components/teacher/infoPresence";
-import "jquery/dist/jquery.min.js";
+import InfoPresence from "../../../components/user/teacher/infoPresence";
+import axios from "axios";
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $ from "jquery";
@@ -11,13 +11,18 @@ class Presence extends React.Component {
   state = {
     studentPresent: [],
   };
+
   componentDidMount() {
+    axios
+      .get(`api/user/current_user`)
+      .then((res) => this.setState({ user: res.data, isLoading: false }))
+      .catch((err) => console.log(err));
     $(document).ready(function () {
       $("#datatable").DataTable({
         searching: true,
         paging: false,
         info: false,
-        columnDefs: [{ orderable: false, targets: [4, 5] }],
+        columnDefs: [{ orderable: false, targets: [3, 4] }],
       });
     });
   }
@@ -60,7 +65,6 @@ class Presence extends React.Component {
                 >
                   <thead>
                     <tr>
-                      <th>N°</th>
                       <th>Matricule</th>
                       <th>Nom</th>
                       <th>Prénom</th>
@@ -70,31 +74,14 @@ class Presence extends React.Component {
                   </thead>
                   <tbody>
                     {/* {this.state.studentPresent.map((student) => {
-                      return <INfo dataEnseignant={student} key={student.id} />;
+                      return <InfoPresence dataStudent={student} key={student.id} />;
                     })} */}
-                    <InfoPresence />
-                    <InfoPresence />
-                    <InfoPresence />
-                    <InfoPresence />
-                    <InfoPresence />
-                    <InfoPresence />
-                    <InfoPresence />
-                    <InfoPresence />
-                    <InfoPresence />
-                    <InfoPresence />
-                    <InfoPresence />
                     <InfoPresence />
                     <InfoPresence />
                   </tbody>
                 </table>
               </div>
             </section>
-            <div className="col-12 header-card">
-              <span></span>
-              <button type="submit" className="btn boutonT">
-                Sauvegarder
-              </button>
-            </div>
           </div>
         </div>
       </LayoutT>

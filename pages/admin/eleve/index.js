@@ -15,14 +15,15 @@ class Eleve extends React.Component {
     super(props);
     this.state = {
       eleve: this.props.students,
-      user: null,
+      user: 0,
     };
   }
   componentDidMount() {
-    axios
-      .get(`api/user/currentuser`)
-      .then((res) => this.setState({ user: res.data }))
-      .catch((err) => Router.push("/"));
+    if (localStorage.getItem("access_token") != null) {
+      this.setState({ user: 1 });
+    } else {
+      Router.push("/");
+    }
     $(document).ready(function () {
       $("#datatable").DataTable({
         searching: true,
@@ -35,7 +36,7 @@ class Eleve extends React.Component {
   render() {
     return (
       <>
-        {this.state.user === null ? (
+        {this.state.user === 0 ? (
           <React.Fragment>
             <Head>
               <title>School online</title>
@@ -101,12 +102,11 @@ export async function getServerSideProps() {
   try {
     const student = await axios.get(`api/user`);
     const classe = await axios.get(`api/school/classe`);
-    const special = await axios.get(`api/school/speciality`);
 
-    const specialite = special.data;
     const clas = classe.data;
     const students = student.data;
-    return { props: { students, clas, specialite } };
+
+    return { props: { students, clas } };
   } catch (err) {
     return { props: { students: [], clas: [], specialite: [] } };
   }

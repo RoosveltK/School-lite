@@ -27,11 +27,6 @@ const InfoEleve = ({ dataEleve, specialite }) => {
             <td>{`${username.toUpperCase()} ${first_name.toUpperCase()}`}</td>
             <td>{email}</td>
             <td>{classes}</td>
-            <td>
-              {specialite.map((special) => {
-                if (special.id == department.id) return special.name;
-              })}
-            </td>
             <td className="contextual-menu survDropdown">
               <Link href={`/admin/eleve/${id}`} key={id}>
                 <a>Afficher</a>
