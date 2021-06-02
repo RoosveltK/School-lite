@@ -15,7 +15,7 @@ export default class ModalEditStudent extends React.Component {
       born_at: this.props.eleve.born_at,
       classe: this.props.eleve.classes,
       gender: this.props.eleve.gender,
-      specialites: this.props.eleve.departement,
+      classeDispo: this.props.classeDispo,
     };
   }
   handleClose = () => this.setState({ show: false });
@@ -28,9 +28,9 @@ export default class ModalEditStudent extends React.Component {
       username: this.state.username,
       matricule: this.state.matricule,
       email: this.state.email,
-      classes: Array.from(this.state.classe),
-      departement: this.state.specialites,
+      classes: [this.state.classe],
       born_at: this.state.born_at,
+      gender: this.state.gender,
     };
     axios
       .put(`api/user/${this.props.eleve.id}`, data)
@@ -79,7 +79,6 @@ export default class ModalEditStudent extends React.Component {
                     }
                   />
                 </div>
-
                 <div>
                   <label>Prénom</label>
                   <input
@@ -92,7 +91,15 @@ export default class ModalEditStudent extends React.Component {
                     }
                   />
                 </div>
-
+                <div>
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    value={this.state.email}
+                    className="form-control"
+                    onChange={(e) => this.setState({ email: e.target.value })}
+                  />
+                </div>
                 <div>
                   <label>Matricule</label>
                   <input
@@ -105,7 +112,6 @@ export default class ModalEditStudent extends React.Component {
                     }
                   />
                 </div>
-
                 <div>
                   <label>Date de naissance</label>
                   <input
@@ -128,15 +134,6 @@ export default class ModalEditStudent extends React.Component {
                     <option value="F">féminin</option>
                   </select>
                 </div>
-                <div>
-                  <label>Email</label>
-                  <input
-                    type="email"
-                    value={this.state.email}
-                    className="form-control"
-                    onChange={(e) => this.setState({ email: e.target.value })}
-                  />
-                </div>
 
                 <div>
                   <label>Classe</label>
@@ -148,27 +145,11 @@ export default class ModalEditStudent extends React.Component {
                         classe: e.target.value,
                       })
                     }
-                    value={this.state.classe}
                   >
-                    {this.props.eleve.classes.map((salle) => (
+                    {this.state.classeDispo.map((salle) => (
                       <option value={salle.id}>
                         {salle.level.describe}- {salle.speciality.describe}
                       </option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label>Spécialité</label>
-                  <select
-                    className="form-select"
-                    onChange={(e) =>
-                      this.setState({ specialite: e.target.value })
-                    }
-                    required
-                    value={this.state.specialites}
-                  >
-                    {this.props.eleve.departement.map((depart) => (
-                      <option value={depart.id}>{depart.describe}</option>
                     ))}
                   </select>
                 </div>

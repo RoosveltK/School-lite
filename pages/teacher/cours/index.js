@@ -17,7 +17,7 @@ class Cours extends React.Component {
       lecon: "",
       classe: "",
       program: [],
-      isLoading: true,
+      isLoading: false,
     };
   }
 
@@ -95,7 +95,7 @@ class Cours extends React.Component {
                 <select
                   className="form-select"
                   onChange={(e) => this.setState({ lecon: e.target.value })}
-                  value={this.lecon.titre}
+                  value={this.state.lecon.titre}
                 >
                   {this.state.program.map((program) => (
                     <option value={program.id}>{program.name}</option>

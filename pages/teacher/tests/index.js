@@ -2,6 +2,8 @@ import React from "react";
 import LayoutT from "../../../components/LayoutT";
 import ModalSelectTest from "../../../components/tests/ModalSelectTest";
 import { SiGoogleclassroom } from "react-icons/si";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 class Tests extends React.Component {
   constructor(props) {
@@ -189,7 +191,25 @@ class Tests extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state.tabQuestion);
+    this.state.tabQuestion.forEach((element) => {
+      axios
+        .post(`api/school/question`, {
+          lesson: 1,
+          content: element.question,
+        })
+        .then((res) => {
+          element.reponses.forEach((rep) => {
+            axios
+              .post(`api/school/reponse`, {
+                question: res.data.id,
+                content: rep.rep,
+                verify: rep.valeur,
+              })
+              .catch(() => console.log("erreur"));
+          });
+        })
+        .catch(() => toast.error("Erreur lors de la creation de test"));
+    });
   };
   getInfo = (matiere, niveau, specialite) => {
     this.setState({ matiere: matiere });
@@ -287,7 +307,7 @@ class Tests extends React.Component {
                 })}
                 <div className="col-12 header-card">
                   <span></span>
-                  <button type="submit" className="btn boutonT">
+                  <button type="submit" className="btn review bntTeacher ">
                     Créer
                   </button>
                 </div>

@@ -4,20 +4,27 @@ import Image from "next/image";
 import { responsbar, respons } from "../scripts/form";
 import { Dropdown } from "react-bootstrap";
 import { AiOutlineMenu } from "react-icons/ai";
+import { IoMailOutline } from "react-icons/io5";
+import { IoIosNotificationsOutline } from "react-icons/io";
+import { CgLogOut } from "react-icons/cg";
+import { MdSupervisorAccount } from "react-icons/md";
 import CustomToggle from "./customToggle";
 import Link from "next/link";
 import { Router } from "next/router";
-
-class Layout extends React.Component {
+const menuItems = ["COURS", "EVALUATION", "PRESENCE", "TESTS"];
+class LayoutS extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { user: "" };
+    this.state = { user: "", active: "" };
   }
 
   componentDidMount() {
     responsbar();
     respons();
   }
+  // _handleClick(menuItem) {
+  //   this.setState({ active: menuItem });
+  // }
 
   render() {
     return (
@@ -29,38 +36,41 @@ class Layout extends React.Component {
           <div className="topbar"></div>
           <div className="d-flex" id="wrapper">
             <div className="bg-light border-right" id="sidebar-wrapper">
-              <div className="sidebar-heading">
-                <Link href="enseignant">
-                  <a className="homeLink">SCHOOL ONLINE</a>
+              <div className="sidebar-heading ">
+                <Link href="/">
+                  <a className="homeLink">
+                    <Image
+                      className=""
+                      src="/static/school.png"
+                      alt="pic profile"
+                      width={30}
+                      height={30}
+                    />
+                  </a>
                 </Link>
+                <div className="bar"></div>
+                <span className="devise">Discipline - Travail - Succès</span>
               </div>
               <div className="list-group list-group-flush" id="menuLoading">
-                <Link href="cours">
+                <Link href="student/cours">
                   <a
                     className={`list-group-item list-group-item-action bg-light top`}
                   >
-                    COURS
+                    COURS{" "}
+                  </a>
+                </Link>
+                <Link href="student/tests">
+                  <a
+                    className={`list-group-item list-group-item-action bg-light `}
+                  >
+                    TESTS
                   </a>
                 </Link>{" "}
-                <Link href="eleve">
+                <Link href="student/evaluation">
                   <a
                     className={`list-group-item list-group-item-action bg-light `}
                   >
-                    ELEVES
-                  </a>
-                </Link>
-                <Link href="enseignant">
-                  <a
-                    className={`list-group-item list-group-item-action bg-light `}
-                  >
-                    ENSEIGNANTS{" "}
-                  </a>
-                </Link>
-                <Link href="programme">
-                  <a
-                    className={`list-group-item list-group-item-action bg-light `}
-                  >
-                    PROGRAMMES
+                    EVALUATION{" "}
                   </a>
                 </Link>
               </div>
@@ -83,6 +93,12 @@ class Layout extends React.Component {
                   </form>
                 </div>
                 <div className="logo-textL">
+                  <a className="nav-link cercleNavbar">
+                    <IoMailOutline size="30px" />
+                  </a>
+                  <a className="nav-link cercleNavbar">
+                    <IoIosNotificationsOutline size="30px" />
+                  </a>
                   <Dropdown>
                     <Dropdown.Toggle as={CustomToggle}>
                       <Image
@@ -95,9 +111,18 @@ class Layout extends React.Component {
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       <Dropdown.Item>
-                        <Link href="/">
-                          <a>Déconnexion</a>
+                        <Link href="compte">
+                          <a>
+                            <MdSupervisorAccount size="20px" />
+                            Compte
+                          </a>
                         </Link>
+                      </Dropdown.Item>
+                      <Dropdown.Divider />
+                      <Dropdown.Item>
+                        {" "}
+                        <CgLogOut size="20px" />
+                        Déconnexion
                       </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
@@ -114,4 +139,4 @@ class Layout extends React.Component {
   }
 }
 
-export default Layout;
+export default LayoutS;

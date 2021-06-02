@@ -9,7 +9,6 @@ import axios from "axios";
 const Login = () => {
   const [email, setEmail] = useState(" ");
   const [password, setPassword] = useState(" ");
-  const [btn, setBtn] = useState(false);
 
   useEffect(() => {
     const affiche = setInterval(Defile, 150);
@@ -18,11 +17,6 @@ const Login = () => {
       clearInterval(affiche);
     };
   });
-
-  useEffect(() => {
-    if (password !== "" && email !== "") setBtn(true);
-    else if (btn) setBtn(false);
-  }, [password, email, btn]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -37,6 +31,7 @@ const Login = () => {
     axios
       .post(`auth/token/`, user)
       .then(async (res) => {
+        localStorage.clear();
         localStorage.setItem("access_token", res.data.access_token);
         localStorage.setItem("refresh_token", res.data.refresh_token);
         await axios
@@ -47,9 +42,9 @@ const Login = () => {
           })
           .then((res) => {
             console.log(res.data);
-            if (res.data.role === 1) Router.push(`teacher/cours`);
-            if (res.data.role === 2) Router.push(`admin/cours`);
-            if (res.data.role === 3) Router.push(`student/cours`);
+            if (res.data.role === 2) Router.push(`teacher/cours`);
+            if (res.data.role === 3) Router.push(`admin/cours`);
+            if (res.data.role === 1) Router.push(`student/cours`);
           })
           .catch((err) => console.log(err));
         console.log(`Reussie`);
@@ -107,22 +102,10 @@ const Login = () => {
                   <label htmlFor="floatingPassword">Password</label>
                 </div>
               </div>
-              {btn === true ? (
-                <button
-                  type="submit"
-                  className="btn btn-success col-10 fw-bold"
-                >
-                  Sign In
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  className="btn btn-success col-10 fw-bold"
-                  disabled
-                >
-                  Sign In
-                </button>
-              )}
+
+              <button type="submit" className="btn btn-success col-10 fw-bold">
+                Sign In
+              </button>
               <p>
                 Mot de passe oublié ?{" "}
                 <a

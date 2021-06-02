@@ -27,28 +27,38 @@ class Cours extends React.Component {
     matiere: null,
     niveau: null,
     specialite: null,
-    user: 0,
+    user: 1,
+    programme: [],
   };
 
   componentDidMount() {
-    if (localStorage.getItem("access_token") != null) {
-      this.setState({ user: 1 });
-    } else {
-      Router.push("/");
-    }
-    $(document).ready(function () {
-      $("#datatable").DataTable({
-        searching: true,
-        paging: false,
-        info: false,
-        columnDefs: [{ orderable: false, targets: [2, 3] }],
-      });
-    });
+    // if (localStorage.getItem("access_token") != null) {
+    //   this.setState({ user: 1 });
+    // } else {
+    //   Router.push("/");
+    // }
+    // $(document).ready(function () {
+    //   $("#datatable").DataTable({
+    //     searching: true,
+    //     paging: false,
+    //     info: false,
+    //     columnDefs: [{ orderable: false, targets: [2, 3] }],
+    //   });
+    // });
   }
-  getInfo = (matiere, niveau, specialite) => {
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.matiere !== prevState.matiere) {
+      axios
+        .get(`api/school/program_by_matter/${this.state.matiere.id}`)
+        .then((res) => {
+          this.setState({ programme: res.data });
+        })
+        .catch((err) => console.log(err));
+    }
+  }
+  getInfo = (matiere) => {
     this.setState({ matiere: matiere });
-    this.setState({ niveau: niveau });
-    this.setState({ specialite: specialite });
   };
   render() {
     return (
@@ -79,24 +89,35 @@ class Cours extends React.Component {
                         <Dropdown.Divider />
                         <ModalCreateLevel />
                         <Dropdown.Divider />
-                        <ModalCreateClass
+                        {/* <ModalCreateClass
                           niveau={this.props.niveau}
                           specialite={this.props.specialite}
-                        />
+                        /> */}
                       </Dropdown.Menu>
                     </Dropdown>
                   </div>
-                  <div className="col-12 titreCours">
+                  {/* <div className="col-12 titreCours">
                     Matière :{this.state.matiere} <br />
-                  </div>
-                  <div className="col-4 titreCours">
-                    Spécialité :{this.state.specialite} <br />
+                  </div> */}
+                  {/* <div className="col-4 titreCours">
+                    Spécialité :
+                    {this.state.matiere === null
+                      ? null
+                      : this.state.matiere.classe.speciality.describe}{" "}
+                    <br />
                   </div>{" "}
                   <div className="col-4 titreCours">
-                    Niveau :{this.state.niveau} <br />
-                  </div>
+                    Niveau :
+                    {this.state.matiere === null
+                      ? null
+                      : this.state.matiere.classe.level.describe}{" "}
+                    <br />
+                  </div> */}
                 </header>
-                <ModalSelect recuperation={this.getInfo} />
+                <ModalSelect
+                  recuperation={this.getInfo}
+                  matiereNiveau={this.props.matter}
+                />
                 <section className="row">
                   <div className="col-12 content-card">
                     <table
@@ -110,25 +131,19 @@ class Cours extends React.Component {
                     >
                       <thead>
                         <tr>
-                          <th width="10%">N°</th>
-                          <th width="60%">Leçon</th>
+                          <th width="50%">Leçon</th>
+                          <th width="10%">Date Début</th>
+                          <th width="10%">Date Limite</th>
                           <th width="10%">Activer</th>
                           <th width="20%">Action</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <InfoCours />
-                        <InfoCours />
-                        <InfoCours />
-                        <InfoCours />
-                        <InfoCours />
-                        <InfoCours />
-                        <InfoCours />
-                        <InfoCours />
-                        <InfoCours />
-                        <InfoCours />
-                        <InfoCours />
-                        <InfoCours />
+                        {this.state.programme.map((program) => {
+                          return (
+                            <InfoCours dataCours={program} key={program.id} />
+                          );
+                        })}
                       </tbody>
                     </table>
                   </div>
@@ -143,19 +158,32 @@ class Cours extends React.Component {
 }
 export async function getServerSideProps() {
   try {
-    const teacher = await axios.get(`api/user`);
-    const classe = await axios.get(`api/school/classe`);
-    const special = await axios.get(`api/school/speciality`);
-    const niv = await axios.get(`api/school/level`);
+    // const classe = await axios.get(`api/school/classe`);
+    // const special = await axios.get(`api/school/speciality`);
+    // const niv = await axios.get(`api/school/level`);
+    // const lecon = await axios.get(`api/school/lecon`);
+    const mat = await axios.get(`api/school/matter`);
 
-    const specialite = special.data;
-    const clas = classe.data;
-    const teachers = teacher.data;
-    const niveau = niv.data;
-    return { props: { teachers, clas, specialite, niveau } };
+    const matter = mat.data;
+    // const specialite = special.data;
+    // const clas = classe.data;
+    // const teachers = teacher.data;
+    // const niveau = niv.data;
+    // const cours = lecon.data;
+    // return { props: { teachers, clas, specialite, niveau, cours, matter } };
+    return { props: { matter } };
   } catch (err) {
     console.log(err);
-    return { props: { teachers: [], clas: [], specialite: [], niveau: [] } };
+    return {
+      props: {
+        // teachers: [],
+        // clas: [],
+        // specialite: [],
+        // niveau: [],
+        // cours: [],
+        matter: [],
+      },
+    };
   }
 }
 

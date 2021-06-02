@@ -6,27 +6,38 @@ import ModalDelete from "../ModalDelete";
 import ModalEditStudent from "./ModalEditStudent";
 import { BiDotsVertical } from "react-icons/bi";
 
-const InfoEleve = ({ dataEleve, specialite }) => {
-  const {
-    id,
-    department,
-    username,
-    first_name,
-    email,
-    matricule,
-    classes,
-    role,
-  } = dataEleve;
-
+const InfoEleve = ({ dataEleve, classeDispo }) => {
+  const { id, username, first_name, email, matricule, classes, role } =
+    dataEleve;
+  const niveau = [
+    "Sixième",
+    "Cinquième",
+    "Quatrième",
+    "Troisième",
+    "Seconde",
+    "Première",
+    "Terminale",
+  ];
   return (
     <>
       <tr>
-        {role == 2 ? (
+        {role === 1 ? (
           <React.Fragment>
             <td>{matricule}</td>
             <td>{`${username.toUpperCase()} ${first_name.toUpperCase()}`}</td>
             <td>{email}</td>
-            <td>{classes}</td>
+            <td position="center">
+              {classes.map((classe) => {
+                let level;
+                niveau.forEach((element, index) => {
+                  if (index + 1 === classe.level) {
+                    level = element;
+                  }
+                });
+                return level;
+              })}
+            </td>{" "}
+            <td>{classes.map((classe) => classe.speciality)}</td>
             <td className="contextual-menu survDropdown">
               <Link href={`/admin/eleve/${id}`} key={id}>
                 <a>Afficher</a>
@@ -36,7 +47,10 @@ const InfoEleve = ({ dataEleve, specialite }) => {
                   <BiDotsVertical />
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="options">
-                  <ModalEditStudent eleve={dataEleve} />
+                  <ModalEditStudent
+                    eleve={dataEleve}
+                    classeDispo={classeDispo}
+                  />
                   <Dropdown.Divider />
                   <ModalDelete id={id} titre={"eleve"} />
                 </Dropdown.Menu>

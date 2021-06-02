@@ -15,7 +15,8 @@ class Eleve extends React.Component {
     super(props);
     this.state = {
       eleve: this.props.students,
-      user: 0,
+      user: 0, //remettre a 0 pour verifier l'auth
+      count: 0,
     };
   }
   componentDidMount() {
@@ -29,10 +30,17 @@ class Eleve extends React.Component {
         searching: true,
         paging: false,
         info: false,
-        columnDefs: [{ orderable: false, targets: [3, 5] }],
+        columnDefs: [{ orderable: false, targets: [2, 5] }],
       });
     });
   }
+  countStudent = () => {
+    let countS = 0;
+    this.state.eleve.forEach((element) => {
+      if (element.role === 1) countS += 1;
+    });
+    return countS;
+  };
   render() {
     return (
       <>
@@ -49,7 +57,7 @@ class Eleve extends React.Component {
               <div className="mainCard">
                 <header className="row">
                   <div className="col-12 header-card">
-                    <span>ELEVES({this.state.eleve.length})</span>
+                    <span>ELEVES({this.countStudent()})</span>
                     <ModalAddStudent
                       specialite={this.props.specialite}
                       classes={this.props.clas}
@@ -60,7 +68,7 @@ class Eleve extends React.Component {
                   <div className="col-12 content-card">
                     <table
                       id="datatable"
-                      className="table-responsive-sm nowrap "
+                      className="table-responsive-sm nowrap table-striped"
                       style={{
                         borderCollapse: "collapse",
                         borderSpacing: 0,
@@ -81,7 +89,7 @@ class Eleve extends React.Component {
                         {this.state.eleve.map((student) => (
                           <InfoEleve
                             dataEleve={student}
-                            specialite={this.props.specialite}
+                            classeDispo={this.props.clas}
                             key={student.id}
                           />
                         ))}
@@ -102,11 +110,13 @@ export async function getServerSideProps() {
   try {
     const student = await axios.get(`api/user`);
     const classe = await axios.get(`api/school/classe`);
+    const special = await axios.get(`api/school/speciality`);
 
     const clas = classe.data;
     const students = student.data;
+    const specialite = special.data;
 
-    return { props: { students, clas } };
+    return { props: { students, clas, specialite } };
   } catch (err) {
     return { props: { students: [], clas: [], specialite: [] } };
   }

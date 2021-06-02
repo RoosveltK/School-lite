@@ -43,7 +43,16 @@ class Programme extends React.Component {
     console.log(dataProgram);
     axios
       .post(`api/school/program`, dataProgram)
-      .then(() => toast.success("Programme mis à jour"))
+      .then(() => {
+        toast.success("Programme mis à jour");
+        this.setState({
+          titre: "",
+          description: "",
+          dateLimite: "",
+          duree: 0,
+          temps: 0,
+        });
+      })
       .catch(() => toast.error("Erreur lors de la mise à jour du programme"));
   };
   getInfo = (matiere) => {
@@ -85,6 +94,7 @@ class Programme extends React.Component {
                           type="text"
                           className="form-control"
                           placeholder="Entrez le titre"
+                          value={this.state.titre}
                           onChange={(e) =>
                             this.setState({ titre: e.target.value })
                           }
@@ -95,6 +105,7 @@ class Programme extends React.Component {
                           <input
                             type="date"
                             className="form-control"
+                            value={this.state.dateLimite}
                             onChange={(e) =>
                               this.setState({ dateLimite: e.target.value })
                             }
@@ -105,6 +116,7 @@ class Programme extends React.Component {
                             type="text"
                             className="form-control"
                             placeholder="Durée: 3"
+                            value={this.state.duree}
                             onChange={(e) =>
                               this.setState({ duree: e.target.value })
                             }
@@ -115,6 +127,7 @@ class Programme extends React.Component {
                             type="time"
                             className="form-control"
                             placeholder="Heure de début"
+                            value={this.state.temps}
                             onChange={(e) =>
                               this.setState({ temps: e.target.value })
                             }
@@ -125,6 +138,7 @@ class Programme extends React.Component {
                         <label>Description:</label>
                         <textarea
                           className="form-control"
+                          value={this.state.description}
                           onChange={(e) =>
                             this.setState({ description: e.target.value })
                           }
@@ -157,6 +171,7 @@ export async function getServerSideProps() {
   try {
     const mat = await axios.get(`api/school/matter`);
     const matter = mat.data;
+
     return { props: { matter } };
   } catch (err) {
     console.log(err);

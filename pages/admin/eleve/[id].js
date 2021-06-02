@@ -8,55 +8,47 @@ import Head from "next/head";
 
 function analyticPersonnel({ post, specialites }) {
   const [user, setUser] = useState(null);
-  useEffect(() => {
-    axios
-      .get(`api/user/currentuser`)
-      .then((res) => setUser(res.data))
-      .catch((err) => Router.push("/"));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(`api/user/currentuser`)
+  //     .then((res) => setUser(res.data))
+  //     .catch((err) => Router.push("/"));
+  // }, []);
   return (
     <>
-      {user === null ? (
-        <React.Fragment>
-          <Head>
-            <title>School online</title>
-          </Head>
-          <Loader />
-        </React.Fragment>
-      ) : (
-        <Layout title={post.first_name}>
-          <div className="container-fluid">
-            <div className="mainCard">
-              <header className="row">
-                <div className="col-12 header-card">
-                  <span>INFORMATIONS</span>
-                </div>
-              </header>
-              <section className="row">
-                <div className="col-12 content-card">
-                  <table
-                    id="datatable"
-                    className="table dt-responsive nowrap"
-                    style={{
-                      borderCollapse: "collapse",
-                      borderSpacing: 0,
-                      width: "100%",
-                    }}
-                  >
-                    <tbody>
-                      <InfoPerso
-                        specialites={specialite}
-                        datas={post}
-                        key={post.id}
-                      />
-                    </tbody>
-                  </table>
-                </div>
-              </section>
-            </div>
+      <Layout title={post.first_name}>
+        <div className="container-fluid">
+          <div className="mainCard">
+            <header className="row">
+              <div className="col-12 header-card">
+                <span>INFORMATIONS</span>
+              </div>
+            </header>
+            <section className="row">
+              <div className="col-12 content-card">
+                <table
+                  id="datatable"
+                  className="table dt-responsive nowrap"
+                  style={{
+                    borderCollapse: "collapse",
+                    borderSpacing: 0,
+                    width: "100%",
+                  }}
+                >
+                  <tbody>
+                    <InfoPerso
+                      specialites={specialites}
+                      datas={post}
+                      key={post.id}
+                    />
+                  </tbody>
+                </table>
+              </div>
+            </section>
           </div>
-        </Layout>
-      )}
+        </div>
+      </Layout>
+      )
     </>
   );
 }
@@ -67,7 +59,7 @@ export async function getStaticProps({ params }) {
     const special = await axios.get(`api/school/speciality`);
     const specialites = special.data;
 
-    return { props: { post, specialite } };
+    return { props: { post, specialites } };
   } catch (err) {
     console.log(err);
     return { props: { post: "", specialites: [] } };

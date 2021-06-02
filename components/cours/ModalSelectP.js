@@ -20,7 +20,7 @@ export default function ModalSelect({ recuperation, matiereNiveau }) {
     <>
       <Modal show={show} onHide={handleClose} className="modalSuppression">
         <Modal.Header className="color-titre-ajout">
-          <Modal.Title>Selection Niveau</Modal.Title>
+          <Modal.Title>Selection Niveau et Matière</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>
@@ -41,9 +41,9 @@ export default function ModalSelect({ recuperation, matiereNiveau }) {
             </div>
           </form>
           <Modal.Footer>
-            <Button className="btn btn-secondary" onClick={handleClose}>
+            {/* <Button className="btn btn-secondary" onClick={handleClose}>
               Fermer
-            </Button>
+            </Button> */}
             <Button className="btn color-titre-ajout" onClick={handleSubmit}>
               Soumettre
             </Button>

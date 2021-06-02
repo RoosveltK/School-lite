@@ -10,7 +10,15 @@ const InfoPerso = ({ datas }) => {
     username,
     born_at,
   } = datas;
-
+  const niveau = [
+    "Sixième",
+    "Cinquième",
+    "Quatrième",
+    "Troisième",
+    "Seconde",
+    "Première",
+    "Terminale",
+  ];
   return (
     <>
       <tr>
@@ -35,7 +43,18 @@ const InfoPerso = ({ datas }) => {
       </tr>
       <tr>
         <th>Details</th>
-        <td>{classes}</td>
+        <td>
+          {" "}
+          {classes.map((classe) => {
+            let level;
+            niveau.forEach((element, index) => {
+              if (index + 1 === classe.level) {
+                level = element;
+              }
+            });
+            return level;
+          })}
+        </td>
       </tr>
     </>
   );

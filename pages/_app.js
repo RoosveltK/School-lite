@@ -13,7 +13,7 @@ import { IconContext } from "react-icons";
 import "react-toastify/dist/ReactToastify.css";
 import NextNprogress from "nextjs-progressbar";
 
-axios.defaults.baseURL = "http://192.168.1.100:8000/";
+axios.defaults.baseURL = "http://192.168.43.172:8000/";
 
 function MyApp({ Component, pageProps }) {
   return (

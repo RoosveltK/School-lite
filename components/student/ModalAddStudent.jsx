@@ -33,8 +33,8 @@ export default class ModalAddStudent extends React.Component {
       matricule: this.state.matricule,
       born_at: this.state.born_at,
       gender: this.state.gender,
-      role: 2,
-      classes: this.state.classe,
+      role: 1,
+      classes: [this.state.classe],
       password: this.state.password,
     };
     axios

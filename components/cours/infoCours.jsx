@@ -3,30 +3,53 @@ import { Dropdown, Button } from "react-bootstrap";
 import CustomToggle from "../customToggle";
 import Link from "next/link";
 import axios from "axios";
+import { toast } from "react-toastify";
 
-const InfoCours = () => {
-  const [val, setVal] = useState(false);
+const InfoCours = ({ dataCours }) => {
+  const { id, title, status, course_day, limit_day } = dataCours;
+  const [val, setVal] = useState(null);
   const handleChange = (e) => {
-    e.preventDefault();
     setVal(e.target.checked);
+    axios
+      .get(`api/school/active_or_desactive/${id}`)
+      .then(() => toast.success(`Programme activ`));
   };
   return (
     <>
       <tr>
-        <td align="center">1</td>
-        <td>KN ROOS</td>
-        <td align="center">
-          <input type="checkbox" onChange={handleChange} />
+        <td>{title}</td>
+        <td align="center">{course_day}</td>
+        <td>{limit_day}</td>
+        <td>
+          <input
+            type="checkbox"
+            defaultChecked={status}
+            onChange={handleChange}
+          />
         </td>
         <td>
-          <Link href="/">
-            <a className="badge rounded-pill bg-success badgeCours">Test</a>
-          </Link>{" "}
-          <Link href="/">
-            <a className="badge rounded-pill bg-success badgeCours">
-              Voir cours
-            </a>
-          </Link>
+          {status === true ? (
+            <React.Fragment>
+              <Link href={`/admin/cours/test/${id}`} key={id}>
+                <a className="badge rounded-pill bg-success badgeCours">Test</a>
+              </Link>{" "}
+              <Link href={`/admin/cours/${id}`} key={id}>
+                <a className="badge rounded-pill bg-success badgeCours">
+                  Voir cours
+                </a>
+              </Link>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <a className="badge rounded-pill bg-secondary badgeCoursDesactivate">
+                Test
+              </a>
+
+              <a className="badge rounded-pill bg-secondary badgeCoursDesactivate">
+                Voir cours
+              </a>
+            </React.Fragment>
+          )}
         </td>
       </tr>
     </>
