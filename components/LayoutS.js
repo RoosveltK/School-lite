@@ -11,7 +11,10 @@ import { MdSupervisorAccount } from "react-icons/md";
 import CustomToggle from "./customToggle";
 import Link from "next/link";
 import { Router } from "next/router";
+
 const menuItems = ["COURS", "EVALUATION", "PRESENCE", "TESTS"];
+const Cours = ["MATHEMATIQUE", "ANGLAIS", "FRANCAIS", "GEOGRAPHIE", "HISTOIRE", "ECM", "INFORMATIQUE"];
+
 class LayoutS extends React.Component {
   constructor(props) {
     super(props);
@@ -52,27 +55,19 @@ class LayoutS extends React.Component {
                 <span className="devise">Discipline - Travail - Succès</span>
               </div>
               <div className="list-group list-group-flush" id="menuLoading">
-                <Link href="student/cours">
-                  <a
-                    className={`list-group-item list-group-item-action bg-light top`}
-                  >
-                    COURS{" "}
-                  </a>
-                </Link>
-                <Link href="student/tests">
-                  <a
-                    className={`list-group-item list-group-item-action bg-light `}
-                  >
-                    TESTS
-                  </a>
-                </Link>{" "}
-                <Link href="student/evaluation">
-                  <a
-                    className={`list-group-item list-group-item-action bg-light `}
-                  >
-                    EVALUATION{" "}
-                  </a>
-                </Link>
+              {
+                Cours.map((cours, id) => {
+                  return (
+                    <Link href="/student/cours" key={id}>
+                      <a
+                        className={`list-group-item list-group-item-action bg-light top`}
+                      >
+                        {cours}
+                      </a>
+                    </Link>
+                  )
+                })
+              }
               </div>
             </div>
             <div className="flex-1" id="page-content-wrapper">
@@ -138,5 +133,23 @@ class LayoutS extends React.Component {
     );
   }
 }
+
+/*
+
+                <Link href="/student/tests">
+                  <a
+                    className={`list-group-item list-group-item-action bg-light `}
+                  >
+                    TESTS
+                  </a>
+                </Link>{" "}
+                <Link href="/student/evaluation">
+                  <a
+                    className={`list-group-item list-group-item-action bg-light `}
+                  >
+                    EVALUATION{" "}
+                  </a>
+                </Link>
+*/
 
 export default LayoutS;
