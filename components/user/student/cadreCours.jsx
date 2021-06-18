@@ -11,7 +11,7 @@ const CadreCours = () => {
 
         <div className="caderCours-btn">
           <button className="btn">
-            <Link href="/cours/coursPerso">
+            <Link href="/student/cours/coursPerso">
               <a>Lire</a>
             </Link>
           </button>

@@ -343,6 +343,10 @@ input[type="search"] {
   text-align: center;
 }
 
+.btnSubmit {
+  background-color: lightblue;
+}
+
 @-webkit-keyframes spin {
   0% {
     -webkit-transform: rotate(0deg);

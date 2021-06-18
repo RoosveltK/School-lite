@@ -13,7 +13,7 @@ import Link from "next/link";
 import { Router } from "next/router";
 
 const menuItems = ["COURS", "EVALUATION", "PRESENCE", "TESTS"];
-const Cours = ["MATHEMATIQUE", "ANGLAIS", "FRANCAIS", "GEOGRAPHIE", "HISTOIRE", "ECM", "INFORMATIQUE"];
+const Matieres = ["MATHEMATIQUE", "ANGLAIS", "FRANCAIS", "GEOGRAPHIE", "HISTOIRE", "ECM", "INFORMATIQUE"];
 
 class LayoutS extends React.Component {
   constructor(props) {
@@ -56,7 +56,7 @@ class LayoutS extends React.Component {
               </div>
               <div className="list-group list-group-flush" id="menuLoading">
               {
-                Cours.map((cours, id) => {
+                Matieres.map((cours, id) => {
                   return (
                     <Link href="/student/cours" key={id}>
                       <a

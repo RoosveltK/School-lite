@@ -8,15 +8,22 @@ toast.configure();
 class Quiz extends Component {
   constructor(props) {
     super(props);
-    this.initialState = {
+    let initialState = {
       maxQuestion: 10,
-      idQuestion: 0,
+      idQuestion: 1,
       btnActive: true,
       options: null,
       userResponse: null,
     };
-    this.state = this.initialState;
+    this.state = initialState;
     this.completQuiz = React.createRef();
+  }
+
+  nextQuestion = () => {
+    let idQuestion = this.state.idQuestion;
+    idQuestion += 1;
+
+    this.setState({ idQuestion });
   }
 
   render() {
@@ -35,10 +42,10 @@ class Quiz extends Component {
     // });
     return (
       <div>
-        <ProgressBar id={this.state.idQuestion} max={this.state.maxQuestion} />
+        <ProgressBar idQ={this.state.idQuestion} max={this.state.maxQuestion} />
         <h2>Qui est tu ?</h2>
-        Hello
-        <button disabled={this.state.btnActive} className="btnSubmit">
+
+        <button disabled={this.state.btnActive} className="btn btnSubmit" onClick={() => this.nextQuestion()}>
           {this.state.idQuestion < this.state.maxQuestion - 1
             ? "Suivant"
             : "Terminer"}
