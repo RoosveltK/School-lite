@@ -11,7 +11,10 @@ import { MdSupervisorAccount } from "react-icons/md";
 import CustomToggle from "./customToggle";
 import Link from "next/link";
 import { Router } from "next/router";
+
 const menuItems = ["COURS", "EVALUATION", "PRESENCE", "TESTS"];
+const Matieres = ["MATHEMATIQUE", "ANGLAIS", "FRANCAIS", "GEOGRAPHIE", "HISTOIRE", "ECM", "INFORMATIQUE"];
+
 class LayoutS extends React.Component {
   constructor(props) {
     super(props);
@@ -138,5 +141,23 @@ class LayoutS extends React.Component {
     );
   }
 }
+
+/*
+
+                <Link href="/student/tests">
+                  <a
+                    className={`list-group-item list-group-item-action bg-light `}
+                  >
+                    TESTS
+                  </a>
+                </Link>{" "}
+                <Link href="/student/evaluation">
+                  <a
+                    className={`list-group-item list-group-item-action bg-light `}
+                  >
+                    EVALUATION{" "}
+                  </a>
+                </Link>
+*/
 
 export default LayoutS;

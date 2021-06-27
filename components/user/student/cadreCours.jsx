@@ -8,11 +8,20 @@ const CadreCours = () => {
       <header>INTRODUCTION AUX TIC</header>
       <div>
         Ce cours vous aidera a mieux comprendre ...
-        <button className="btn">
-          <Link href="cours/coursPerso">
-            <a>Lire</a>
-          </Link>
-        </button>
+
+        <div className="caderCours-btn">
+          <button className="btn">
+            <Link href="/student/cours/coursPerso">
+              <a>Lire</a>
+            </Link>
+          </button>
+
+          <button className="btn">
+            <Link href="/student/tests">
+              <a>Faire Test</a>
+            </Link>
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,16 +1,16 @@
 import React from "react";
 
 const ProgressBar = (props) => {
-  const { id, max } = props;
+  const { idQ, max } = props;
   const tailleBar = (total, id) => {
     return (100 / total) * id;
   };
-  const progression = tailleBar(max, id + 1);
+  const progression = tailleBar(max, idQ + 1);
 
   return (
     <>
       <div className="percentage">
-        <div className="progressPercent">{`Question : ${id + 1}/${max}`}</div>
+        <div className="progressPercent">{`Question : ${idQ + 1}/${max}`}</div>
         <div className="progressPercent">{`Progression ${progression} %`} </div>
       </div>
       <div className="progressBar">

@@ -1,7 +1,7 @@
 {
   "name": "school-lite",
   "version": "0.1.0",
-  "description": "Wep application for manage a school ",
+  "description": "Web application for manage a school ",
   "main": "index.js",
   "scripts": {
     "dev": "next dev",

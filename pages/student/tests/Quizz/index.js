@@ -3,8 +3,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { FaChevronRight } from "react-icons/fa";
 import ProgressBar from "../progressBar";
-import { Responses } from "../quizMarvel/responses";
-import { Questions } from "../quizMarvel/questions";
+import { Responses } from "../../../../lib/responses";
+import { Questions } from "../../../../lib/questions";
 import QuizOver from "../QuizOver";
 
 toast.configure();
@@ -26,7 +26,7 @@ class Quiz extends Component {
       welcomeMsg: false,
       quizPartEnd: false,
     };
-    this.state = this.initialState;
+    this.state = initialState;
     this.completQuiz = React.createRef();
   }
 
