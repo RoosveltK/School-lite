@@ -43,7 +43,7 @@ const Login = () => {
           .then((res) => {
             console.log(res.data);
             if (res.data.role === 2) Router.push(`teacher/cours`);
-            if (res.data.role === 3) Router.push(`admin/cours`);
+            if (res.data.role === null) Router.push(`admin/cours`);
             if (res.data.role === 1) Router.push(`student/cours`);
           })
           .catch((err) => console.log(err));
