@@ -7,56 +7,49 @@ import Router from "next/router";
 import Head from "next/head";
 
 function analyticPersonnel({ post, departement }) {
-  const [user, setUser] = useState(null);
-  useEffect(() => {
-    axios
-      .get(`api/user/currentuser`)
-      .then((res) => setUser(res.data))
-      .catch((err) => Router.push("/"));
-  }, []);
   return (
     <>
-      {user === null ? (
+      {/* {user != null ? (
         <React.Fragment>
           <Head>
             <title>School online</title>
           </Head>
           <Loader />
         </React.Fragment>
-      ) : (
-        <Layout title={post.first_name}>
-          <div className="container-fluid">
-            <div className="mainCard">
-              <header className="row">
-                <div className="col-12 header-card">
-                  <span>INFORMATIONS</span>
-                </div>
-              </header>
-              <section className="row">
-                <div className="col-12 content-card">
-                  <table
-                    id="datatable"
-                    className="table dt-responsive nowrap"
-                    style={{
-                      borderCollapse: "collapse",
-                      borderSpacing: 0,
-                      width: "100%",
-                    }}
-                  >
-                    <tbody>
-                      <InfoPerso
-                        departements={departement}
-                        datas={post}
-                        key={post.id}
-                      />
-                    </tbody>
-                  </table>
-                </div>
-              </section>
-            </div>
+      ) : ( */}
+      <Layout title={post.first_name}>
+        <div className="container-fluid">
+          <div className="mainCard">
+            <header className="row">
+              <div className="col-12 header-card">
+                <span>INFORMATIONS</span>
+              </div>
+            </header>
+            <section className="row">
+              <div className="col-12 content-card">
+                <table
+                  id="datatable"
+                  className="table dt-responsive nowrap"
+                  style={{
+                    borderCollapse: "collapse",
+                    borderSpacing: 0,
+                    width: "100%",
+                  }}
+                >
+                  <tbody>
+                    <InfoPerso
+                      departements={departement}
+                      datas={post}
+                      key={post.id}
+                    />
+                  </tbody>
+                </table>
+              </div>
+            </section>
           </div>
-        </Layout>
-      )}
+        </div>
+      </Layout>
+      {/* )}{" "} */}
     </>
   );
 }

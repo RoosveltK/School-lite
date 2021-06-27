@@ -16,6 +16,7 @@ import { Dropdown } from "react-bootstrap";
 import Loader from "../../../components/Loader/LoaderWait";
 import Router from "next/router";
 import Head from "next/head";
+import { dataCours } from "../../../json/dataCours";
 
 class Cours extends React.Component {
   state = {
@@ -66,7 +67,7 @@ class Cours extends React.Component {
         {this.state.user === 0 ? (
           <React.Fragment>
             <Head>
-              <title>School online</title>
+              <title>School Lite</title>
             </Head>
             <Loader />
           </React.Fragment>
@@ -89,10 +90,10 @@ class Cours extends React.Component {
                         <Dropdown.Divider />
                         <ModalCreateLevel />
                         <Dropdown.Divider />
-                        {/* <ModalCreateClass
+                        <ModalCreateClass
                           niveau={this.props.niveau}
                           specialite={this.props.specialite}
-                        /> */}
+                        />
                       </Dropdown.Menu>
                     </Dropdown>
                   </div>
@@ -134,12 +135,14 @@ class Cours extends React.Component {
                           <th width="50%">Leçon</th>
                           <th width="10%">Date Début</th>
                           <th width="10%">Date Limite</th>
-                          <th width="10%">Activer</th>
+                          <th width="10%" class="centerContent">
+                            Activer
+                          </th>
                           <th width="20%">Action</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {this.state.programme.map((program) => {
+                        {dataCours.map((program) => {
                           return (
                             <InfoCours dataCours={program} key={program.id} />
                           );
@@ -158,29 +161,26 @@ class Cours extends React.Component {
 }
 export async function getServerSideProps() {
   try {
-    // const classe = await axios.get(`api/school/classe`);
-    // const special = await axios.get(`api/school/speciality`);
-    // const niv = await axios.get(`api/school/level`);
-    // const lecon = await axios.get(`api/school/lecon`);
+    const classe = await axios.get(`api/school/classe`);
+    const special = await axios.get(`api/school/speciality`);
+    const niv = await axios.get(`api/school/level`);
+    const lecon = await axios.get(`api/school/lecon`);
     const mat = await axios.get(`api/school/matter`);
 
     const matter = mat.data;
-    // const specialite = special.data;
-    // const clas = classe.data;
-    // const teachers = teacher.data;
-    // const niveau = niv.data;
-    // const cours = lecon.data;
-    // return { props: { teachers, clas, specialite, niveau, cours, matter } };
-    return { props: { matter } };
+    const specialite = special.data;
+    const clas = classe.data;
+    const niveau = niv.data;
+    const cours = lecon.data;
+    return { props: { clas, specialite, niveau, cours, matter } };
   } catch (err) {
     console.log(err);
     return {
       props: {
-        // teachers: [],
-        // clas: [],
-        // specialite: [],
-        // niveau: [],
-        // cours: [],
+        clas: [],
+        specialite: [],
+        niveau: [],
+        cours: [],
         matter: [],
       },
     };

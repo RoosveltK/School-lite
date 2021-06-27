@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.css";
+import "../shared/App.css"
 import "../shared/style.css";
 import "../shared/style1.css";
 import "../shared/style2.css";
@@ -13,7 +14,7 @@ import { IconContext } from "react-icons";
 import "react-toastify/dist/ReactToastify.css";
 import NextNprogress from "nextjs-progressbar";
 
-axios.defaults.baseURL = "http://192.168.43.172:8000/";
+axios.defaults.baseURL = "http://school-lite-2002.herokuapp.com/";
 
 function MyApp({ Component, pageProps }) {
   return (

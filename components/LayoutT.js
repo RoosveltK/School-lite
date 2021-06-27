@@ -22,9 +22,6 @@ class Layout extends React.Component {
     responsbar();
     respons();
   }
-  // _handleClick(menuItem) {
-  //   this.setState({ active: menuItem });
-  // }
 
   render() {
     return (
@@ -52,28 +49,28 @@ class Layout extends React.Component {
                 <span className="devise">Discipline - Travail - Succès</span>
               </div>
               <div className="list-group list-group-flush" id="menuLoading">
-                <Link href="tests">
+                <Link href="/teacher/tests">
                   <a
                     className={`list-group-item list-group-item-action bg-light top`}
                   >
                     TESTS{" "}
                   </a>
                 </Link>
-                <Link href="cours">
+                <Link href="/teacher/cours">
                   <a
                     className={`list-group-item list-group-item-action bg-light `}
                   >
                     COURS
                   </a>
                 </Link>{" "}
-                <Link href="presence">
+                <Link href="/teacher/presence">
                   <a
                     className={`list-group-item list-group-item-action bg-light `}
                   >
                     PRESENCE
                   </a>
                 </Link>
-                <Link href="evaluation">
+                <Link href="/teacher/evaluation">
                   <a
                     className={`list-group-item list-group-item-action bg-light lastLink`}
                   >
@@ -94,7 +91,7 @@ class Layout extends React.Component {
                       placeholder="Rechercher..."
                       className="form-control"
                     />
-                    <a href="enseignant">
+                    <a href="/teacher/cours">
                       <i className="fa fa-search"></i>
                     </a>
                   </form>
@@ -117,13 +114,14 @@ class Layout extends React.Component {
                       />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                      <Dropdown.Item>
-                        <Link href="compte">
-                          <a>
-                            <MdSupervisorAccount size="20px" />
-                            Compte
-                          </a>
-                        </Link>
+                      <Dropdown.Item
+                        onClick={() => {
+                          localStorage.clear();
+                          Router.push("/");
+                        }}
+                      >
+                        <MdSupervisorAccount size="20px" />
+                        Compte
                       </Dropdown.Item>
                       <Dropdown.Divider />
                       <Dropdown.Item>

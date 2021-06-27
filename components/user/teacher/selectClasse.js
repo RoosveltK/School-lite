@@ -8,7 +8,6 @@ export default function ModalSelectClasse({ recuperation, classeTeacher }) {
   const [classe, setClasse] = useState("");
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -35,8 +34,8 @@ export default function ModalSelectClasse({ recuperation, classeTeacher }) {
                 <option value={`5e`}>5e</option>
                 <option value={`4e`}>4e</option>
                 <option value={`3e`}>3e</option>
-                {/* {classeTeacher.map((classe) => (
-                  <option value={classe}>{classe.name}</option>
+                {/* {classeTeacher.map((classe, index) => (
+                  <option key={index} value={classe}>{classe.name}</option>
                 ))} */}
               </select>
             </div>

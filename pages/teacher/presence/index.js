@@ -6,6 +6,7 @@ import axios from "axios";
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $ from "jquery";
+import { dataPresence } from "../../../json/dataPresence";
 
 class Presence extends React.Component {
   state = {
@@ -48,7 +49,7 @@ class Presence extends React.Component {
           <div className="mainCard">
             <header className="row">
               <div className="col-12 header-card">
-                <span>LISTE PRESENCE({this.state.studentPresent.length})</span>
+                <span>LISTE PRESENCE({dataPresence.length})</span>
               </div>
             </header>
             <section className="row">
@@ -68,16 +69,14 @@ class Presence extends React.Component {
                       <th>Matricule</th>
                       <th>Nom</th>
                       <th>Prénom</th>
-                      <th>Cours</th>
-                      <th>Test</th>
+                      <th class="centerContent">Cours</th>
+                      <th class="centerContent">Test</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {/* {this.state.studentPresent.map((student) => {
-                      return <InfoPresence dataStudent={student} key={student.id} />;
-                    })} */}
-                    <InfoPresence />
-                    <InfoPresence />
+                    {dataPresence.map((student) => (
+                      <InfoPresence dataStudent={student} key={student.id} />
+                    ))}
                   </tbody>
                 </table>
               </div>

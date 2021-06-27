@@ -1,9 +1,9 @@
 import React from "react";
-import LayoutS from "../../../components/LayoutS";
+import Layout from "../../../components/Layout";
 
 const singelLesson = () => {
   return (
-    <LayoutS title="Cours">
+    <Layout title="Cours">
       <div className="container-fluid">
         <div className="mainCardLesson">
           <h2>INTRODUCTION AUX TICS</h2>
@@ -64,7 +64,7 @@ const singelLesson = () => {
           </div>
         </div>
       </div>
-    </LayoutS>
+    </Layout>
   );
 };
 

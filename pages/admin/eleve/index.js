@@ -9,34 +9,35 @@ import $ from "jquery";
 import Loader from "../../../components/Loader/LoaderWait";
 import Router from "next/router";
 import Head from "next/head";
+import { dataEleve } from "../../../json/dataEleve";
 
 class Eleve extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       eleve: this.props.students,
-      user: 0, //remettre a 0 pour verifier l'auth
+      user: 1, //remettre a 0 pour verifier l'auth
       count: 0,
     };
   }
   componentDidMount() {
-    if (localStorage.getItem("access_token") != null) {
-      this.setState({ user: 1 });
-    } else {
-      Router.push("/");
-    }
+    // if (localStorage.getItem("access_token") != null)
+    //   this.setState({ user: 1 });
+    // else
+    //   Router.push("/");
+    //
     $(document).ready(function () {
       $("#datatable").DataTable({
         searching: true,
         paging: false,
         info: false,
-        columnDefs: [{ orderable: false, targets: [2, 5] }],
+        columnDefs: [{ orderable: false, targets: [2, 3, 4, 5] }],
       });
     });
   }
   countStudent = () => {
     let countS = 0;
-    this.state.eleve.forEach((element) => {
+    dataEleve.forEach((element) => {
       if (element.role === 1) countS += 1;
     });
     return countS;
@@ -47,7 +48,7 @@ class Eleve extends React.Component {
         {this.state.user === 0 ? (
           <React.Fragment>
             <Head>
-              <title>School online</title>
+              <title>School Lite</title>
             </Head>
             <Loader />
           </React.Fragment>
@@ -68,7 +69,7 @@ class Eleve extends React.Component {
                   <div className="col-12 content-card">
                     <table
                       id="datatable"
-                      className="table-responsive-sm nowrap table-striped"
+                      className="table-responsive-sm nowrap "
                       style={{
                         borderCollapse: "collapse",
                         borderSpacing: 0,
@@ -81,7 +82,7 @@ class Eleve extends React.Component {
                           <th>Nom</th>
                           <th>Email</th>
                           <th>Classe</th>
-                          <th>Série</th>
+                          <th className="centerContent">Série</th>
                           <th>Action</th>
                         </tr>
                       </thead>

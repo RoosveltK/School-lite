@@ -199,16 +199,17 @@ class Tests extends React.Component {
         })
         .then((res) => {
           element.reponses.forEach((rep) => {
-            axios
-              .post(`api/school/reponse`, {
-                question: res.data.id,
-                content: rep.rep,
-                verify: rep.valeur,
-              })
-              .catch(() => console.log("erreur"));
+            axios.post(`api/school/reponse`, {
+              question: res.data.id,
+              content: rep.rep,
+              verify: rep.valeur,
+            });
           });
+          toast.success(`Question ${element.id} crée avec succès`);
         })
-        .catch(() => toast.error("Erreur lors de la creation de test"));
+        .catch(() =>
+          toast.error(`Echec lors de la création de la question ${element.id} `)
+        );
     });
   };
   getInfo = (matiere, niveau, specialite) => {

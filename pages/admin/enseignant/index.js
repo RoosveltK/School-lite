@@ -15,31 +15,35 @@ class Enseignant extends React.Component {
     super(props);
     this.state = {
       enseignant: this.props.teachers,
-      user: 0,
+      user: 1,
     };
   }
   componentDidMount() {
-    if (localStorage.getItem("access_token") != null) {
-      this.setState({ user: 1 });
-    } else {
-      Router.push("/");
-    }
-    $(document).ready(function () {
-      $("#datatable").DataTable({
-        searching: true,
-        paging: false,
-        info: false,
-        columnDefs: [{ orderable: false, targets: [3, 5] }],
-      });
+    // if (localStorage.getItem("access_token") != null)
+    //   this.setState({ user: 1 });
+    // else Router.push("/");
+
+    $("#datatable").DataTable({
+      searching: true,
+      paging: false,
+      info: false,
+      columnDefs: [{ orderable: false, targets: [3, 5] }],
     });
   }
+  countTeacher = () => {
+    let countS = 0;
+    this.state.enseignant.forEach((element) => {
+      if (element.role == 2) countS += 1;
+    });
+    return countS;
+  };
   render() {
     return (
       <>
         {this.state.user === 0 ? (
           <React.Fragment>
             <Head>
-              <title>School online</title>
+              <title>School Lite</title>
             </Head>
             <Loader />
           </React.Fragment>
@@ -49,7 +53,7 @@ class Enseignant extends React.Component {
               <div className="mainCard">
                 <header className="row">
                   <div className="col-12 header-card">
-                    <span>ENSEIGNANTS({this.state.enseignant.length})</span>
+                    <span>ENSEIGNANTS({this.countTeacher()})</span>
                     <ModalAddTeacher
                       specialite={this.props.specialite}
                       classes={this.props.clas}
@@ -58,6 +62,7 @@ class Enseignant extends React.Component {
                 </header>
                 <section className="row">
                   <div className="col-12 content-card">
+
                     <table
                       id="datatable"
                       className="table-responsive-sm nowrap "
@@ -77,6 +82,7 @@ class Enseignant extends React.Component {
                           <th>Action</th>
                         </tr>
                       </thead>
+
                       <tbody>
                         {this.state.enseignant.map((teacher) => {
                           return (
@@ -91,6 +97,7 @@ class Enseignant extends React.Component {
                         })}
                       </tbody>
                     </table>
+                    
                   </div>
                 </section>
               </div>

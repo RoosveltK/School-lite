@@ -1,30 +1,32 @@
 import React, { useState } from "react";
-import Link from "next/link";
-import { Modal, Button, Dropdown } from "react-bootstrap";
-import Router from "next/router";
-
+import { Modal, Button } from "react-bootstrap";
+import { toast } from "react-toastify";
 export default function ModalSelect({ recuperation, matiereNiveau }) {
   const [show, setShow] = useState(true);
   const [matiere, setMatiere] = useState("");
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     recuperation(matiere);
-    setShow(false);
+    if (matiere == "") toast.error("Veuillez séléctionner une matière");
+    else setShow(false);
   };
   const handleChange = (index) => {
-    console.log(`Voila xa ${index}`);
     const datas = matiereNiveau[index];
     setMatiere(datas);
   };
   return (
     <>
-      <Modal show={show} onHide={handleClose} className="modalSuppression">
+      <Modal
+        show={show}
+        onHide={handleClose}
+        className="modalSuppression"
+        keyboard={false}
+      >
         <Modal.Header className="color-titre-ajout">
-          <Modal.Title>Selection Niveau et Matière</Modal.Title>
+          <Modal.Title>Sélection Matière</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>
@@ -36,7 +38,7 @@ export default function ModalSelect({ recuperation, matiereNiveau }) {
                 id="matiere"
               >
                 {matiereNiveau.map((mat, index) => (
-                  <option value={parseInt(index)}>
+                  <option key={index} value={parseInt(index)}>
                     {mat.classe.level.describe} - {mat.classe.speciality.letter}
                   </option>
                 ))}
@@ -44,9 +46,6 @@ export default function ModalSelect({ recuperation, matiereNiveau }) {
             </div>
           </form>
           <Modal.Footer>
-            {/* <Button className="btn btn-secondary" onClick={handleClose}>
-              Fermer
-            </Button> */}
             <Button className="btn color-titre-ajout" onClick={handleSubmit}>
               Soumettre
             </Button>

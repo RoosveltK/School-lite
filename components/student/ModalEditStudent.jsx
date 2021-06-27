@@ -2,6 +2,7 @@ import React from "react";
 import { Modal, Button, Dropdown } from "react-bootstrap";
 import { toast } from "react-toastify";
 import axios from "axios";
+import Router from "next/router";
 
 export default class ModalEditStudent extends React.Component {
   constructor(props) {
@@ -35,16 +36,14 @@ export default class ModalEditStudent extends React.Component {
     axios
       .put(`api/user/${this.props.eleve.id}`, data)
       .then(() => {
-        toast.success(
-          "Informations modifiés avec succès, veuillez recharchez la page"
-        );
+        toast.success("Informations modifiés avec succès");
+        setTimeout(() => Router.reload(), 2000);
       })
       .catch(() => {
         toast.error(
           "Erreur lors de la modification des informations de l'élève"
         );
       });
-    console.log(data);
     this.setState({ show: false });
   };
 

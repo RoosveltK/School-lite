@@ -337,7 +337,7 @@ body {
   box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
   font-family: "proxima Regular";
 }
-.caderViewTest h3{
+.caderViewTest h3 {
   text-align: center;
   font-weight: 700;
 }
@@ -461,3 +461,41 @@ body {
   color: var(--white-color);
 }
 /* END ANSWER OPTIONS*/
+
+/* SUBMIT BUTTON */
+.btnSubmit {
+  font-size: 16px;
+  padding: 6px;
+  background-color: #198754;
+  color: var(--white-color);
+  border-color: #198754;
+  border-radius: 5px;
+  width: 150px;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.btnSubmit:hover {
+  font-size: 16px;
+  padding: 6px;
+  background-color: var(--white-color);
+  color: #198754;
+  border-color: #198754;
+  border-radius: 5px;
+  width: 150px;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.selected {
+  background-color: #198754;
+  color: var(--white-color);
+  text-transform: uppercase;
+}
+/* END SUBMIT BUTTON */
+
+.centerContent {
+  text-align: center ;
+}

@@ -1,6 +1,6 @@
 import $ from "jquery";
 
-var words = ["School Online"],
+var words = ["School Lite"],
   part,
   i = 0,
   offset = 0,

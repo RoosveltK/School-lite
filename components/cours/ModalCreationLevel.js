@@ -19,7 +19,7 @@ export default class ModalCreateSpeciality extends React.Component {
   handleCreate = async (event) => {
     event.preventDefault();
     const data = {
-      num: this.state.serie,
+      num: parseInt(this.state.serie),
       describe: this.state.describe,
     };
     console.log(data);

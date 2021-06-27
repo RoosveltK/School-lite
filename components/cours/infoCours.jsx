@@ -10,9 +10,10 @@ const InfoCours = ({ dataCours }) => {
   const [val, setVal] = useState(null);
   const handleChange = (e) => {
     setVal(e.target.checked);
-    axios
-      .get(`api/school/active_or_desactive/${id}`)
-      .then(() => toast.success(`Programme activ`));
+    axios.get(`api/school/active_or_desactive/${id}`).then(() => {
+      if (e.target.checked) toast.success(`Programme activé`);
+      else toast.warning(`Programme désactivé`);
+    });
   };
   return (
     <>
@@ -20,7 +21,7 @@ const InfoCours = ({ dataCours }) => {
         <td>{title}</td>
         <td align="center">{course_day}</td>
         <td>{limit_day}</td>
-        <td>
+        <td class="centerContent">
           <input
             type="checkbox"
             defaultChecked={status}
@@ -44,7 +45,6 @@ const InfoCours = ({ dataCours }) => {
               <a className="badge rounded-pill bg-secondary badgeCoursDesactivate">
                 Test
               </a>
-
               <a className="badge rounded-pill bg-secondary badgeCoursDesactivate">
                 Voir cours
               </a>

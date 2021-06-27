@@ -36,7 +36,7 @@ export default class ModalAddTeacher extends React.Component {
       dep: parseInt(this.state.specialite),
       born_at: this.state.born_at,
       gender: this.state.gender,
-      role: 1,
+      role: 2,
       classes: this.state.classe,
       password: this.state.password,
     };

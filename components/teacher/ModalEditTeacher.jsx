@@ -2,6 +2,7 @@ import React from "react";
 import { Modal, Button, Dropdown } from "react-bootstrap";
 import { toast } from "react-toastify";
 import axios from "axios";
+import Router from "next/router";
 
 export default class ModalEditTeacher extends React.Component {
   constructor(props) {
@@ -33,13 +34,10 @@ export default class ModalEditTeacher extends React.Component {
       born_at: this.state.born_at,
     };
     axios
-      .put(`api/user/${this.props.enseignant.id}`, data, {
-        headers: { "Access-Control-Allow-Origin": "*" },
-      })
+      .put(`api/user/${this.props.enseignant.id}`, data)
       .then(() => {
-        toast.success(
-          "Informations modifiés avec succès, veuillez recharchez la page"
-        );
+        toast.success("Informations modifiés avec succès");
+        setTimeout(() => Router.reload(), 2000);
       })
       .catch(() => {
         toast.error(

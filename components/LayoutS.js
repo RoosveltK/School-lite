@@ -52,21 +52,21 @@ class LayoutS extends React.Component {
                 <span className="devise">Discipline - Travail - Succès</span>
               </div>
               <div className="list-group list-group-flush" id="menuLoading">
-                <Link href="student/cours">
+                <Link href="/student/cours">
                   <a
                     className={`list-group-item list-group-item-action bg-light top`}
                   >
                     COURS{" "}
                   </a>
                 </Link>
-                <Link href="student/tests">
+                <Link href="/student/tests">
                   <a
                     className={`list-group-item list-group-item-action bg-light `}
                   >
                     TESTS
                   </a>
                 </Link>{" "}
-                <Link href="student/evaluation">
+                <Link href="/student/evaluation">
                   <a
                     className={`list-group-item list-group-item-action bg-light `}
                   >
@@ -87,7 +87,7 @@ class LayoutS extends React.Component {
                       placeholder="Rechercher..."
                       className="form-control"
                     />
-                    <a href="enseignant">
+                    <a href="/enseignant">
                       <i className="fa fa-search"></i>
                     </a>
                   </form>

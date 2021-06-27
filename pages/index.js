@@ -47,11 +47,10 @@ const Login = () => {
             if (res.data.role === 1) Router.push(`student/cours`);
           })
           .catch((err) => console.log(err));
-        console.log(`Reussie`);
       })
       .catch((err) => {
-        console.log(`Erreur ===============================${err}`);
-        toast.error("Erreur lors de la connexion");
+        console.log(err);
+        toast.error("Erreur lors de la connexion, vérifiez vos informations");
       });
   };
 
@@ -71,7 +70,7 @@ const Login = () => {
           />
           <div className="row card-img-overlay  p-sm-1">
             <h1 className="mb-md-5 text-center text-md-start ps-md-5 col-md-6 mt-5 col-sm-12 fw-bold pe-md-5 text-apparition">
-              School Online
+              School Lite
             </h1>
             <form
               className="col-md-5 col-sm-12 g-3 p-md-5 ms-md-5 ms-sm-0 d-flex justify-content-between flex-column align-items-center mt-sm-5 p-4 needs-validation"

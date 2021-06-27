@@ -4,15 +4,13 @@ import axios from "axios";
 import Router from "next/router";
 import { toast } from "react-toastify";
 
-export default class ModalCreateSpeciality extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      show: false,
-      level: "",
-      speciality: [],
-    };
-  }
+export default class ModalCreateClass extends React.Component {
+  state = {
+    show: false,
+    level: null,
+    speciality: null,
+  };
+
   handleClose = () => this.setState({ show: false });
   handleShow = () => this.setState({ show: true });
 
@@ -20,7 +18,7 @@ export default class ModalCreateSpeciality extends React.Component {
     event.preventDefault();
     const data = {
       level: parseInt(this.state.level),
-      speciality: this.state.speciality,
+      speciality: parseInt(this.state.speciality),
     };
     console.log(data);
     axios
@@ -34,7 +32,6 @@ export default class ModalCreateSpeciality extends React.Component {
   };
 
   render() {
-    console.log(this.state.matiereE);
     return (
       <>
         <Dropdown.Item
@@ -73,17 +70,12 @@ export default class ModalCreateSpeciality extends React.Component {
                 <select
                   className="form-select"
                   onChange={(e) =>
-                    this.setState({
-                      speciality: Array.from(e.target.selectedOptions).map(
-                        (option) => option.value
-                      ),
-                    })
+                    this.setState({ speciality: e.target.value })
                   }
-                  multiple
                   required
                 >
                   {this.props.specialite.map((special) => (
-                    <option value={special.id}>{special.describe}</option>
+                    <option value={special.id}>{special.letter}</option>
                   ))}
                 </select>
               </div>

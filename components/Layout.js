@@ -6,7 +6,7 @@ import { Dropdown } from "react-bootstrap";
 import { AiOutlineMenu } from "react-icons/ai";
 import CustomToggle from "./customToggle";
 import Link from "next/link";
-import { Router } from "next/router";
+import Router from "next/router";
 
 class Layout extends React.Component {
   constructor(props) {
@@ -30,33 +30,33 @@ class Layout extends React.Component {
           <div className="d-flex" id="wrapper">
             <div className="bg-light border-right" id="sidebar-wrapper">
               <div className="sidebar-heading">
-                <Link href="enseignant">
-                  <a className="homeLink">SCHOOL ONLINE</a>
+                <Link href="/admin/enseignant">
+                  <a className="homeLink">SCHOOL LITE</a>
                 </Link>
               </div>
               <div className="list-group list-group-flush" id="menuLoading">
-                <Link href="cours">
+                <Link href="/admin/cours">
                   <a
                     className={`list-group-item list-group-item-action bg-light top`}
                   >
                     COURS
                   </a>
                 </Link>{" "}
-                <Link href="eleve">
+                <Link href="/admin/eleve">
                   <a
                     className={`list-group-item list-group-item-action bg-light `}
                   >
                     ELEVES
                   </a>
                 </Link>
-                <Link href="enseignant">
+                <Link href="/admin/enseignant">
                   <a
                     className={`list-group-item list-group-item-action bg-light `}
                   >
                     ENSEIGNANTS{" "}
                   </a>
                 </Link>
-                <Link href="programme">
+                <Link href="/admin/programme">
                   <a
                     className={`list-group-item list-group-item-action bg-light `}
                   >
@@ -77,7 +77,7 @@ class Layout extends React.Component {
                       placeholder="Rechercher..."
                       className="form-control"
                     />
-                    <a href="enseignant">
+                    <a href="/admin/enseignant">
                       <i className="fa fa-search"></i>
                     </a>
                   </form>
@@ -94,10 +94,13 @@ class Layout extends React.Component {
                       />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                      <Dropdown.Item>
-                        <Link href="/">
-                          <a>Déconnexion</a>
-                        </Link>
+                      <Dropdown.Item
+                        onClick={() => {
+                          localStorage.clear();
+                          Router.push("/");
+                        }}
+                      >
+                        Déconnexion
                       </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
