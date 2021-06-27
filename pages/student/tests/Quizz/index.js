@@ -26,7 +26,7 @@ class Quiz extends Component {
       welcomeMsg: false,
       quizPartEnd: false,
     };
-    this.state = initialState;
+    this.state = this.initialState;
     this.completQuiz = React.createRef();
   }
 
@@ -180,7 +180,7 @@ class Quiz extends Component {
       />
     ) : (
       <div>
-        <ProgressBar id={this.state.idQuestion} max={this.state.maxQuestion} />
+        <ProgressBar idQ={this.state.idQuestion} max={this.state.maxQuestion} />
         <h2>{this.state.question}</h2>
         {question}
         <button
