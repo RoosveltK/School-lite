@@ -14,7 +14,7 @@ import { IconContext } from "react-icons";
 import "react-toastify/dist/ReactToastify.css";
 import NextNprogress from "nextjs-progressbar";
 
-axios.defaults.baseURL = "http://school-lite-2002.herokuapp.com/";
+axios.defaults.baseURL = "https://school-lite-2002.herokuapp.com/";
 
 function MyApp({ Component, pageProps }) {
   return (
