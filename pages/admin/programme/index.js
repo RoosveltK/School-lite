@@ -20,16 +20,16 @@ class Programme extends React.Component {
     duree: 0,
     temps: 0,
     matiere: null,
-    user: 1,
+    user: 0,
   };
 
-  // componentDidMount() {
-  //   if (localStorage.getItem("access_token") != null) {
-  //     this.setState({ user: 1 });
-  //   } else {
-  //     Router.push("/");
-  //   }
-  // }
+  componentDidMount() {
+    if (localStorage.getItem("access_token") != null) {
+      this.setState({ user: 1 });
+    } else {
+      Router.push("/");
+    }
+  }
   handleSubmit = (e) => {
     e.preventDefault();
     const dataProgram = {

@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.css";
-import "../shared/App.css"
+import "../shared/App.css";
 import "../shared/style.css";
 import "../shared/style1.css";
 import "../shared/style2.css";

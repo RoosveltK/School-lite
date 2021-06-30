@@ -15,13 +15,13 @@ class Enseignant extends React.Component {
     super(props);
     this.state = {
       enseignant: this.props.teachers,
-      user: 1,
+      user: 0,
     };
   }
   componentDidMount() {
-    // if (localStorage.getItem("access_token") != null)
-    //   this.setState({ user: 1 });
-    // else Router.push("/");
+    if (localStorage.getItem("access_token") != null)
+      this.setState({ user: 1 });
+    else Router.push("/");
 
     $("#datatable").DataTable({
       searching: true,
@@ -40,7 +40,7 @@ class Enseignant extends React.Component {
   render() {
     return (
       <>
-        {this.state.user === 0 ? (
+        {this.state.user == 0 ? (
           <React.Fragment>
             <Head>
               <title>School Lite</title>

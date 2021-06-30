@@ -33,9 +33,7 @@ export default function ModalSelect({ recuperation, matiereNiveau }) {
                 id="matiere"
               >
                 {matiereNiveau.map((mat) => (
-                  <option value={mat.id}>
-                    {mat.classe.level.describe} - {mat.classe.speciality.letter}
-                  </option>
+                  <option value={mat.id}>{mat.classe}</option>
                 ))}
               </select>
             </div>
