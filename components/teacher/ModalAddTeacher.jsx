@@ -21,10 +21,30 @@ export default class ModalAddTeacher extends React.Component {
       classeDispo: this.props.classes,
       departementDispo: this.props.specialite,
       password: "admin",
+      tableClasse: [],
     };
   }
   handleClose = () => this.setState({ show: false });
   handleShow = () => this.setState({ show: true });
+
+  componentDidMount() {
+    let arrayC = [];
+    this.state.classeDispo.map((salle) => {
+      this.props.specialite.forEach((special) => {
+        this.props.level.map((lev) => {
+          if (salle.speciality == special.id && salle.level == lev.id) {
+            const info = {
+              id: salle.id,
+              describe: lev.describe,
+              letter: special.letter,
+            };
+            arrayC.push(info);
+            this.setState({ tableClasse: arrayC });
+          }
+        });
+      });
+    });
+  }
 
   handleCreate = async (event) => {
     event.preventDefault();
@@ -45,9 +65,12 @@ export default class ModalAddTeacher extends React.Component {
       .then(() => {
         toast.success("Enseignant crée avec succèss ");
         setTimeout(() => Router.reload(), 2000);
+        this.setState({ show: false });
       })
-      .catch((errr) => toast.error("Erreur lors de la création"));
-    this.setState({ show: false });
+      .catch((err) => {
+        if (err.response != undefined) toast.error(err.response.data.message);
+        else toast.error("Echec lors de la création l'enseignant");
+      });
   };
 
   render() {
@@ -155,11 +178,13 @@ export default class ModalAddTeacher extends React.Component {
                     }
                     multiple
                   >
-                    {this.state.classeDispo.map((salle) => (
-                      <option value={salle.id}>
-                        {salle.level.describe}- {salle.speciality.describe}
-                      </option>
-                    ))}
+                    {this.state.tableClasse.map((info) => {
+                      return (
+                        <option key={info.id} value={info.id}>
+                          {info.describe}- {info.letter}
+                        </option>
+                      );
+                    })}
                   </select>
                 </div>
                 <div>
@@ -172,7 +197,7 @@ export default class ModalAddTeacher extends React.Component {
                     required
                   >
                     {this.state.departementDispo.map((depart) => (
-                      <option value={depart.id}>{depart.describe}</option>
+                      <option value={depart.id}>{depart.letter}</option>
                     ))}
                   </select>
                 </div>
@@ -183,7 +208,11 @@ export default class ModalAddTeacher extends React.Component {
                   >
                     Fermer
                   </button>
-                  <button type="submit" className="btn color-titre-ajout">
+                  <button
+                    type="submit"
+                    onClick={this.handleCreate}
+                    className="btn color-titre-ajout"
+                  >
                     Valider
                   </button>
                 </div>

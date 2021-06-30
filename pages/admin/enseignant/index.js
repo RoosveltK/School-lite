@@ -55,6 +55,7 @@ class Enseignant extends React.Component {
                   <div className="col-12 header-card">
                     <span>ENSEIGNANTS({this.countTeacher()})</span>
                     <ModalAddTeacher
+                      level={this.props.level}
                       specialite={this.props.specialite}
                       classes={this.props.clas}
                     />
@@ -62,7 +63,6 @@ class Enseignant extends React.Component {
                 </header>
                 <section className="row">
                   <div className="col-12 content-card">
-
                     <table
                       id="datatable"
                       className="table-responsive-sm nowrap "
@@ -89,6 +89,7 @@ class Enseignant extends React.Component {
                             <InfoEnseignant
                               dataEnseignant={teacher}
                               specialite={this.props.specialite}
+                              level={this.props.level}
                               classe={this.props.clas}
                               departementPerso={this.props.departement}
                               key={teacher.id}
@@ -97,7 +98,6 @@ class Enseignant extends React.Component {
                         })}
                       </tbody>
                     </table>
-                    
                   </div>
                 </section>
               </div>
@@ -115,16 +115,24 @@ export async function getServerSideProps() {
     const classe = await axios.get(`api/school/classe`);
     const special = await axios.get(`api/school/speciality`);
     const departs = await axios.get(`api/user/departement`);
+    const niv = await axios.get(`api/school/level`);
 
     const specialite = special.data;
     const clas = classe.data;
     const teachers = teacher.data;
     const departement = departs.data;
-    return { props: { teachers, clas, specialite, departement } };
+    const level = niv.data;
+    return { props: { teachers, clas, specialite, departement, level } };
   } catch (err) {
     console.log(err);
     return {
-      props: { teachers: [], clas: [], specialite: [], departement: [] },
+      props: {
+        teachers: [],
+        clas: [],
+        specialite: [],
+        departement: [],
+        level: [],
+      },
     };
   }
 }

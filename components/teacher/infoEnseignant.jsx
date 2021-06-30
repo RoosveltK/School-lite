@@ -10,6 +10,7 @@ const InfoEnseignant = ({
   dataEnseignant,
   specialite,
   classe,
+  level,
   departementPerso,
 }) => {
   const { id, first_name, email, matricule, departement, classes, role } =
@@ -45,6 +46,7 @@ const InfoEnseignant = ({
                   enseignant={dataEnseignant}
                   specialite={specialite}
                   classe={classe}
+                  level={level}
                 />
                 <Dropdown.Divider />
                 <ModalDelete id={id} titre={"enseignant"} />

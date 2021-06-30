@@ -16,16 +16,14 @@ class Eleve extends React.Component {
     super(props);
     this.state = {
       eleve: this.props.students,
-      user: 1, //remettre a 0 pour verifier l'auth
-      count: 0,
+      user: 0,
     };
   }
   componentDidMount() {
-    // if (localStorage.getItem("access_token") != null)
-    //   this.setState({ user: 1 });
-    // else
-    //   Router.push("/");
-    //
+    if (localStorage.getItem("access_token") != null)
+      this.setState({ user: 1 });
+    else Router.push("/");
+
     $(document).ready(function () {
       $("#datatable").DataTable({
         searching: true,
@@ -37,15 +35,15 @@ class Eleve extends React.Component {
   }
   countStudent = () => {
     let countS = 0;
-    dataEleve.forEach((element) => {
-      if (element.role === 1) countS += 1;
+    this.state.eleve.forEach((element) => {
+      if (element.role == 1) countS += 1;
     });
     return countS;
   };
   render() {
     return (
       <>
-        {this.state.user === 0 ? (
+        {this.state.user == 0 ? (
           <React.Fragment>
             <Head>
               <title>School Lite</title>
@@ -60,6 +58,7 @@ class Eleve extends React.Component {
                   <div className="col-12 header-card">
                     <span>ELEVES({this.countStudent()})</span>
                     <ModalAddStudent
+                      level={this.props.level}
                       specialite={this.props.specialite}
                       classes={this.props.clas}
                     />
@@ -91,6 +90,8 @@ class Eleve extends React.Component {
                           <InfoEleve
                             dataEleve={student}
                             classeDispo={this.props.clas}
+                            specialite={this.props.specialite}
+                            level={this.props.level}
                             key={student.id}
                           />
                         ))}
@@ -112,14 +113,16 @@ export async function getServerSideProps() {
     const student = await axios.get(`api/user`);
     const classe = await axios.get(`api/school/classe`);
     const special = await axios.get(`api/school/speciality`);
+    const niv = await axios.get(`api/school/level`);
 
     const clas = classe.data;
     const students = student.data;
     const specialite = special.data;
+    const level = niv.data;
 
-    return { props: { students, clas, specialite } };
+    return { props: { students, clas, specialite, level } };
   } catch (err) {
-    return { props: { students: [], clas: [], specialite: [] } };
+    return { props: { students: [], clas: [], specialite: [], level: [] } };
   }
 }
 export default Eleve;

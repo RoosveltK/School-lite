@@ -19,10 +19,30 @@ export default class ModalAddStudent extends React.Component {
       matiereE: null,
       classeDispo: this.props.classes,
       password: "student",
+      tableClasse: [],
     };
   }
   handleClose = () => this.setState({ show: false });
   handleShow = () => this.setState({ show: true });
+
+  componentDidMount() {
+    let arrayC = [];
+    this.state.classeDispo.map((salle) => {
+      this.props.specialite.forEach((special) => {
+        this.props.level.map((lev) => {
+          if (salle.speciality == special.id && salle.level == lev.id) {
+            const info = {
+              id: salle.id,
+              describe: lev.describe,
+              letter: special.letter,
+            };
+            arrayC.push(info);
+            this.setState({ tableClasse: arrayC });
+          }
+        });
+      });
+    });
+  }
 
   handleCreate = async (event) => {
     event.preventDefault();
@@ -39,15 +59,16 @@ export default class ModalAddStudent extends React.Component {
     };
     console.log(data);
     axios
-      .post("api/user/", data)
+      .post(`api/user/`, data)
       .then(() => {
         toast.success("Elève crée avec succèss ");
         setTimeout(() => Router.reload(), 2000);
+        this.setState({ show: false });
       })
-      .catch((errr) => {
-        toast.error("Erreur lors de la création");
+      .catch((err) => {
+        if (err.response != undefined) toast.error(err.response.data.message);
+        else toast.error("Echec lors de la création de l'élève");
       });
-    this.setState({ show: false });
   };
 
   render() {
@@ -152,11 +173,16 @@ export default class ModalAddStudent extends React.Component {
                       })
                     }
                   >
-                    {this.state.classeDispo.map((salle) => (
-                      <option value={salle.id}>
-                        {salle.level.describe}- {salle.speciality.describe}
-                      </option>
-                    ))}
+                    <option value={null}>
+                      Veuillez sélèctionner la classe--{" "}
+                    </option>
+                    {this.state.tableClasse.map((info) => {
+                      return (
+                        <option key={info.id} value={info.id}>
+                          {info.describe}- {info.letter}
+                        </option>
+                      );
+                    })}
                   </select>
                 </div>
                 <div className="btnModal">
@@ -166,7 +192,11 @@ export default class ModalAddStudent extends React.Component {
                   >
                     Fermer
                   </button>
-                  <button type="submit" className="btn color-titre-ajout">
+                  <button
+                    onClick={this.handleCreate}
+                    type="submit"
+                    className="btn color-titre-ajout"
+                  >
                     Valider
                   </button>
                 </div>

@@ -17,10 +17,30 @@ export default class ModalEditTeacher extends React.Component {
       classe: this.props.enseignant.classes,
       gender: this.props.enseignant.gender,
       specialites: this.props.enseignant.departement,
+      tableClasse: [],
     };
   }
   handleClose = () => this.setState({ show: false });
   handleShow = () => this.setState({ show: true });
+
+  componentDidMount() {
+    let arrayC = [];
+    this.state.classeDispo.map((salle) => {
+      this.props.specialite.forEach((special) => {
+        this.props.level.map((lev) => {
+          if (salle.speciality == special.id && salle.level == lev.id) {
+            const info = {
+              id: salle.id,
+              describe: lev.describe,
+              letter: special.letter,
+            };
+            arrayC.push(info);
+            this.setState({ tableClasse: arrayC });
+          }
+        });
+      });
+    });
+  }
 
   handleModif = async (event) => {
     event.preventDefault();
@@ -38,13 +58,15 @@ export default class ModalEditTeacher extends React.Component {
       .then(() => {
         toast.success("Informations modifiés avec succès");
         setTimeout(() => Router.reload(), 2000);
+        this.setState({ show: false });
       })
-      .catch(() => {
-        toast.error(
-          "Erreur lors de la modification des informations de l'enseignant"
-        );
+      .catch((err) => {
+        if (err.response != undefined) toast.error(err.response.data.message);
+        else
+          toast.error(
+            "Echec lors de la modification des informations de l'enseignant"
+          );
       });
-    this.setState({ show: false });
   };
 
   render() {
@@ -152,11 +174,13 @@ export default class ModalEditTeacher extends React.Component {
                     value={this.state.classe}
                     multiple
                   >
-                    {this.props.classe.map((salle) => (
-                      <option value={salle.id}>
-                        {salle.level.describe}- {salle.speciality.describe}
-                      </option>
-                    ))}
+                    {this.state.tableClasse.map((info) => {
+                      return (
+                        <option key={info.id} value={info.id}>
+                          {info.describe}- {info.letter}
+                        </option>
+                      );
+                    })}
                   </select>
                 </div>
                 <div>
