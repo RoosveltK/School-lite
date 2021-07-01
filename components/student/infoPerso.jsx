@@ -32,14 +32,16 @@ const InfoPerso = ({ datas }) => {
       <tr>
         <th>Niveau</th>
         <td>
-          {speciality.map((elt) => {
-            if (elt.value == classes[0].level) return elt.name;
-          })}
+          {classes.length != 0
+            ? speciality.map((elt) => {
+                if (elt.value == classes[0].level) return elt.name;
+              })
+            : null}
         </td>
       </tr>{" "}
       <tr>
         <th>Série</th>
-        <td>{classes[0].speciality}</td>
+        <td>{classes.length != 0 ? classes[0].speciality : null}</td>
       </tr>
       {/* <tr>
         <th>Details</th>

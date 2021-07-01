@@ -4,11 +4,11 @@ import LayoutT from "../../../components/LayoutT";
 
 class Compte extends React.Component {
   state = {
-    user: JSON.parse(localStorage.getItem("teacherInfo")),
+    user:[],
   };
 
   componentDidMount() {
-    this.state.user = JSON.parse(localStorage.getItem("teacherInfo"));
+    // this.state.user = JSON.parse(localStorage.getItem("teacherInfo"));
     //this.setState({ user: res.data, isLoading: false }
   }
   render() {
@@ -33,7 +33,7 @@ class Compte extends React.Component {
                   />
                 </div>
                 <div className="infoCompte">
-                  <h3>
+                  {/* <h3>
                     {this.state.user.username}
                     <br />
                     {this.state.user.first_name}
@@ -43,7 +43,7 @@ class Compte extends React.Component {
                   <span> {this.state.user.matricule}</span>
                   <span className="badge rounded-pill bg-success">
                     {this.state.user.departement}
-                  </span>
+                  </span> */}
                 </div>
                 <hr />
               </div>
