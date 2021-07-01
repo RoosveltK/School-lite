@@ -19,29 +19,40 @@ export default class ModalAddTeacher extends React.Component {
       classe: [],
       matiereE: null,
       classeDispo: this.props.classes,
-      departementDispo: this.props.specialite,
+      departementDispo: [],
       password: "admin",
-      tableClasse: [],
+      levels: [
+        { value: "0", name: "Terminale" },
+        { value: "1", name: "Première" },
+        { value: "2", name: "Seconde" },
+        { value: "3", name: "Troisième" },
+        { value: "4", name: "Quatrième" },
+        { value: "5", name: "Cinquième" },
+        { value: "6", name: "Sixième" },
+      ],
+      tabClasse: [],
     };
   }
   handleClose = () => this.setState({ show: false });
   handleShow = () => this.setState({ show: true });
 
   componentDidMount() {
-    let arrayC = [];
-    this.state.classeDispo.map((salle) => {
-      this.props.specialite.forEach((special) => {
-        this.props.level.map((lev) => {
-          if (salle.speciality == special.id && salle.level == lev.id) {
-            const info = {
-              id: salle.id,
-              describe: lev.describe,
-              letter: special.letter,
-            };
-            arrayC.push(info);
-            this.setState({ tableClasse: arrayC });
-          }
-        });
+    let tab = [];
+    this.state.departementDispo = JSON.parse(
+      localStorage.getItem("departements")
+    );
+
+    this.state.classeDispo.map((infos) => {
+      this.state.levels.map((lev) => {
+        if (lev.value == infos.level) {
+          const info = {
+            id: infos.id,
+            level: lev.name,
+            speciality: infos.speciality,
+          };
+          tab.push(info);
+          this.setState({ tabClasse: tab });
+        }
       });
     });
   }
@@ -53,13 +64,14 @@ export default class ModalAddTeacher extends React.Component {
       username: this.state.username,
       email: this.state.email,
       matricule: this.state.matricule,
-      dep: parseInt(this.state.specialite),
+      departement: this.state.specialite,
       born_at: this.state.born_at,
       gender: this.state.gender,
-      role: 2,
+      role: "teach",
       classes: this.state.classe,
       password: this.state.password,
     };
+    console.log(data);
     axios
       .post("api/user/", data)
       .then(() => {
@@ -142,6 +154,7 @@ export default class ModalAddTeacher extends React.Component {
                     }
                     required
                   />
+
                   <div>
                     <label>Date de naissance</label>
                     <input
@@ -165,6 +178,7 @@ export default class ModalAddTeacher extends React.Component {
                     <option value={`F`}>féminin</option>
                   </select>
                 </div>
+
                 <div>
                   <label>Classe</label>
                   <select
@@ -178,17 +192,16 @@ export default class ModalAddTeacher extends React.Component {
                     }
                     multiple
                   >
-                    {this.state.tableClasse.map((info) => {
-                      return (
-                        <option key={info.id} value={info.id}>
-                          {info.describe}- {info.letter}
-                        </option>
-                      );
-                    })}
+                    {this.state.tabClasse.map((info) => (
+                      <option key={info.id} value={info.id}>
+                        {info.level}-{info.speciality}
+                      </option>
+                    ))}
                   </select>
                 </div>
+
                 <div>
-                  <label>Spécialité</label>
+                  <label>Départements</label>
                   <select
                     className="form-select"
                     onChange={(e) =>
@@ -197,7 +210,7 @@ export default class ModalAddTeacher extends React.Component {
                     required
                   >
                     {this.state.departementDispo.map((depart) => (
-                      <option value={depart.id}>{depart.letter}</option>
+                      <option value={depart.value}>{depart.name}</option>
                     ))}
                   </select>
                 </div>

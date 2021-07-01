@@ -19,27 +19,35 @@ export default class ModalAddStudent extends React.Component {
       matiereE: null,
       classeDispo: this.props.classes,
       password: "student",
-      tableClasse: [],
+      tabClasse: [],
+      levels: [
+        { value: "0", name: "Terminale" },
+        { value: "1", name: "Première" },
+        { value: "2", name: "Seconde" },
+        { value: "3", name: "Troisième" },
+        { value: "4", name: "Quatrième" },
+        { value: "5", name: "Cinquième" },
+        { value: "6", name: "Sixième" },
+      ],
     };
   }
   handleClose = () => this.setState({ show: false });
   handleShow = () => this.setState({ show: true });
 
   componentDidMount() {
-    let arrayC = [];
-    this.state.classeDispo.map((salle) => {
-      this.props.specialite.forEach((special) => {
-        this.props.level.map((lev) => {
-          if (salle.speciality == special.id && salle.level == lev.id) {
-            const info = {
-              id: salle.id,
-              describe: lev.describe,
-              letter: special.letter,
-            };
-            arrayC.push(info);
-            this.setState({ tableClasse: arrayC });
-          }
-        });
+    let tab = [];
+
+    this.state.classeDispo.map((infos) => {
+      this.state.levels.map((lev) => {
+        if (lev.value == infos.level) {
+          const info = {
+            id: infos.id,
+            level: lev.name,
+            speciality: infos.speciality,
+          };
+          tab.push(info);
+          this.setState({ tabClasse: tab });
+        }
       });
     });
   }
@@ -53,9 +61,10 @@ export default class ModalAddStudent extends React.Component {
       matricule: this.state.matricule,
       born_at: this.state.born_at,
       gender: this.state.gender,
-      role: 1,
+      role: "stud",
       classes: [this.state.classe],
       password: this.state.password,
+      departement: "stud",
     };
     console.log(data);
     axios
@@ -176,13 +185,11 @@ export default class ModalAddStudent extends React.Component {
                     <option value={null}>
                       Veuillez sélèctionner la classe--{" "}
                     </option>
-                    {this.state.tableClasse.map((info) => {
-                      return (
-                        <option key={info.id} value={info.id}>
-                          {info.describe}- {info.letter}
-                        </option>
-                      );
-                    })}
+                    {this.state.tabClasse.map((info) => (
+                      <option key={info.id} value={info.id}>
+                        {info.level}-{info.speciality}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div className="btnModal">

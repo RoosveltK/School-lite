@@ -1,24 +1,16 @@
 import React from "react";
-
+const speciality = [
+  { value: "0", name: "Terminale" },
+  { value: "1", name: "Première" },
+  { value: "2", name: "Seconde" },
+  { value: "3", name: "Troisième" },
+  { value: "4", name: "Quatrième" },
+  { value: "5", name: "Cinquième" },
+  { value: "6", name: "Sixième" },
+];
 const InfoPerso = ({ datas }) => {
-  const {
-    first_name,
-    classes,
-    email,
-    matricule,
-    departement,
-    username,
-    born_at,
-  } = datas;
-  const niveau = [
-    "Sixième",
-    "Cinquième",
-    "Quatrième",
-    "Troisième",
-    "Seconde",
-    "Première",
-    "Terminale",
-  ];
+  const { first_name, classes, email, matricule, username, born_at } = datas;
+
   return (
     <>
       <tr>
@@ -38,10 +30,18 @@ const InfoPerso = ({ datas }) => {
         <td>{born_at}</td>
       </tr>
       <tr>
-        <th>Spécialité</th>
-        <td>{departement}</td>
-      </tr>
+        <th>Niveau</th>
+        <td>
+          {speciality.map((elt) => {
+            if (elt.value == classes[0].level) return elt.name;
+          })}
+        </td>
+      </tr>{" "}
       <tr>
+        <th>Série</th>
+        <td>{classes[0].speciality}</td>
+      </tr>
+      {/* <tr>
         <th>Details</th>
         <td>
           {" "}
@@ -55,7 +55,7 @@ const InfoPerso = ({ datas }) => {
             return level;
           })}
         </td>
-      </tr>
+      </tr> */}
     </>
   );
 };

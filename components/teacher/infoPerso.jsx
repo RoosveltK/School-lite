@@ -1,7 +1,27 @@
-import React from "react";
-import { Dropdown } from "react-bootstrap";
+import React, { useState } from "react";
 
-const InfoPerso = ({ datas, departements }) => {
+const speciality = [
+  { value: "0", name: "Terminale" },
+  { value: "1", name: "Première" },
+  { value: "2", name: "Seconde" },
+  { value: "3", name: "Troisième" },
+  { value: "4", name: "Quatrième" },
+  { value: "5", name: "Cinquième" },
+  { value: "6", name: "Sixième" },
+];
+
+const departements = [
+  { value: "math", name: "Mathématique" },
+  { value: "phy", name: "Physique" },
+  { value: "chim", name: "Chimie" },
+  { value: "hist", name: "Histoire" },
+  { value: "svt", name: "Science" },
+  { value: "ecm", name: "ECM" },
+  { value: "eps", name: "Sport" },
+];
+
+const InfoPerso = ({ datas }) => {
+  const [tabState, setTable] = useState([]);
   const {
     first_name,
     classes,
@@ -12,6 +32,24 @@ const InfoPerso = ({ datas, departements }) => {
     departement,
   } = datas;
 
+  React.useEffect(() => {
+    let tab = [];
+    classes.map((clas) => {
+      speciality.map((elt) => {
+        if (elt.value == clas.level) {
+          const elts = {
+            name: elt.name,
+            special: clas.speciality,
+          };
+          tab.push(elts);
+        }
+      });
+    });
+    const tab1 = tab.sort(function (a, b) {
+      return a.name.localeCompare(b.name);
+    });
+    setTable(tab1);
+  }, []);
   return (
     <>
       <tr>
@@ -33,17 +71,17 @@ const InfoPerso = ({ datas, departements }) => {
       <tr>
         <th>Spécialité</th>
         <td>
-          {departements.map((depts) => {
-            if (depts.id == departement) return depts.name;
+          {departements.map((elt) => {
+            if (elt.value == departement) return elt.name;
           })}
         </td>
       </tr>
       <tr>
-        <th>Details</th>
+        <th>Classes</th>
         <td>
           <ul>
-            {classes.map((clas) => (
-              <li>{clas.level + "" + clas.speciality}</li>
+            {tabState.map((clas) => (
+              <li>{clas.name + " - " + clas.special}</li>
             ))}
           </ul>
         </td>
@@ -51,13 +89,5 @@ const InfoPerso = ({ datas, departements }) => {
     </>
   );
 };
-export async function getServerSideProps() {
-  try {
-    const departs = axios.get(`api/user/departement`);
-    departement = derparts.data;
-  } catch {
-    return { props: {} };
-  }
-}
 
 export default InfoPerso;

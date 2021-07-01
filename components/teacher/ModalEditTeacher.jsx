@@ -16,28 +16,41 @@ export default class ModalEditTeacher extends React.Component {
       born_at: this.props.enseignant.born_at,
       classe: this.props.enseignant.classes,
       gender: this.props.enseignant.gender,
-      specialites: this.props.enseignant.departement,
-      tableClasse: [],
+      classeDispo: this.props.classe,
+      departement: this.props.enseignant.departement,
+      departementDispo: [],
+      levels: [
+        { value: "0", name: "Terminale" },
+        { value: "1", name: "Première" },
+        { value: "2", name: "Seconde" },
+        { value: "3", name: "Troisième" },
+        { value: "4", name: "Quatrième" },
+        { value: "5", name: "Cinquième" },
+        { value: "6", name: "Sixième" },
+      ],
+      tabClasse: [],
     };
   }
   handleClose = () => this.setState({ show: false });
   handleShow = () => this.setState({ show: true });
 
   componentDidMount() {
-    let arrayC = [];
-    this.state.classeDispo.map((salle) => {
-      this.props.specialite.forEach((special) => {
-        this.props.level.map((lev) => {
-          if (salle.speciality == special.id && salle.level == lev.id) {
-            const info = {
-              id: salle.id,
-              describe: lev.describe,
-              letter: special.letter,
-            };
-            arrayC.push(info);
-            this.setState({ tableClasse: arrayC });
-          }
-        });
+    let tab = [];
+    this.state.departementDispo = JSON.parse(
+      localStorage.getItem("departements")
+    );
+
+    this.state.classeDispo.map((infos) => {
+      this.state.levels.map((lev) => {
+        if (lev.value == infos.level) {
+          const info = {
+            id: infos.id,
+            level: lev.name,
+            speciality: infos.speciality,
+          };
+          tab.push(info);
+          this.setState({ tabClasse: tab });
+        }
       });
     });
   }
@@ -50,7 +63,7 @@ export default class ModalEditTeacher extends React.Component {
       matricule: this.state.matricule,
       email: this.state.email,
       classes: this.state.classe,
-      departement: this.state.specialites,
+      departement: this.state.departement,
       born_at: this.state.born_at,
     };
     axios
@@ -174,27 +187,28 @@ export default class ModalEditTeacher extends React.Component {
                     value={this.state.classe}
                     multiple
                   >
-                    {this.state.tableClasse.map((info) => {
-                      return (
-                        <option key={info.id} value={info.id}>
-                          {info.describe}- {info.letter}
-                        </option>
-                      );
-                    })}
+                    {this.state.tabClasse.map((info) => (
+                      <option key={info.id} value={info.id}>
+                        {info.level}-{info.speciality}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div>
-                  <label>Spécialité</label>
+                  <label>Département</label>
                   <select
                     className="form-select"
                     onChange={(e) =>
                       this.setState({ specialite: e.target.value })
                     }
                     required
-                    value={this.state.specialites}
+                    value={this.state.departement}
                   >
-                    {this.props.specialite.map((depart) => (
-                      <option value={depart.id}>{depart.describe}</option>
+                    <option>
+                      Veuillez sélectionner le département de l'enseignant
+                    </option>
+                    {this.state.departementDispo.map((depart) => (
+                      <option value={depart.value}>{depart.name}</option>
                     ))}
                   </select>
                 </div>

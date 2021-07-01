@@ -6,7 +6,6 @@ import axios from "axios";
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $ from "jquery";
-import { dataPresence } from "../../../json/dataPresence";
 
 class Presence extends React.Component {
   state = {
@@ -14,6 +13,7 @@ class Presence extends React.Component {
   };
 
   componentDidMount() {
+    this.state.studentPresent = this.props.students;
     axios
       .get(`api/user/current_user`)
       .then((res) => this.setState({ user: res.data, isLoading: false }))
@@ -28,6 +28,13 @@ class Presence extends React.Component {
     });
   }
 
+  countStudent = () => {
+    let countS = 0;
+    this.state.studentPresent.map((element) => {
+      if (element.role == 1) countS += 1;
+    });
+    return countS;
+  };
   render() {
     return (
       <LayoutT title="Presence">
@@ -49,7 +56,7 @@ class Presence extends React.Component {
           <div className="mainCard">
             <header className="row">
               <div className="col-12 header-card">
-                <span>LISTE PRESENCE({dataPresence.length})</span>
+                <span>LISTE PRESENCE({this.countStudent()})</span>
               </div>
             </header>
             <section className="row">
@@ -74,7 +81,7 @@ class Presence extends React.Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {dataPresence.map((student) => (
+                    {this.state.studentPresent.map((student) => (
                       <InfoPresence dataStudent={student} key={student.id} />
                     ))}
                   </tbody>
@@ -85,6 +92,17 @@ class Presence extends React.Component {
         </div>
       </LayoutT>
     );
+  }
+}
+
+export async function getServerSideProps() {
+  try {
+    const student = await axios.get(`api/user`);
+    const students = student.data;
+
+    return { props: { students } };
+  } catch (err) {
+    return { props: { students: [] } };
   }
 }
 export default Presence;

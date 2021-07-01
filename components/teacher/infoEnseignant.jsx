@@ -6,31 +6,21 @@ import ModalDelete from "../ModalDelete";
 import ModalEditTeacher from "./ModalEditTeacher";
 import { BiDotsVertical } from "react-icons/bi";
 
-const InfoEnseignant = ({
-  dataEnseignant,
-  specialite,
-  classe,
-  level,
-  departementPerso,
-}) => {
+const InfoEnseignant = ({ dataEnseignant, classe }) => {
   const { id, first_name, email, matricule, departement, classes, role } =
     dataEnseignant;
 
   return (
     <>
-      {role == 2 ? (
+      {role == "teach" ? (
         <tr>
           <td>{matricule}</td>
           <td>{`${first_name.toUpperCase()}`}</td>
-          <td>
-            {departementPerso.map((dept) => {
-              if (dept.id == departement) return dept.name;
-            })}
-          </td>
+          <td>{departement}</td>
           <td>{email}</td>
           <td>
-            {classes.length !== 0
-              ? classes.map((clas) => clas.level + "/" + clas.speciality)
+            {classes.length != 0
+              ? classes.map((clas) => clas.level + "-" + clas.speciality + "/")
               : null}
           </td>
           <td className="contextual-menu survDropdown">
@@ -42,12 +32,7 @@ const InfoEnseignant = ({
                 <BiDotsVertical />
               </Dropdown.Toggle>
               <Dropdown.Menu className="options">
-                <ModalEditTeacher
-                  enseignant={dataEnseignant}
-                  specialite={specialite}
-                  classe={classe}
-                  level={level}
-                />
+                <ModalEditTeacher enseignant={dataEnseignant} classe={classe} />
                 <Dropdown.Divider />
                 <ModalDelete id={id} titre={"enseignant"} />
               </Dropdown.Menu>

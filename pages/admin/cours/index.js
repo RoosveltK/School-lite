@@ -1,8 +1,5 @@
 import React from "react";
 import Layout from "../../../components/Layout";
-import ModalCreateMatter from "../../../components/cours/ModalCreateMatter";
-import ModalCreateSpeciality from "../../../components/cours/ModalCreateSpeciality";
-import ModalCreateLevel from "../../../components/cours/ModalCreationLevel";
 import ModalCreateClass from "../../../components/cours/ModalCreateClass";
 import ModalSelect from "../../../components/cours/ModalSelect";
 import CustomToggle from "../../../components/customToggle";
@@ -86,14 +83,7 @@ class Cours extends React.Component {
                         </button>
                       </Dropdown.Toggle>
                       <Dropdown.Menu className="options">
-                        <ModalCreateSpeciality />
-                        <Dropdown.Divider />
-                        <ModalCreateLevel />
-                        <Dropdown.Divider />
-                        <ModalCreateClass
-                          niveau={this.props.niveau}
-                          specialite={this.props.specialite}
-                        />
+                        <ModalCreateClass />
                       </Dropdown.Menu>
                     </Dropdown>
                   </div>
@@ -162,24 +152,18 @@ class Cours extends React.Component {
 export async function getServerSideProps() {
   try {
     const classe = await axios.get(`api/school/classe`);
-    const special = await axios.get(`api/school/speciality`);
-    const niv = await axios.get(`api/school/level`);
     const lecon = await axios.get(`api/school/lecon`);
     const mat = await axios.get(`api/school/matter`);
 
     const matter = mat.data;
-    const specialite = special.data;
     const clas = classe.data;
-    const niveau = niv.data;
     const cours = lecon.data;
-    return { props: { clas, specialite, niveau, cours, matter } };
+    return { props: { clas, cours, matter } };
   } catch (err) {
     console.log(err);
     return {
       props: {
         clas: [],
-        specialite: [],
-        niveau: [],
         cours: [],
         matter: [],
       },

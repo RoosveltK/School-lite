@@ -9,7 +9,6 @@ import $ from "jquery";
 import Loader from "../../../components/Loader/LoaderWait";
 import Router from "next/router";
 import Head from "next/head";
-import { dataEleve } from "../../../json/dataEleve";
 
 class Eleve extends React.Component {
   constructor(props) {
@@ -32,11 +31,22 @@ class Eleve extends React.Component {
         columnDefs: [{ orderable: false, targets: [2, 3, 4, 5] }],
       });
     });
+
+    const speciality = [
+      { value: "0", name: "Terminale" },
+      { value: "1", name: "Première" },
+      { value: "2", name: "Seconde" },
+      { value: "3", name: "Troisième" },
+      { value: "4", name: "Quatrième" },
+      { value: "5", name: "Cinquième" },
+      { value: "6", name: "Sixième" },
+    ];
+    localStorage.setItem("specialities", JSON.stringify(speciality));
   }
   countStudent = () => {
     let countS = 0;
     this.state.eleve.forEach((element) => {
-      if (element.role == 1) countS += 1;
+      if (element.role == "stud") countS += 1;
     });
     return countS;
   };
@@ -57,11 +67,7 @@ class Eleve extends React.Component {
                 <header className="row">
                   <div className="col-12 header-card">
                     <span>ELEVES({this.countStudent()})</span>
-                    <ModalAddStudent
-                      level={this.props.level}
-                      specialite={this.props.specialite}
-                      classes={this.props.clas}
-                    />
+                    <ModalAddStudent classes={this.props.clas} />
                   </div>
                 </header>
                 <section className="row">
@@ -90,8 +96,6 @@ class Eleve extends React.Component {
                           <InfoEleve
                             dataEleve={student}
                             classeDispo={this.props.clas}
-                            specialite={this.props.specialite}
-                            level={this.props.level}
                             key={student.id}
                           />
                         ))}
@@ -112,17 +116,13 @@ export async function getServerSideProps() {
   try {
     const student = await axios.get(`api/user`);
     const classe = await axios.get(`api/school/classe`);
-    const special = await axios.get(`api/school/speciality`);
-    const niv = await axios.get(`api/school/level`);
 
     const clas = classe.data;
     const students = student.data;
-    const specialite = special.data;
-    const level = niv.data;
 
-    return { props: { students, clas, specialite, level } };
+    return { props: { students, clas } };
   } catch (err) {
-    return { props: { students: [], clas: [], specialite: [], level: [] } };
+    return { props: { students: [], clas: [] } };
   }
 }
 export default Eleve;

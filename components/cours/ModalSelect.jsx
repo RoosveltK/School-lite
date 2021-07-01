@@ -9,9 +9,13 @@ export default function ModalSelect({ recuperation, matiereNiveau }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    recuperation(matiere);
-    if (matiere == "") toast.error("Veuillez séléctionner une matière");
-    else setShow(false);
+
+    if (matiere == "")
+      toast.error("Veuillez séléctionner une matière et une classe");
+    else {
+      recuperation(matiere);
+      setShow(false);
+    }
   };
   const handleChange = (index) => {
     const datas = matiereNiveau[index];
@@ -23,6 +27,7 @@ export default function ModalSelect({ recuperation, matiereNiveau }) {
         show={show}
         onHide={handleClose}
         className="modalSuppression"
+        // backdrop="static"
         keyboard={false}
       >
         <Modal.Header className="color-titre-ajout">
@@ -31,12 +36,13 @@ export default function ModalSelect({ recuperation, matiereNiveau }) {
         <Modal.Body>
           <form>
             <div className="form-group">
-              <label htmlFor="matiere">Matière</label>
+              <label htmlFor="matiere">Matière - Classe</label>
               <select
                 className="form-select"
                 onChange={(e) => handleChange(e.target.value)}
                 id="matiere"
               >
+                <option>Veuillez séléctionner la matière et la classe</option>
                 {matiereNiveau.map((mat, index) => (
                   <option key={index} value={parseInt(index)}>
                     {mat.classe.level.describe} - {mat.classe.speciality.letter}

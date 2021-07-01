@@ -10,7 +10,7 @@ import { CgLogOut } from "react-icons/cg";
 import { MdSupervisorAccount } from "react-icons/md";
 import CustomToggle from "./customToggle";
 import Link from "next/link";
-import { Router } from "next/router";
+import Router from "next/router";
 const menuItems = ["COURS", "EVALUATION", "PRESENCE", "TESTS"];
 class Layout extends React.Component {
   constructor(props) {
@@ -116,15 +116,19 @@ class Layout extends React.Component {
                     <Dropdown.Menu>
                       <Dropdown.Item
                         onClick={() => {
-                          localStorage.clear();
-                          Router.push("/");
+                          Router.push("/teacher/compte");
                         }}
                       >
                         <MdSupervisorAccount size="20px" />
                         Compte
                       </Dropdown.Item>
                       <Dropdown.Divider />
-                      <Dropdown.Item>
+                      <Dropdown.Item
+                        onClick={() => {
+                          localStorage.clear();
+                          Router.push("/");
+                        }}
+                      >
                         {" "}
                         <CgLogOut size="20px" />
                         Déconnexion

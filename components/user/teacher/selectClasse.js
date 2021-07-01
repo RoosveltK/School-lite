@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import Link from "next/link";
+import React, { useState, useEffect } from "react";
 import { Modal, Button, Dropdown } from "react-bootstrap";
 import { toast } from "react-toastify";
 
-export default function ModalSelectClasse({ recuperation, classeTeacher }) {
+export default function ModalSelectClasse({ recuperation }) {
   const [show, setShow] = useState(true);
   const [classe, setClasse] = useState("");
+
+  const getClassInLocalStorage = () =>
+    JSON.parse(localStorage.getItem("teacherInfo"));
 
   const handleClose = () => setShow(false);
 
@@ -16,7 +18,13 @@ export default function ModalSelectClasse({ recuperation, classeTeacher }) {
   };
   return (
     <>
-      <Modal show={show} onHide={handleClose} className="modalSuppression">
+      <Modal
+        show={show}
+        onHide={handleClose}
+        className="modalSuppression"
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header className="color-titre-ajout">
           <Modal.Title>Selection de la Classe</Modal.Title>
         </Modal.Header>
@@ -30,7 +38,7 @@ export default function ModalSelectClasse({ recuperation, classeTeacher }) {
                 onChange={(e) => setClasse(e.target.value)}
                 id="niveau"
               >
-                <option value={`6e`}>6e </option>
+                <option>Veuillez séléctionner la classe</option>
                 <option value={`5e`}>5e</option>
                 <option value={`4e`}>4e</option>
                 <option value={`3e`}>3e</option>
@@ -41,9 +49,6 @@ export default function ModalSelectClasse({ recuperation, classeTeacher }) {
             </div>
           </form>
           <Modal.Footer>
-            <Button className="btn btn-secondary" onClick={handleClose}>
-              Fermer
-            </Button>
             <Button className="btn color-titre-ajout" onClick={handleSubmit}>
               Soumettre
             </Button>

@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Modal, Dropdown } from "react-bootstrap";
 import axios from "axios";
-import Router from "next/router";
 import { toast } from "react-toastify";
 
 export default class ModalCreateClass extends React.Component {
@@ -9,6 +8,23 @@ export default class ModalCreateClass extends React.Component {
     show: false,
     level: null,
     speciality: null,
+    levels: [
+      { value: "0", name: "Terminale" },
+      { value: "1", name: "Première" },
+      { value: "2", name: "Seconde" },
+      { value: "3", name: "Troisième" },
+      { value: "4", name: "Quatrième" },
+      { value: "5", name: "Cinquième" },
+      { value: "6", name: "Sixième" },
+    ],
+    specialities: [
+      { value: "C", name: "Mathématique" },
+      { value: "D", name: "Science" },
+      { value: "TI", name: "Informatique" },
+      { value: "ESP", name: "Espagnol" },
+      { value: "ALL", name: "Allemand" },
+      { value: "N", name: "Aucune" },
+    ],
   };
 
   handleClose = () => this.setState({ show: false });
@@ -16,19 +32,22 @@ export default class ModalCreateClass extends React.Component {
 
   handleCreate = async (event) => {
     event.preventDefault();
-    const data = {
-      level: parseInt(this.state.level),
-      speciality: parseInt(this.state.speciality),
-    };
-    console.log(data);
-    axios
-      .post("api/school/classe", data)
-      .then(() => toast.success("Classe crée avec succèss "))
-      .catch((errr) => {
-        console.log(errr);
-        toast.error("Erreur lors de la création");
-      });
-    this.setState({ show: false });
+    if (this.state.level != null && this.state.speciality != null) {
+      const data = {
+        level: this.state.level,
+        speciality: this.state.speciality,
+      };
+      axios
+        .post("api/school/classe", data)
+        .then(() => {
+          toast.success("Classe crée avec succèss ");
+          this.setState({ show: false });
+        })
+        .catch((errr) => {
+          console.log(errr);
+          toast.error("Erreur lors de la création");
+        });
+    }
   };
 
   render() {
@@ -60,8 +79,9 @@ export default class ModalCreateClass extends React.Component {
                   onChange={(e) => this.setState({ level: e.target.value })}
                   required
                 >
-                  {this.props.niveau.map((lev) => (
-                    <option value={lev.id}>{lev.describe}</option>
+                  <option>-------------------</option>
+                  {this.state.levels.map((lev) => (
+                    <option value={lev.value}>{lev.name}</option>
                   ))}
                 </select>
               </div>
@@ -74,8 +94,9 @@ export default class ModalCreateClass extends React.Component {
                   }
                   required
                 >
-                  {this.props.specialite.map((special) => (
-                    <option value={special.id}>{special.letter}</option>
+                  <option>-------------------</option>
+                  {this.state.specialities.map((special) => (
+                    <option value={special.value}>{special.name}</option>
                   ))}
                 </select>
               </div>

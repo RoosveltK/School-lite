@@ -9,6 +9,7 @@ import axios from "axios";
 const Login = () => {
   const [email, setEmail] = useState(" ");
   const [password, setPassword] = useState(" ");
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     const affiche = setInterval(Defile, 150);
@@ -19,6 +20,7 @@ const Login = () => {
   });
 
   const handleSubmit = async (event) => {
+    setLoading(true);
     event.preventDefault();
     const user = {
       client_id: "roosvelt",
@@ -42,15 +44,34 @@ const Login = () => {
           })
           .then((res) => {
             console.log(res.data);
-            if (res.data.role === 2) Router.push(`teacher/cours`);
-            if (res.data.role === null) Router.push(`admin/cours`);
-            if (res.data.role === 1) Router.push(`student/cours`);
+            if (res.data.role == "teach") {
+              localStorage.setItem("teacherInfo", JSON.stringify(res.data));
+              Router.push(`teacher/cours`);
+            }
+            if (res.data.role == "admin") {
+              localStorage.setItem("adminInfo", JSON.stringify(res.data));
+              Router.push(`admin/eleve`);
+            }
+            if (res.data.role == "stud") {
+              localStorage.setItem("studentInfo", JSON.stringify(res.data));
+              Router.push(`student/cours`);
+            }
           })
-          .catch((err) => console.log(err));
+          .catch((err) => {
+            if (err.response != undefined)
+              toast.error(err.response.data.message);
+            else
+              toast.error(
+                "Erreur lors de la connexion, vérifiez vos informations"
+              );
+            setLoading(false);
+          });
       })
       .catch((err) => {
-        console.log(err);
-        toast.error("Erreur lors de la connexion, vérifiez vos informations");
+        if (err.response != undefined) toast.error(err.response.data.message);
+        else
+          toast.error("Erreur lors de la connexion, vérifiez vos informations");
+        setLoading(false);
       });
   };
 
@@ -101,10 +122,19 @@ const Login = () => {
                   <label htmlFor="floatingPassword">Password</label>
                 </div>
               </div>
+              {isLoading ? (
+                <button disabled className="btn btn-success col-10 fw-bold">
+                  Veuillez patienter...
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="btn btn-success col-10 fw-bold"
+                >
+                  Sign In
+                </button>
+              )}
 
-              <button type="submit" className="btn btn-success col-10 fw-bold">
-                Sign In
-              </button>
               <p>
                 Mot de passe oublié ?{" "}
                 <a

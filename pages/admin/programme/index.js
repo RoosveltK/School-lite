@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "../../../components/Layout";
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
-import ModalSelectP from "../../../components/cours/ModalSelectP";
+import ModalSelect from "../../../components/cours/ModalSelect";
 import $ from "jquery";
 import axios from "axios";
 import { Button } from "react-bootstrap";
@@ -24,11 +24,11 @@ class Programme extends React.Component {
   };
 
   componentDidMount() {
-    if (localStorage.getItem("access_token") != null) {
-      this.setState({ user: 1 });
-    } else {
-      Router.push("/");
-    }
+    // if (localStorage.getItem("access_token") != null) {
+    //   this.setState({ user: 1 });
+    // } else {
+    //   Router.push("/");
+    // }
   }
   handleSubmit = (e) => {
     e.preventDefault();
@@ -63,10 +63,10 @@ class Programme extends React.Component {
   render() {
     return (
       <>
-        {this.state.user === 0 ? (
+        {this.state.user === 1 ? (
           <React.Fragment>
             <Head>
-              <title>School online</title>
+              <title>School Lite</title>
             </Head>
             <Loader />
           </React.Fragment>
@@ -81,7 +81,7 @@ class Programme extends React.Component {
                     </h3>
                   </div>
                 </header>
-                <ModalSelectP
+                <ModalSelect
                   recuperation={this.getInfo}
                   matiereNiveau={this.props.matter}
                 />
@@ -169,7 +169,7 @@ class Programme extends React.Component {
 
 export async function getServerSideProps() {
   try {
-    const mat = await axios.get(`api/school/matter`);
+    // const mat = await axios.get(`api/school/matter`);
     const matter = mat.data;
 
     return { props: { matter } };

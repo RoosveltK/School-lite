@@ -1,22 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Layout from "../../../components/Layout";
 import InfoPerso from "../../../components/teacher/infoPerso";
 import axios from "axios";
-import Loader from "../../../components/Loader/LoaderWait";
-import Router from "next/router";
-import Head from "next/head";
 
-function analyticPersonnel({ post, departement }) {
+
+function analyticPersonnel({ post }) {
   return (
     <>
-      {/* {user != null ? (
-        <React.Fragment>
-          <Head>
-            <title>School online</title>
-          </Head>
-          <Loader />
-        </React.Fragment>
-      ) : ( */}
       <Layout title={post.first_name}>
         <div className="container-fluid">
           <div className="mainCard">
@@ -37,11 +27,7 @@ function analyticPersonnel({ post, departement }) {
                   }}
                 >
                   <tbody>
-                    <InfoPerso
-                      departements={departement}
-                      datas={post}
-                      key={post.id}
-                    />
+                    <InfoPerso datas={post} key={post.id} />
                   </tbody>
                 </table>
               </div>
@@ -49,7 +35,6 @@ function analyticPersonnel({ post, departement }) {
           </div>
         </div>
       </Layout>
-      {/* )}{" "} */}
     </>
   );
 }
@@ -57,9 +42,8 @@ export async function getStaticProps({ params }) {
   try {
     const res = await axios.get(`api/user/${params.id}`);
     const post = res.data;
-    const departs = await axios.get(`api/user/departement`);
-    const departement = departs.data;
-    return { props: { post, departement } };
+
+    return { props: { post } };
   } catch (err) {
     console.log(err);
     return { props: { post: "" } };

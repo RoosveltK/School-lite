@@ -23,8 +23,8 @@ const InfoPresence = ({ dataStudent }) => {
     <>
       <tr>
         <td>{matricule}</td>
-        <td>{first_name}</td>
-        <td>{username}</td>
+        <td>{first_name.toUpperCase()}</td>
+        <td>{username.toLowerCase()}</td>
         <td class="centerContent">
           <input
             type="checkbox"

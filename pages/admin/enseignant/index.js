@@ -19,21 +19,34 @@ class Enseignant extends React.Component {
     };
   }
   componentDidMount() {
+    $(document).ready(function () {
+      $("#datatable").DataTable({
+        searching: true,
+        paging: false,
+        info: false,
+        columnDefs: [{ orderable: false, targets: [3, 5] }],
+      });
+    });
+
+    const departement = [
+      { value: "math", name: "Mathématique" },
+      { value: "phy", name: "Physique" },
+      { value: "chim", name: "Chimie" },
+      { value: "hist", name: "Histoire" },
+      { value: "svt", name: "Science" },
+      { value: "ecm", name: "ECM" },
+      { value: "eps", name: "Sport" },
+    ];
+    localStorage.setItem("departements", JSON.stringify(departement));
+
     if (localStorage.getItem("access_token") != null)
       this.setState({ user: 1 });
     else Router.push("/");
-
-    $("#datatable").DataTable({
-      searching: true,
-      paging: false,
-      info: false,
-      columnDefs: [{ orderable: false, targets: [3, 5] }],
-    });
   }
   countTeacher = () => {
     let countS = 0;
     this.state.enseignant.forEach((element) => {
-      if (element.role == 2) countS += 1;
+      if (element.role == "teach") countS += 1;
     });
     return countS;
   };
@@ -54,11 +67,7 @@ class Enseignant extends React.Component {
                 <header className="row">
                   <div className="col-12 header-card">
                     <span>ENSEIGNANTS({this.countTeacher()})</span>
-                    <ModalAddTeacher
-                      level={this.props.level}
-                      specialite={this.props.specialite}
-                      classes={this.props.clas}
-                    />
+                    <ModalAddTeacher classes={this.props.clas} />
                   </div>
                 </header>
                 <section className="row">
@@ -88,10 +97,7 @@ class Enseignant extends React.Component {
                           return (
                             <InfoEnseignant
                               dataEnseignant={teacher}
-                              specialite={this.props.specialite}
-                              level={this.props.level}
                               classe={this.props.clas}
-                              departementPerso={this.props.departement}
                               key={teacher.id}
                             />
                           );
@@ -113,25 +119,16 @@ export async function getServerSideProps() {
   try {
     const teacher = await axios.get(`api/user`);
     const classe = await axios.get(`api/school/classe`);
-    const special = await axios.get(`api/school/speciality`);
-    const departs = await axios.get(`api/user/departement`);
-    const niv = await axios.get(`api/school/level`);
 
-    const specialite = special.data;
     const clas = classe.data;
     const teachers = teacher.data;
-    const departement = departs.data;
-    const level = niv.data;
-    return { props: { teachers, clas, specialite, departement, level } };
+    return { props: { teachers, clas } };
   } catch (err) {
     console.log(err);
     return {
       props: {
         teachers: [],
         clas: [],
-        specialite: [],
-        departement: [],
-        level: [],
       },
     };
   }

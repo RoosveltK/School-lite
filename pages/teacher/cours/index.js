@@ -24,10 +24,8 @@ class Cours extends React.Component {
   }
 
   componentDidMount() {
-    // axios
-    //   .get(`api/user/current_user`)
-    //   .then((res) => this.setState({ user: res.data, isLoading: false }))
-    //   .catch(() => Router.push("/"));
+    this.state.user = JSON.parse(localStorage.getItem("teacherInfo"));
+    //this.setState({ user: res.data, isLoading: false }
   }
 
   handleSubmit = (event) => {
