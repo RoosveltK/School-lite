@@ -1,6 +1,5 @@
 import React from "react";
 import LayoutT from "../../../components/LayoutT";
-import ModalAddTest from "../../../components/user/teacher/ModalAddTest";
 import { SiGoogleclassroom } from "react-icons/si";
 
 const templateReponse = {

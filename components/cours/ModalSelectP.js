@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Modal, Button, Dropdown } from "react-bootstrap";
 import { toast } from "react-toastify";
-import Router from "next/router";
 
 export default function ModalSelect({ recuperation, matiereNiveau }) {
   const [show, setShow] = useState(true);
@@ -18,7 +17,12 @@ export default function ModalSelect({ recuperation, matiereNiveau }) {
   };
   return (
     <>
-      <Modal show={show} onHide={handleClose} className="modalSuppression">
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        className="modalSuppression"
+      >
         <Modal.Header className="color-titre-ajout">
           <Modal.Title>Selection Niveau et Matière</Modal.Title>
         </Modal.Header>

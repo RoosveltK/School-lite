@@ -22,9 +22,6 @@ class LayoutS extends React.Component {
     responsbar();
     respons();
   }
-  // _handleClick(menuItem) {
-  //   this.setState({ active: menuItem });
-  // }
 
   render() {
     return (
@@ -58,13 +55,6 @@ class LayoutS extends React.Component {
                     COURS{" "}
                   </a>
                 </Link>
-                {/* <Link href="/student/tests">
-                  <a
-                    className={`list-group-item list-group-item-action bg-light `}
-                  >
-                    TESTS
-                  </a>
-                </Link>{" "} */}
                 <Link href="/student/evaluation">
                   <a
                     className={`list-group-item list-group-item-action bg-light `}
@@ -109,7 +99,7 @@ class LayoutS extends React.Component {
                       />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                      <Dropdown.Item>
+                      {/* <Dropdown.Item>
                         <Link href="compte">
                           <a>
                             <MdSupervisorAccount size="20px" />
@@ -117,13 +107,11 @@ class LayoutS extends React.Component {
                           </a>
                         </Link>
                       </Dropdown.Item>
-                      <Dropdown.Divider />
+                      <Dropdown.Divider /> */}
                       <Dropdown.Item
                         onClick={() => {
                           localStorage.clear();
-                          setTimeout(() => {
-                            Router.push("/");
-                          }, 1000);
+                          Router.push("/");
                         }}
                       >
                         {" "}

@@ -28,14 +28,18 @@ class Enseignant extends React.Component {
       });
     });
 
-    const departement = [
+    const departements = [
       { value: "math", name: "Mathématique" },
       { value: "phy", name: "Physique" },
       { value: "chim", name: "Chimie" },
       { value: "hist", name: "Histoire" },
+      { value: "geo", name: "Géographie" },
+      { value: "en", name: "Anglais" },
+      { value: "fr", name: "Français" },
       { value: "svt", name: "Science" },
       { value: "ecm", name: "ECM" },
       { value: "eps", name: "Sport" },
+      { value: "inf", name: "Informatique" },
     ];
     localStorage.setItem("departements", JSON.stringify(departement));
 

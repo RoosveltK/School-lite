@@ -1,6 +1,4 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { GiTrophyCup } from "react-icons/gi";
-import axios from "axios";
 
 const QuizOver = React.forwardRef((props, ref) => {
   const { levelNames, score, maxQuestion, quizLevel, percent, loadNextLevel } =

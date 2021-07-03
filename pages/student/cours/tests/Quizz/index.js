@@ -3,11 +3,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { FaChevronRight } from "react-icons/fa";
 import ProgressBar from "../progressBar";
-import { Responses } from "../../../../../lib/responses";
-import { Questions } from "../../../../../lib/questions";
 import QuizOver from "../QuizOver";
-import { Table } from "react-bootstrap";
-import { MdIndeterminateCheckBox } from "react-icons/md";
 
 toast.configure();
 

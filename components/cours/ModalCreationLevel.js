@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Modal, Dropdown } from "react-bootstrap";
 import axios from "axios";
-import Router from "next/router";
 import { toast } from "react-toastify";
 
 export default class ModalCreateSpeciality extends React.Component {

@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { Dropdown } from "react-bootstrap";
-import axios from "axios";
 import { toast } from "react-toastify";
 
 const InfoPresence = ({ dataStudent }) => {
   const [cours, setCours] = useState(false);
   const [test, setTests] = useState(false);
-  const { id, first_name, username, email, matricule } = dataStudent;
+  const { id, first_name, username, email, matricule, role } = dataStudent;
 
   const handleNotify = (e, nom) => {
     if (nom == "cours") {
@@ -21,25 +19,28 @@ const InfoPresence = ({ dataStudent }) => {
   };
   return (
     <>
-      <tr>
-        <td>{matricule}</td>
-        <td>{first_name.toUpperCase()}</td>
-        <td>{username.toLowerCase()}</td>
-        <td class="centerContent">
-          <input
-            type="checkbox"
-            name="cours"
-            onChange={(e) => handleNotify(e, "cours")}
-          />
-        </td>
-        <td class="centerContent">
-          <input
-            type="checkbox"
-            name="tests"
-            onChange={(e) => handleNotify(e, "tests")}
-          />
-        </td>
-      </tr>
+      {role == "stud" ? (
+        <tr>
+          <td>{matricule}</td>
+          <td>
+            {first_name.toUpperCase()} {username.toUpperCase()}
+          </td>
+          <td class="centerContent">
+            <input
+              type="checkbox"
+              name="cours"
+              onChange={(e) => handleNotify(e, "cours")}
+            />
+          </td>
+          <td class="centerContent">
+            <input
+              type="checkbox"
+              name="tests"
+              onChange={(e) => handleNotify(e, "tests")}
+            />
+          </td>
+        </tr>
+      ) : null}
     </>
   );
 };

@@ -15,6 +15,3 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 ));
 
 export default CustomToggle;
-
-// Pour icon menu deroulant
-// &#x25bc;

@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import Link from "next/link";
-import { Modal, Button, Dropdown } from "react-bootstrap";
-import { toast } from "react-toastify";
-import Router from "next/router";
+import { Modal, Button } from "react-bootstrap";
 
 export default function ModalSelectTest({ recuperation }) {
   const [show, setShow] = useState(true);

@@ -2,14 +2,40 @@ import Image from "next/image";
 import React from "react";
 import LayoutT from "../../../components/LayoutT";
 
+const classeDispo = [
+  { value: "0", name: "Terminale" },
+  { value: "1", name: "Première" },
+  { value: "2", name: "Seconde" },
+  { value: "3", name: "Troisième" },
+  { value: "4", name: "Quatrième" },
+  { value: "5", name: "Cinquième" },
+  { value: "6", name: "Sixième" },
+];
+
 class Compte extends React.Component {
   state = {
-    user:[],
+    user: null,
+    classe: [],
   };
 
   componentDidMount() {
-    // this.state.user = JSON.parse(localStorage.getItem("teacherInfo"));
-    //this.setState({ user: res.data, isLoading: false }
+    const infoUser = JSON.parse(localStorage.getItem("teacherInfo"));
+    const info = {
+      username: infoUser.username,
+      first_name: infoUser.first_name,
+      matricule: infoUser.matricule,
+      born_at: infoUser.born_at,
+      email: infoUser.email,
+    };
+
+    this.setState({ user: info });
+    let tab = infoUser.classes;
+    tab.forEach((elt) => {
+      classeDispo.forEach((element) => {
+        if (element.value == elt.level) elt.level = element.name;
+      });
+    });
+    this.setState({ classe: tab });
   }
   render() {
     const couleur = {
@@ -32,36 +58,44 @@ class Compte extends React.Component {
                     height={200}
                   />
                 </div>
-                <div className="infoCompte">
-                  {/* <h3>
-                    {this.state.user.username}
-                    <br />
-                    {this.state.user.first_name}
-                  </h3>
-                  <span> {this.state.user.email}</span>
-                  <span> {this.state.user.born_at}</span>
-                  <span> {this.state.user.matricule}</span>
-                  <span className="badge rounded-pill bg-success">
-                    {this.state.user.departement}
-                  </span> */}
-                </div>
-                <hr />
+                {this.state.user != null ? (
+                  <div className="infoCompte">
+                    <h3>
+                      {this.state.user.username.toUpperCase()}
+                      <br />
+                      {this.state.user.first_name.toUpperCase()}
+                    </h3>
+                    <span> {this.state.user.email}</span>
+                    <span> {this.state.user.born_at}</span>
+                    <span> {this.state.user.matricule}</span>
+                    <span className="badge rounded-pill bg-success">
+                      {this.state.user.departement}
+                    </span>
+                  </div>
+                ) : null}
               </div>
             </section>
-            {/* <section className="row">
-              {this.state.user.classes.map((info) => (
-                <React.Fragment>
-                  <h2>{info.level - info.speciality}</h2>
-                  <div>
-                    <button className="btn boutonStat">COURS</button>
-                    <button className="btn boutonStat">TEST</button>
-                    <button className="btn boutonStat">EVALUATION</button>
-                  </div>
-                </React.Fragment>
-              ))}
-            </section> */}
             <hr />
-            <hr />{" "}
+            <section className="row">
+              {this.state.classe != null ? (
+                <React.Fragment>
+                  {this.state.classe.map((info) => (
+                    <React.Fragment>
+                      <h2>
+                        {info.level} - {info.speciality}
+                      </h2>
+                      <div>
+                        <button className="btn boutonStat">COURS</button>
+                        <button className="btn boutonStat" disabled>
+                          EVALUATION
+                        </button>
+                      </div>
+                    </React.Fragment>
+                  ))}
+                </React.Fragment>
+              ) : null}
+            </section>
+            <hr />
           </div>
         </div>
       </LayoutT>

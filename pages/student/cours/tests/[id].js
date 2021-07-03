@@ -8,7 +8,13 @@ const Test = ({ program, quiz }) => {
     <LayoutS title="Test">
       <div className="container-fluid">
         <div className="mainCard">
-          <Quizz quiz={quiz} />
+          {quiz == "" ? (
+            <div className="textCours text-secondary">
+              TEST PAS ENCORE DISPONIBLE
+            </div>
+          ) : (
+            <Quizz quiz={quiz} />
+          )}
         </div>
       </div>
     </LayoutS>

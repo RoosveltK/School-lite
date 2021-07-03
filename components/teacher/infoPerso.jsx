@@ -15,9 +15,13 @@ const departements = [
   { value: "phy", name: "Physique" },
   { value: "chim", name: "Chimie" },
   { value: "hist", name: "Histoire" },
+  { value: "geo", name: "Géographie" },
+  { value: "en", name: "Anglais" },
+  { value: "fr", name: "Français" },
   { value: "svt", name: "Science" },
   { value: "ecm", name: "ECM" },
   { value: "eps", name: "Sport" },
+  { value: "inf", name: "Informatique" },
 ];
 
 const InfoPerso = ({ datas }) => {

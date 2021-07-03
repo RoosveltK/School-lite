@@ -44,6 +44,7 @@ class Cours extends React.Component {
       .then(() => {
         this.setState({ content: "" });
         toast.success("Cours ajouté avec succès");
+        Router.push("/teacher/compte");
       })
       .catch((err) => {
         if (err.response != undefined) toast.error(err.response.data.error);

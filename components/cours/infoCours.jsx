@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { Dropdown, Button } from "react-bootstrap";
-import CustomToggle from "../customToggle";
 import Link from "next/link";
 import axios from "axios";
 import { toast } from "react-toastify";

@@ -141,10 +141,10 @@ export default class ModalSelectClasse extends React.Component {
                     <option>------------------ </option>
                   )}
                   {this.state.program.map((prog) => (
-                        <option key={prog.id} value={JSON.stringify(prog)}>
-                          {prog.title}
-                        </option>
-                      ))}
+                    <option key={prog.id} value={JSON.stringify(prog)}>
+                      {prog.title}
+                    </option>
+                  ))}
                 </select>
               </div>
             </form>

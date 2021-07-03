@@ -336,9 +336,20 @@ class Tests extends React.Component {
                 })}
                 <div className="col-12 header-card">
                   <span></span>
-                  <button type="submit" className="btn review bntTeacher ">
-                    {this.state.isLoading ? `Veuillez patienter` : `Soumettre`}
-                  </button>
+
+                  {this.state.isLoading ? (
+                    <button
+                      disabled
+                      type="submit"
+                      className="btn review bntTeacher "
+                    >
+                      Patienter...
+                    </button>
+                  ) : (
+                    <button type="submit" className="btn review bntTeacher ">
+                      Soumettre
+                    </button>
+                  )}
                 </div>
               </form>
             </section>

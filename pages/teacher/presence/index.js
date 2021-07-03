@@ -9,21 +9,22 @@ import $ from "jquery";
 
 class Presence extends React.Component {
   state = {
-    studentPresent: [],
+    studentPresent: this.props.students,
   };
 
   componentDidMount() {
-    this.state.studentPresent = this.props.students;
+    //this.state.studentPresent = this.props.students;
     axios
       .get(`api/user/current_user`)
       .then((res) => this.setState({ user: res.data, isLoading: false }))
       .catch((err) => console.log(err));
+
     $(document).ready(function () {
       $("#datatable").DataTable({
         searching: true,
         paging: false,
         info: false,
-        columnDefs: [{ orderable: false, targets: [3, 4] }],
+        columnDefs: [{ orderable: false, targets: [2, 3] }],
       });
     });
   }
@@ -31,7 +32,7 @@ class Presence extends React.Component {
   countStudent = () => {
     let countS = 0;
     this.state.studentPresent.map((element) => {
-      if (element.role == 1) countS += 1;
+      if (element.role == "stud") countS += 1;
     });
     return countS;
   };
@@ -43,14 +44,6 @@ class Presence extends React.Component {
             <SiGoogleclassroom size="20px" /> <span>Classe 5</span>
           </div>
           <div id="triangle"></div>
-          <h3 className="form-group">
-            Titre :{" "}
-            <select className="form-select">
-              <option>Equations</option>
-              <option>.</option>
-              <option>..</option>
-            </select>
-          </h3>
         </div>
         <div className="container-fluid">
           <div className="mainCard">
@@ -75,9 +68,8 @@ class Presence extends React.Component {
                     <tr>
                       <th>Matricule</th>
                       <th>Nom</th>
-                      <th>Prénom</th>
-                      <th class="centerContent">Cours</th>
-                      <th class="centerContent">Test</th>
+                      <th className="centerContent">Cours</th>
+                      <th className="centerContent">Test</th>
                     </tr>
                   </thead>
                   <tbody>

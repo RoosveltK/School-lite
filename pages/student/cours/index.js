@@ -2,17 +2,20 @@ import React, { Component } from "react";
 import LayoutS from "../../../components/LayoutS";
 import CadreCours from "../../../components/user/student/cadreCours";
 import axios from "axios";
+
 const departement = [
   { value: "math", name: "Mathématique" },
   { value: "phy", name: "Physique" },
   { value: "chim", name: "Chimie" },
   { value: "hist", name: "Histoire" },
+  { value: "geo", name: "Géographie" },
+  { value: "en", name: "Anglais" },
+  { value: "fr", name: "Français" },
   { value: "svt", name: "Science" },
   { value: "ecm", name: "ECM" },
   { value: "eps", name: "Sport" },
-  { value: "eng", name: "Anglais" },
+  { value: "inf", name: "Informatique" },
 ];
-
 class Cours extends Component {
   state = {
     allLecon: [],
