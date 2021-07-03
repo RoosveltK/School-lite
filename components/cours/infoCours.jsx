@@ -11,8 +11,8 @@ const InfoCours = ({ dataCours }) => {
   const handleChange = (e) => {
     setVal(e.target.checked);
     axios.get(`api/school/active_or_desactive/${id}`).then(() => {
-      if (e.target.checked) toast.success(`Programme activé`);
-      else toast.warning(`Programme désactivé`);
+      if (e.target.checked) toast.success(`Leçon activée`);
+      else toast.warning(`Leçon désactivée`);
     });
   };
   return (
@@ -29,7 +29,7 @@ const InfoCours = ({ dataCours }) => {
           />
         </td>
         <td>
-          {status === true ? (
+          {status == true ? (
             <React.Fragment>
               <Link href={`/admin/cours/test/${id}`} key={id}>
                 <a className="badge rounded-pill bg-success badgeCours">Test</a>

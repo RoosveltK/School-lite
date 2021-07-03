@@ -119,6 +119,8 @@ class Tests extends React.Component {
       numQuestion: 4,
       chapitre: null,
       classe: null,
+      lecon: null,
+      isLoading: false,
     };
   }
   componentDidUpdate(prevProps, prevState) {
@@ -171,6 +173,17 @@ class Tests extends React.Component {
         tabQuestion: tab,
       });
     }
+
+    if (prevState.chapitre != this.state.chapitre) {
+      axios
+        .get(`api/school/lecon_by_program/${this.state.chapitre.id}`)
+        .then((res) => this.setState({ lecon: res.data }))
+        .catch(() =>
+          toast.error(
+            `Désolé vous ne pouvez pas créer de test car il semblerait que le cours n'éxiste pas encore`
+          )
+        );
+    }
   }
 
   handleQuestion = (event, index) => {
@@ -193,26 +206,36 @@ class Tests extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.state.tabQuestion.forEach((element) => {
-      axios
-        .post(`api/school/question`, {
-          lesson: 1,
-          content: element.question,
-        })
-        .then((res) => {
-          element.reponses.forEach((rep) => {
-            axios.post(`api/school/reponse`, {
-              question: res.data.id,
-              content: rep.rep,
-              verify: rep.valeur,
+
+    if (this.state.lecon != null) {
+      this.setState({ isLoading: true });
+      this.state.tabQuestion.forEach((element) => {
+        axios
+          .post(`api/school/question`, {
+            lesson: this.state.lecon.id,
+            content: element.question,
+          })
+          .then((res) => {
+            element.reponses.forEach((rep) => {
+              axios.post(`api/school/reponse`, {
+                question: res.data.id,
+                content: rep.rep,
+                verify: rep.valeur,
+              });
             });
-          });
-          toast.success(`Question ${element.id} crée avec succès`);
-        })
-        .catch(() =>
-          toast.error(`Echec lors de la création de la question ${element.id} `)
-        );
-    });
+            toast.success(`Question ${element.id} crée avec succès`);
+          })
+          .catch(() =>
+            toast.error(
+              `Echec lors de la création de la question ${element.id} `
+            )
+          )
+          .finally(() => this.setState({ isLoading: false }));
+      });
+    } else
+      toast.error(
+        "Veuillez d'abord ajouter la leçon avant de pouvoir créer ce test"
+      );
   };
 
   getInfo = (chap, classes) => {
@@ -314,7 +337,7 @@ class Tests extends React.Component {
                 <div className="col-12 header-card">
                   <span></span>
                   <button type="submit" className="btn review bntTeacher ">
-                    Soumettre
+                    {this.state.isLoading ? `Veuillez patienter` : `Soumettre`}
                   </button>
                 </div>
               </form>

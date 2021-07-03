@@ -76,7 +76,6 @@ export default class ModalSelectClasse extends React.Component {
           onHide={this.handleClose}
           className="modalSuppression"
           backdrop="static"
-          keyboard={false}
         >
           <Modal.Header className="color-titre-ajout">
             <Modal.Title>Selection de la Classe</Modal.Title>

@@ -13,7 +13,6 @@ import { Dropdown } from "react-bootstrap";
 import Loader from "../../../components/Loader/LoaderWait";
 import Router from "next/router";
 import Head from "next/head";
-import { dataCours } from "../../../json/dataCours";
 
 class Cours extends React.Component {
   state = {
@@ -25,28 +24,20 @@ class Cours extends React.Component {
     matiere: null,
     niveau: null,
     specialite: null,
-    user: 1,
+    user: 0,
     programme: [],
+    chapitre: null,
+    classe: null,
   };
 
   componentDidMount() {
-    // if (localStorage.getItem("access_token") != null) {
-    //   this.setState({ user: 1 });
-    // } else {
-    //   Router.push("/");
-    // }
-    // $(document).ready(function () {
-    //   $("#datatable").DataTable({
-    //     searching: true,
-    //     paging: false,
-    //     info: false,
-    //     columnDefs: [{ orderable: false, targets: [2, 3] }],
-    //   });
-    // });
+    if (localStorage.getItem("access_token") != null)
+      this.setState({ user: 1 });
+    else Router.push("/");
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.matiere !== prevState.matiere) {
+    if (prevState.matiere != this.state.matiere) {
       axios
         .get(`api/school/program_by_matter/${this.state.matiere.id}`)
         .then((res) => {
@@ -55,13 +46,14 @@ class Cours extends React.Component {
         .catch((err) => console.log(err));
     }
   }
-  getInfo = (matiere) => {
+  getInfo = (classes, matiere) => {
+    this.setState({ classe: classes });
     this.setState({ matiere: matiere });
   };
   render() {
     return (
       <>
-        {this.state.user === 0 ? (
+        {this.state.user == 0 ? (
           <React.Fragment>
             <Head>
               <title>School Lite</title>
@@ -87,27 +79,24 @@ class Cours extends React.Component {
                       </Dropdown.Menu>
                     </Dropdown>
                   </div>
-                  {/* <div className="col-12 titreCours">
-                    Matière :{this.state.matiere} <br />
-                  </div> */}
-                  {/* <div className="col-4 titreCours">
-                    Spécialité :
-                    {this.state.matiere === null
+                  <div className="col-4 titreCours">
+                    Classe:
+                    {this.state.classe == null
                       ? null
-                      : this.state.matiere.classe.speciality.describe}{" "}
+                      : `${this.state.classe.level}-${this.state.classe.speciality}`}{" "}
                     <br />
                   </div>{" "}
                   <div className="col-4 titreCours">
-                    Niveau :
-                    {this.state.matiere === null
+                    Matière:
+                    {this.state.matiere == null
                       ? null
-                      : this.state.matiere.classe.level.describe}{" "}
+                      : this.state.matiere.matter}{" "}
                     <br />
-                  </div> */}
+                  </div>
                 </header>
                 <ModalSelect
-                  recuperation={this.getInfo}
-                  matiereNiveau={this.props.matter}
+                  classes={this.props.clas}
+                  getChapterAndClass={this.getInfo}
                 />
                 <section className="row">
                   <div className="col-12 content-card">
@@ -132,7 +121,7 @@ class Cours extends React.Component {
                         </tr>
                       </thead>
                       <tbody>
-                        {dataCours.map((program) => {
+                        {this.state.programme.map((program) => {
                           return (
                             <InfoCours dataCours={program} key={program.id} />
                           );

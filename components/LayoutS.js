@@ -10,10 +10,7 @@ import { CgLogOut } from "react-icons/cg";
 import { MdSupervisorAccount } from "react-icons/md";
 import CustomToggle from "./customToggle";
 import Link from "next/link";
-import { Router } from "next/router";
-
-const menuItems = ["COURS", "EVALUATION", "PRESENCE", "TESTS"];
-const Matieres = ["MATHEMATIQUE", "ANGLAIS", "FRANCAIS", "GEOGRAPHIE", "HISTOIRE", "ECM", "INFORMATIQUE"];
+import Router from "next/router";
 
 class LayoutS extends React.Component {
   constructor(props) {
@@ -43,7 +40,6 @@ class LayoutS extends React.Component {
                 <Link href="/">
                   <a className="homeLink">
                     <Image
-                      className=""
                       src="/static/school.png"
                       alt="pic profile"
                       width={30}
@@ -62,13 +58,13 @@ class LayoutS extends React.Component {
                     COURS{" "}
                   </a>
                 </Link>
-                <Link href="/student/tests">
+                {/* <Link href="/student/tests">
                   <a
                     className={`list-group-item list-group-item-action bg-light `}
                   >
                     TESTS
                   </a>
-                </Link>{" "}
+                </Link>{" "} */}
                 <Link href="/student/evaluation">
                   <a
                     className={`list-group-item list-group-item-action bg-light `}
@@ -122,7 +118,14 @@ class LayoutS extends React.Component {
                         </Link>
                       </Dropdown.Item>
                       <Dropdown.Divider />
-                      <Dropdown.Item>
+                      <Dropdown.Item
+                        onClick={() => {
+                          localStorage.clear();
+                          setTimeout(() => {
+                            Router.push("/");
+                          }, 1000);
+                        }}
+                      >
                         {" "}
                         <CgLogOut size="20px" />
                         Déconnexion
@@ -141,23 +144,5 @@ class LayoutS extends React.Component {
     );
   }
 }
-
-/*
-
-                <Link href="/student/tests">
-                  <a
-                    className={`list-group-item list-group-item-action bg-light `}
-                  >
-                    TESTS
-                  </a>
-                </Link>{" "}
-                <Link href="/student/evaluation">
-                  <a
-                    className={`list-group-item list-group-item-action bg-light `}
-                  >
-                    EVALUATION{" "}
-                  </a>
-                </Link>
-*/
 
 export default LayoutS;

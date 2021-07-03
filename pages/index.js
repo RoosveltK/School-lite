@@ -43,7 +43,6 @@ const Login = () => {
             },
           })
           .then((res) => {
-            console.log(res.data);
             if (res.data.role == "teach") {
               localStorage.setItem("teacherInfo", JSON.stringify(res.data));
               Router.push(`teacher/cours`);
@@ -58,17 +57,15 @@ const Login = () => {
             }
           })
           .catch((err) => {
-            if (err.response != undefined)
-              toast.error(err.response.data.message);
-            else
-              toast.error(
-                "Erreur lors de la connexion, vérifiez vos informations"
-              );
+            toast.error(
+              "Erreur lors de la connexion, vérifiez vos informations ou votre connexion internet"
+            );
             setLoading(false);
           });
       })
       .catch((err) => {
-        if (err.response != undefined) toast.error(err.response.data.message);
+        if (err.response != undefined)
+          toast.error(err.response.data.error_description);
         else
           toast.error("Erreur lors de la connexion, vérifiez vos informations");
         setLoading(false);

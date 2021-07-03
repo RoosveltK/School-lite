@@ -126,7 +126,9 @@ class Layout extends React.Component {
                       <Dropdown.Item
                         onClick={() => {
                           localStorage.clear();
-                          Router.push("/");
+                          setTimeout(() => {
+                            Router.push("/");
+                          }, 1000);
                         }}
                       >
                         {" "}

@@ -20,7 +20,7 @@ function TestPerso({ recuperation }) {
                     <u style={{ fontWeight: 800 }}>Propositions:</u>{" "}
                   </h4>
                   <div className="caderViewTest__response">
-                    {recup.response.map((rep, index) => {
+                    {recup.response.map((rep) => {
                       return (
                         <h4>
                           <span>
@@ -48,11 +48,11 @@ function TestPerso({ recuperation }) {
 export async function getStaticProps({ params }) {
   try {
     const recup = await axios.get(`api/school/lecon_test/${params}`);
-    let recuperation = recup.data;
+    const recuperation = recup.data;
     return {
       props: { recuperation },
     };
-  } catch {
+  } catch (err) {
     return {
       props: {
         recuperation: [],
@@ -62,7 +62,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const res = await axios.get(`api/school/lecon`);
+  const res = await axios.get(`api/school/program`);
   const posts = res.data;
   try {
     const paths = posts.map((post) => `/admin/cours/test/${post.id}`);
@@ -71,4 +71,5 @@ export async function getStaticPaths() {
     console.log(err);
   }
 }
+
 export default TestPerso;

@@ -1,18 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Modal, Button } from "react-bootstrap";
-import { toast } from "react-toastify";
-
-const departement = [
-  { value: "math", name: "Mathématique" },
-  { value: "phy", name: "Physique" },
-  { value: "chim", name: "Chimie" },
-  { value: "hist", name: "Histoire" },
-  { value: "svt", name: "Science" },
-  { value: "ecm", name: "ECM" },
-  { value: "eps", name: "Sport" },
-  { value: "eng", name: "Anglais" },
-];
-
+import React from "react";
+import { Modal, Button, Dropdown } from "react-bootstrap";
+import axios from "axios";
 const classeDispo = [
   { value: "0", name: "Terminale" },
   { value: "1", name: "Première" },
@@ -22,97 +10,120 @@ const classeDispo = [
   { value: "5", name: "Cinquième" },
   { value: "6", name: "Sixième" },
 ];
-export default function ModalSelect({ recuperation, matiereNiveau, classes }) {
-  const [show, setShow] = useState(true);
-  const [matiere, setMatiere] = useState(null);
-  const [tabContent, setTabContent] = useState([]);
+export default class ModalSelect extends React.Component {
+  state = {
+    show: true,
+    classe: [],
+    matiere: [],
+    program: [],
+    selectClass: null,
+    selectMatter: null,
+    selectProgram: null,
+  };
 
-  const handleClose = () => setShow(false);
+  componentDidMount() {
+    const tab = this.props.classes;
 
-  useEffect(() => {
-    let tab = [];
-    let info;
-    classes.map((element) => {
-      matiereNiveau.map((elt) => {
-        if (element.id == elt.classe) {
-          info = {
-            id: elt.id,
-            nameMatter: elt.matter,
-            classeLevel: element.level,
-            classeSpeciality: element.speciality,
-          };
-          tab.push(info);
-        }
+    tab.forEach((elt) => {
+      classeDispo.forEach((element) => {
+        if (element.value == elt.level) elt.level = element.name;
       });
     });
+    this.setState({ classe: tab });
+  }
 
-    try {
-      tab.forEach((val) => {
-        let level = classeDispo.find(
-          (classe) => classe.value == val.classeLevel
-        );
-        val.classeLevel = level.name;
-        let matter = departement.find((elt) => elt.value == val.nameMatter);
-        val.nameMatter = matter.name;
-      });
-      setTabContent(
-        tab.sort((a, b) => a.nameMatter.localeCompare(b.nameMatter))
-      );
-    } catch (err) {
-      console.log(err);
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.selectClass != this.state.selectClass) {
+      let ids = JSON.parse(this.state.selectClass);
+      axios
+        .get(`api/school/classe/matter/${ids.id}`)
+        .then((res) => {
+          this.setState({ matiere: res.data });
+        })
+        .catch((err) => console.log(err));
     }
-  }, []);
+  }
+  handleClose = () => this.setState({ show: false });
 
-  const handleSubmit = (event) => {
+  handleSubmit = (event) => {
     event.preventDefault();
-    if (matiere == null || matiere == undefined) {
-      toast.error("Veuillez séléctionner une matière et une classe");
-    } else {
-      recuperation(matiere);
-      setShow(false);
+    if (this.state.selectClass != null || this.state.selectMatter != null) {
+      this.props.getChapterAndClass(
+        JSON.parse(this.state.selectClass),
+        JSON.parse(this.state.selectMatter)
+      );
+      this.handleClose();
     }
   };
-  const handleChange = (val) => {
-    const mat = tabContent.find((classe) => classe.id == val);
-    setMatiere(mat);
-  };
+  render() {
+    return (
+      <>
+        <Modal
+          show={this.state.show}
+          onHide={this.handleClose}
+          className="modalSuppression"
+          backdrop="static"
+        >
+          <Modal.Header className="color-titre-ajout">
+            <Modal.Title>Selection de la Classe</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form>
+              <div className="noticeUploadCours text-danger">
+                <strong>NB</strong>: Veuillez séléctionner dans l'ordre
+                classe-matière en patientant 4 secondes par sélection
+              </div>
+              <div className="form-group">
+                <label htmlFor="niveau">Classe</label>
+                <select
+                  className="form-select"
+                  onChange={(e) =>
+                    this.setState({ selectClass: e.target.value })
+                  }
+                  id="niveau"
+                >
+                  <option>---------------------</option>
+                  {this.state.classe.map((clas) => (
+                    <option key={clas.id} value={JSON.stringify(clas)}>
+                      {clas.level}-{clas.speciality}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-  return (
-    <>
-      <Modal
-        show={show}
-        onHide={handleClose}
-        className="modalSuppression"
-        // backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header className="color-titre-ajout">
-          <Modal.Title>Sélection Matière</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form>
-            <div className="form-group">
-              <select
-                className="form-select"
-                onChange={(e) => handleChange(e.target.value)}
-                id="matiere"
+              <div className="form-group">
+                <label htmlFor="niveau">Matière</label>
+                <select
+                  className="form-select"
+                  onChange={(e) =>
+                    this.setState({ selectMatter: e.target.value })
+                  }
+                  id="niveau"
+                >
+                  {this.state.matiere.length != 0 ? (
+                    <option>Maintenant séléctionnez la matière </option>
+                  ) : (
+                    <option>------------------ </option>
+                  )}
+                  {this.state.matiere.map((mat) => (
+                    <option key={mat.id} value={JSON.stringify(mat)}>
+                      {mat.matter}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </form>
+            <Modal.Footer>
+              <Button
+                className="btn color-titre-ajout"
+                onClick={this.handleSubmit}
               >
-                <option value="">Veuillez séléctionner la matière</option>
-                {tabContent.map((mat) => (
-                  <option key={mat.id} value={mat.id}>
-                    {mat.nameMatter} : {mat.classeLevel}-{mat.classeSpeciality}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </form>
-          <Modal.Footer>
-            <Button className="btn color-titre-ajout" onClick={handleSubmit}>
-              Soumettre
-            </Button>
-          </Modal.Footer>
-        </Modal.Body>
-      </Modal>
-    </>
-  );
+                Soumettre
+              </Button>
+            </Modal.Footer>
+          </Modal.Body>
+        </Modal>
+      </>
+    );
+  }
 }
