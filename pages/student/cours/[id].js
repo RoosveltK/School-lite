@@ -4,25 +4,7 @@ import axios from "axios";
 import ReactHtmlParser from "react-html-parser";
 
 function CoursPerso({ post, program }) {
-  const [detailProgram, setdetailProgram] = useState(null);
-  useEffect(() => {
-    let trv = 0;
-    program.forEach((element) => {
-      if (element.id == post.program) {
-        setdetailProgram(element);
-        trv = 1;
-      }
-    });
-    if (trv == 0) {
-      const datas = {
-        title: "",
-        describe: "",
-        limit_day: "",
-        begin_time: "",
-      };
-      setdetailProgram(datas);
-    }
-  });
+  const [detailProgram, setdetailProgram] = useState(program);
 
   return (
     <>
@@ -37,7 +19,7 @@ function CoursPerso({ post, program }) {
                   fontWeight: 700,
                 }}
               >
-                LECON PAS ENCORE INDISPONIBLE
+                LECON PAS ENCORE DISPONIBLE
               </div>
             ) : (
               <React.Fragment>
@@ -66,7 +48,7 @@ function CoursPerso({ post, program }) {
 export async function getStaticProps({ params }) {
   try {
     const res = await axios.get(`api/school/lecon_by_program/${params.id}`);
-    const prog = await axios.get(`api/school/program`);
+    const prog = await axios.get(`api/school/program/${params.id}`);
 
     const post = res.data;
     const program = prog.data;
@@ -74,12 +56,12 @@ export async function getStaticProps({ params }) {
     return { props: { post, program } };
   } catch (err) {
     console.log(err);
-    return { props: { post: "", program: [] } };
+    return { props: { post: "", program: "" } };
   }
 }
 
 export async function getStaticPaths() {
-  const res = await axios.get(`api/school/lecon`);
+  const res = await axios.get(`api/school/program`);
   const posts = res.data;
   try {
     const paths = posts.map((post) => `/student/cours/${post.id}`);

@@ -18,7 +18,7 @@ export default class ModalAddStudent extends React.Component {
       classe: null,
       matiereE: null,
       classeDispo: this.props.classes,
-      password: "student",
+      password: "",
       tabClasse: [],
       levels: [
         { value: "0", name: "Terminale" },
@@ -63,10 +63,9 @@ export default class ModalAddStudent extends React.Component {
       gender: this.state.gender,
       role: "stud",
       classes: [this.state.classe],
-      password: this.state.password,
+      password: this.state.first_name + "12345",
       departement: "stud",
     };
-    console.log(data);
     axios
       .post(`api/user/`, data)
       .then(() => {

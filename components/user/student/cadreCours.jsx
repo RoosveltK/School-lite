@@ -1,17 +1,15 @@
 import React from "react";
-import ModalReadCours from "./modalReadCours";
 import Link from "next/link";
 
-const CadreCours = () => {
+const CadreCours = ({ dataLecon }) => {
   return (
     <div className="caderCours">
-      <header>INTRODUCTION AUX TIC</header>
+      <header>{dataLecon.title}</header>
       <div>
-        Ce cours vous aidera a mieux comprendre ...
-
+        {dataLecon.description}
         <div className="caderCours-btn">
           <button className="btn">
-            <Link href="/student/cours/coursPerso">
+            <Link href={`/student/cours/${dataLecon.id}`}>
               <a>Lire</a>
             </Link>
           </button>
