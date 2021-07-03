@@ -41,7 +41,7 @@ class Enseignant extends React.Component {
       { value: "eps", name: "Sport" },
       { value: "inf", name: "Informatique" },
     ];
-    localStorage.setItem("departements", JSON.stringify(departement));
+    localStorage.setItem("departements", JSON.stringify(departements));
 
     if (localStorage.getItem("access_token") != null)
       this.setState({ user: 1 });
