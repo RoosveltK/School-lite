@@ -541,5 +541,13 @@ body {
 /* END SUBMIT BUTTON */
 
 .centerContent {
-  text-align: center ;
+  text-align: center;
+}
+
+.noticeUploadCours {
+  padding: 5px;
+  text-align: center;
+  border: 1px solid;
+  margin-left: auto;
+  margin-right: auto;
 }

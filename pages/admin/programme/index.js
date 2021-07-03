@@ -24,11 +24,11 @@ class Programme extends React.Component {
   };
 
   componentDidMount() {
-    // if (localStorage.getItem("access_token") != null) {
-    //   this.setState({ user: 1 });
-    // } else {
-    //   Router.push("/");
-    // }
+    if (localStorage.getItem("access_token") != null) {
+      this.setState({ user: 1 });
+    } else {
+      Router.push("/");
+    }
   }
   handleSubmit = (e) => {
     e.preventDefault();
@@ -38,13 +38,15 @@ class Programme extends React.Component {
       limit_day: this.state.dateLimite,
       begin_time: this.state.temps,
       duration: parseInt(this.state.duree),
-      matter: parseInt(this.state.matiere),
+      matter: this.state.matiere.id,
     };
     console.log(dataProgram);
     axios
       .post(`api/school/program`, dataProgram)
       .then(() => {
-        toast.success("Programme mis à jour");
+        toast.success(
+          `Programme de ${this.state.matiere.classeLevel}-${this.state.matiere.classeSpeciality} mis à jour`
+        );
         this.setState({
           titre: "",
           description: "",
@@ -53,7 +55,10 @@ class Programme extends React.Component {
           temps: 0,
         });
       })
-      .catch(() => toast.error("Erreur lors de la mise à jour du programme"));
+      .catch((err) => {
+        if (err.response != undefined) toast.error(err.response.data.message);
+        else toast.error("Erreur lors de la mise à jour du programme");
+      });
   };
   getInfo = (matiere) => {
     this.setState({
@@ -63,7 +68,7 @@ class Programme extends React.Component {
   render() {
     return (
       <>
-        {this.state.user === 1 ? (
+        {this.state.user == 0 ? (
           <React.Fragment>
             <Head>
               <title>School Lite</title>
@@ -76,14 +81,13 @@ class Programme extends React.Component {
               <div className="mainCard">
                 <header className="row">
                   <div className="panneauStyle">
-                    <h3 className="form-group">
-                      {/* Matière : {this.state.titre1} */}
-                    </h3>
+                    <h3 className="form-group"></h3>
                   </div>
                 </header>
                 <ModalSelect
                   recuperation={this.getInfo}
                   matiereNiveau={this.props.matter}
+                  classes={this.props.classes}
                 />
                 <section className="row">
                   <div className="col-12 content-card">
@@ -169,13 +173,16 @@ class Programme extends React.Component {
 
 export async function getServerSideProps() {
   try {
-    // const mat = await axios.get(`api/school/matter`);
+    const mat = await axios.get(`api/school/matter`);
+    const clas = await axios.get(`api/school/classe`);
+
+    const classes = clas.data;
     const matter = mat.data;
 
-    return { props: { matter } };
+    return { props: { matter, classes } };
   } catch (err) {
     console.log(err);
-    return { props: { matter: [] } };
+    return { props: { matter: [], classes: [] } };
   }
 }
 

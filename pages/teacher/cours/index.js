@@ -2,130 +2,93 @@ import React from "react";
 import axios from "axios";
 import LayoutT from "../../../components/LayoutT";
 import { SiGoogleclassroom } from "react-icons/si";
-import { Button } from "react-bootstrap";
 import Router from "next/router";
 import { Editor } from "@tinymce/tinymce-react";
 import ModalSelectClasse from "../../../components/user/teacher/selectClasse";
 import { toast } from "react-toastify";
-import Loaders from "../../loader";
+import Loader from "../../../components/Loader/LoaderWait";
+import Head from "next/head";
 
 class Cours extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null,
-      new: 0,
       content: "",
-      lecon: null,
-      classe: "",
+      classe: null,
       program: [],
-      isLoading: false,
+      isLoading: true,
+      classes: null,
+      chapitre: null,
     };
   }
 
   componentDidMount() {
-    this.state.user = JSON.parse(localStorage.getItem("teacherInfo"));
-    //this.setState({ user: res.data, isLoading: false }
+    if (localStorage.getItem("access_token") != null) {
+      this.setState({ isLoading: false });
+    } else {
+      Router.push("/");
+    }
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
     const data = {
       content: this.state.content,
-      program: parseInt(this.state.lecon),
+      program: parseInt(this.state.chapitre.id),
     };
-    // if (this.state.new == 0) {
-    //   axios
-    //     .post(`api/school/lecon`, data)
-    //     .then(() => toast.success("Cours ajouté avec succès"))
-    //     .catch(() => toast.error("Echec lors de la publication du cours "));
-    // } else {
-    //   axios
-    //     .put(`api/school/lecon/${this.state.lecon}`, data)
-    //     .then(() => toast.success("Cours Modifié avec succès"))
-    //     .catch(() => toast.error("Echec lors de la modification du cours "));
-    // }
-    console.log(data);
+
+    axios
+      .post(`api/school/lecon`, data)
+      .then(() => toast.success("Cours ajouté avec succès"))
+      .catch((err) => {
+        if (err.response != undefined) toast.error(err.response.data.error);
+        else toast.error("Echec lors  de la publication de la leçon");
+      });
   };
 
   handleChange = (content, editor) => {
     this.setState({ content: content });
   };
 
-  getInfo = (classes) => {
+  getInfo = (chap, classes) => {
+    this.setState({ chapitre: chap });
     this.setState({ classe: classes });
   };
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.program !== prevState.program) {
-      try {
-        const contentCours = axios.get(`api/school/lecon/${this.state.titre}`);
-        const cours = contentCours.data;
-        this.setState({ content: cours.content, new: 1 });
-      } catch (err) {
-        console.log(err);
-      }
-    }
-
-    if (this.state.classe !== prevState.classe) {
-      try {
-        const programme = axios.get(`api/school/`);
-        this.setState({ program: programme });
-      } catch {
-        console.log("Erreur");
-      }
-    }
-  }
 
   render() {
     return (
       <LayoutT title="Cours">
         {this.state.isLoading ? (
-          <Loaders />
+          <React.Fragment>
+            <Head>
+              <title>School Lite</title>
+            </Head>
+            <Loader />
+          </React.Fragment>
         ) : (
           <React.Fragment>
             <div className="panneauStyle">
               <div className="panneauClasse">
                 <SiGoogleclassroom size="20px" />{" "}
-                <span>{this.state.classe}</span>
+                <span>
+                  {this.state.classe != null
+                    ? `${this.state.classe.level}-${this.state.classe.speciality}`
+                    : null}
+                </span>
               </div>
               <div id="triangle"></div>
-              <h3 className="form-group">
-                Titre :{" "}
-                <select className="form-select">
-                  <option>PHOTOSYNTHESE</option>
-                  <option>NUTRITIONS</option>
-                  <option>MALADIES DE LA PEAU</option>
-                </select>
+              <h3 className="form-group noticeUploadCours text-danger font-weight-bold ">
+                {this.state.chapitre != null
+                  ? `Titre : ${this.state.chapitre.title}`
+                  : null}
               </h3>
-              {/* <select
-                className="form-select"
-                onChange={(e) => this.setState({ lecon: e.target.value })}
-                value={this.state.lecon.titre}
-              >
-                {this.state.program.map((program) => (
-                <option>PHOTOSYNTHESE</option>
-                <option>NUTRITIONS</option>
-                <option>MALADIES DE LA PEAU</option>
-                ))}}
-              </select> */}
             </div>
-            {/* <ModalSelectClasse
-              classeTeacher={this.state.user.classes}
-              recuperation={this.getInfo}
-            /> */}
+            <ModalSelectClasse getChapterAndClass={this.getInfo} />
             <div className="container-fluid">
               <div className="mainCard">
                 <section className="row">
                   <div className="col-12 content-card">
                     <div></div>
-                    {/* <Button
-                      variant="dark"
-                      className="btn boutonE"
-                      onClick={() => Router.push("/student/cours")}
-                    >
-                      VOIR COURS
-                    </Button> */}
                     <form onSubmit={this.handleSubmit}>
                       <Editor
                         apiKey="0p57wtq8ihmq5rdl86lg5w6ph4kamw3z10pscm7wvic034n2"

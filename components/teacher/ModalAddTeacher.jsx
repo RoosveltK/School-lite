@@ -15,12 +15,12 @@ export default class ModalAddTeacher extends React.Component {
       matricule: "",
       born_at: null,
       gender: "M",
-      specialite: 1,
+      specialite: "",
       classe: [],
       matiereE: null,
       classeDispo: this.props.classes,
       departementDispo: [],
-      password: "admin",
+      password: "",
       levels: [
         { value: "0", name: "Terminale" },
         { value: "1", name: "Première" },
@@ -69,7 +69,7 @@ export default class ModalAddTeacher extends React.Component {
       gender: this.state.gender,
       role: "teach",
       classes: this.state.classe,
-      password: this.state.password,
+      password: this.state.first_name + "12345",
     };
     console.log(data);
     axios
@@ -209,6 +209,7 @@ export default class ModalAddTeacher extends React.Component {
                     }
                     required
                   >
+                    <option>Sélectionner le département de l'enseignant</option>
                     {this.state.departementDispo.map((depart) => (
                       <option value={depart.value}>{depart.name}</option>
                     ))}

@@ -1,26 +1,82 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
-export default function ModalSelect({ recuperation, matiereNiveau }) {
+
+const departement = [
+  { value: "math", name: "Mathématique" },
+  { value: "phy", name: "Physique" },
+  { value: "chim", name: "Chimie" },
+  { value: "hist", name: "Histoire" },
+  { value: "svt", name: "Science" },
+  { value: "ecm", name: "ECM" },
+  { value: "eps", name: "Sport" },
+  { value: "eng", name: "Anglais" },
+];
+
+const classeDispo = [
+  { value: "0", name: "Terminale" },
+  { value: "1", name: "Première" },
+  { value: "2", name: "Seconde" },
+  { value: "3", name: "Troisième" },
+  { value: "4", name: "Quatrième" },
+  { value: "5", name: "Cinquième" },
+  { value: "6", name: "Sixième" },
+];
+export default function ModalSelect({ recuperation, matiereNiveau, classes }) {
   const [show, setShow] = useState(true);
-  const [matiere, setMatiere] = useState("");
+  const [matiere, setMatiere] = useState(null);
+  const [tabContent, setTabContent] = useState([]);
 
   const handleClose = () => setShow(false);
 
+  useEffect(() => {
+    let tab = [];
+    let info;
+    classes.map((element) => {
+      matiereNiveau.map((elt) => {
+        if (element.id == elt.classe) {
+          info = {
+            id: elt.id,
+            nameMatter: elt.matter,
+            classeLevel: element.level,
+            classeSpeciality: element.speciality,
+          };
+          tab.push(info);
+        }
+      });
+    });
+
+    try {
+      tab.forEach((val) => {
+        let level = classeDispo.find(
+          (classe) => classe.value == val.classeLevel
+        );
+        val.classeLevel = level.name;
+        let matter = departement.find((elt) => elt.value == val.nameMatter);
+        val.nameMatter = matter.name;
+      });
+      setTabContent(
+        tab.sort((a, b) => a.nameMatter.localeCompare(b.nameMatter))
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    if (matiere == "")
+    if (matiere == null || matiere == undefined) {
       toast.error("Veuillez séléctionner une matière et une classe");
-    else {
+    } else {
       recuperation(matiere);
       setShow(false);
     }
   };
-  const handleChange = (index) => {
-    const datas = matiereNiveau[index];
-    setMatiere(datas);
+  const handleChange = (val) => {
+    const mat = tabContent.find((classe) => classe.id == val);
+    setMatiere(mat);
   };
+
   return (
     <>
       <Modal
@@ -36,16 +92,15 @@ export default function ModalSelect({ recuperation, matiereNiveau }) {
         <Modal.Body>
           <form>
             <div className="form-group">
-              <label htmlFor="matiere">Matière - Classe</label>
               <select
                 className="form-select"
                 onChange={(e) => handleChange(e.target.value)}
                 id="matiere"
               >
-                <option>Veuillez séléctionner la matière et la classe</option>
-                {matiereNiveau.map((mat, index) => (
-                  <option key={index} value={parseInt(index)}>
-                    {mat.classe.level.describe} - {mat.classe.speciality.letter}
+                <option value="">Veuillez séléctionner la matière</option>
+                {tabContent.map((mat) => (
+                  <option key={mat.id} value={mat.id}>
+                    {mat.nameMatter} : {mat.classeLevel}-{mat.classeSpeciality}
                   </option>
                 ))}
               </select>

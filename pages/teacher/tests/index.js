@@ -1,6 +1,6 @@
 import React from "react";
 import LayoutT from "../../../components/LayoutT";
-import ModalSelectTest from "../../../components/tests/ModalSelectTest";
+import ModalSelectClasse from "../../../components/user/teacher/selectClasse";
 import { SiGoogleclassroom } from "react-icons/si";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -117,6 +117,8 @@ class Tests extends React.Component {
         },
       ],
       numQuestion: 4,
+      chapitre: null,
+      classe: null,
     };
   }
   componentDidUpdate(prevProps, prevState) {
@@ -212,34 +214,37 @@ class Tests extends React.Component {
         );
     });
   };
-  getInfo = (matiere, niveau, specialite) => {
-    this.setState({ matiere: matiere });
-    this.setState({ niveau: niveau });
-    this.setState({ specialite: specialite });
+
+  getInfo = (chap, classes) => {
+    this.setState({ chapitre: chap });
+    this.setState({ classe: classes });
   };
   render() {
     return (
       <LayoutT title="Tests">
         <div className="panneauStyle">
           <div className="panneauClasse">
-            <SiGoogleclassroom size="20px" /> <span>{this.state.niveau}</span>
+            <SiGoogleclassroom size="20px" />{" "}
+            <span>
+              {" "}
+              {this.state.classe != null
+                ? `${this.state.classe.level}-${this.state.classe.speciality}`
+                : null}
+            </span>
           </div>
           <div id="triangle"></div>
-          <h3 className="form-group">
-            Titre :{" "}
-            <select className="form-select">
-              <option>Equations</option>
-              <option>.</option>
-              <option>..</option>
-            </select>
+          <h3 className="form-group noticeUploadCours text-danger font-weight-bold d-flex justify-content-center">
+            {this.state.chapitre != null
+              ? `Test sur: ${this.state.chapitre.title}`
+              : null}
           </h3>
         </div>
-        <ModalSelectTest recuperation={this.getInfo} />
+        <ModalSelectClasse getChapterAndClass={this.getInfo} />
         <div className="container-fluid">
           <div className="mainCard">
             <header className="row">
               <div className="col-12 header-card centrer">
-                <span>TESTS : QCM </span>
+                Nombre de question
                 <select
                   className="form-select taille"
                   value={this.state.numQuestion}
@@ -309,7 +314,7 @@ class Tests extends React.Component {
                 <div className="col-12 header-card">
                   <span></span>
                   <button type="submit" className="btn review bntTeacher ">
-                    Créer
+                    Soumettre
                   </button>
                 </div>
               </form>
