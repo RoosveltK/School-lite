@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 
 class Programme extends React.Component {
   state = {
+    isLoading: false,
     titre: "",
     titre1: "",
     description: "",
@@ -21,6 +22,7 @@ class Programme extends React.Component {
     temps: 0,
     matiere: null,
     user: 0,
+    classe: null,
   };
 
   componentDidMount() {
@@ -32,6 +34,7 @@ class Programme extends React.Component {
   }
   handleSubmit = (e) => {
     e.preventDefault();
+    this.setState({ isLoading: true });
     const dataProgram = {
       title: this.state.titre,
       describe: this.state.description,
@@ -45,7 +48,7 @@ class Programme extends React.Component {
       .post(`api/school/program`, dataProgram)
       .then(() => {
         toast.success(
-          `Programme de ${this.state.matiere.classeLevel}-${this.state.matiere.classeSpeciality} mis à jour`
+          `Programme de ${this.state.classe.level}-${this.state.classe.speciality} mis à jour`
         );
         this.setState({
           titre: "",
@@ -56,13 +59,16 @@ class Programme extends React.Component {
         });
       })
       .catch((err) => {
-        if (err.response != undefined) toast.error(err.response.data.message);
-        else toast.error("Erreur lors de la mise à jour du programme");
-      });
+        toast.error("Erreur lors de la mise à jour du programme");
+      })
+      .finally(() => this.setState({ isLoading: false }));
   };
-  getInfo = (matiere) => {
+  getInfo = (classes, matiere) => {
     this.setState({
       matiere: matiere,
+    });
+    this.setState({
+      classe: classes,
     });
   };
   render() {
@@ -85,7 +91,7 @@ class Programme extends React.Component {
                   </div>
                 </header>
                 <ModalSelect
-                  recuperation={this.getInfo}
+                  getChapterAndClass={this.getInfo}
                   matiereNiveau={this.props.matter}
                   classes={this.props.classes}
                 />
@@ -151,13 +157,24 @@ class Programme extends React.Component {
                       </div>
                       <div className="col-12 header-card">
                         <span></span>
-                        <Button
-                          variant="dark"
-                          type="submit"
-                          className="btn boutonE "
-                        >
-                          Soumettre
-                        </Button>
+                        {this.state.isLoading == true ? (
+                          <Button
+                            variant="dark"
+                            type="submit"
+                            className="btn boutonE "
+                            disabled
+                          >
+                            Patientez...
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="dark"
+                            type="submit"
+                            className="btn boutonE "
+                          >
+                            Soumettre
+                          </Button>
+                        )}
                       </div>
                     </form>
                   </div>

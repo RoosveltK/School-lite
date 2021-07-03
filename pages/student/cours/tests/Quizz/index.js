@@ -6,6 +6,8 @@ import ProgressBar from "../progressBar";
 import { Responses } from "../../../../../lib/responses";
 import { Questions } from "../../../../../lib/questions";
 import QuizOver from "../QuizOver";
+import { Table } from "react-bootstrap";
+import { MdIndeterminateCheckBox } from "react-icons/md";
 
 toast.configure();
 
@@ -31,17 +33,23 @@ class Quiz extends Component {
   }
 
   loadQuestion = () => {
-    axios.get();
-    const datas = Questions;
-    this.setState({ maxQuestion: datas.length });
-    let quizAndAnswer = datas;
-    quizAndAnswer.forEach((elt, index) => {
-      Responses.forEach((element) => {
-        if (element.question == elt.id && element.verify == true)
-          quizAndAnswer[index].answer = element.content;
+    let tab = [];
+    let datas = [];
+    this.props.quiz.forEach((elt) => {
+      datas.push(elt.content);
+      elt.response.forEach((question) => {
+        if (question.verify == true) {
+          tab.push({
+            content: elt.content,
+            answer: question.content,
+          });
+        }
       });
     });
-    this.completQuiz.current = quizAndAnswer;
+
+    this.completQuiz.current = tab;
+
+    this.setState({ maxQuestion: tab.length });
     this.setState({
       saveQuestion: datas,
     });
@@ -57,25 +65,26 @@ class Quiz extends Component {
       this.state.saveQuestion.length
     ) {
       let rep = [];
-      Responses.forEach((element) => {
-        if (element.question == this.state.idQuestion + 1) rep.push(element);
+      this.props.quiz.forEach((element, index) => {
+        if (index == this.state.idQuestion) rep = element.response;
       });
 
       this.setState({
-        question: this.state.saveQuestion[this.state.idQuestion].content,
+        question: this.state.saveQuestion[this.state.idQuestion],
         options: rep,
       });
     }
+
     if (
       this.state.idQuestion !== prevState.idQuestion &&
       this.state.saveQuestion.length
     ) {
       let rep = [];
-      Responses.forEach((element) => {
-        if (element.question == this.state.idQuestion + 1) rep.push(element);
+      this.props.quiz.forEach((element, index) => {
+        if (index == this.state.idQuestion) rep = element.response;
       });
       this.setState({
-        question: this.state.saveQuestion[this.state.idQuestion].content,
+        question: this.state.saveQuestion[this.state.idQuestion],
         options: rep,
         btnActive: true,
         userResponse: null,

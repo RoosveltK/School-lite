@@ -8,6 +8,7 @@ export default class ModalAddTeacher extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: false,
       show: false,
       first_name: "",
       username: "",
@@ -59,6 +60,7 @@ export default class ModalAddTeacher extends React.Component {
 
   handleCreate = async (event) => {
     event.preventDefault();
+    this.setState({ isLoading: true });
     const data = {
       first_name: this.state.first_name,
       username: this.state.username,
@@ -71,7 +73,6 @@ export default class ModalAddTeacher extends React.Component {
       classes: this.state.classe,
       password: this.state.first_name + "12345",
     };
-    console.log(data);
     axios
       .post("api/user/", data)
       .then(() => {
@@ -80,8 +81,8 @@ export default class ModalAddTeacher extends React.Component {
         this.setState({ show: false });
       })
       .catch((err) => {
-        if (err.response != undefined) toast.error(err.response.data.message);
-        else toast.error("Echec lors de la création l'enseignant");
+        toast.error("Echec lors de la création l'enseignant");
+        this.setState({ isLoading: false });
       });
   };
 
@@ -222,13 +223,23 @@ export default class ModalAddTeacher extends React.Component {
                   >
                     Fermer
                   </button>
-                  <button
-                    type="submit"
-                    onClick={this.handleCreate}
-                    className="btn color-titre-ajout"
-                  >
-                    Valider
-                  </button>
+                  {this.state.isLoading == true ? (
+                    <button
+                      type="submit"
+                      disabled
+                      className="btn color-titre-ajout"
+                    >
+                      Patientez ...
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      onClick={this.handleCreate}
+                      className="btn color-titre-ajout"
+                    >
+                      Valider
+                    </button>
+                  )}
                 </div>
               </form>
             </div>

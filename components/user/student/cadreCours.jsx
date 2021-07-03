@@ -6,7 +6,7 @@ const CadreCours = ({ dataLecon }) => {
     <div className="caderCours">
       <header>{dataLecon.title}</header>
       <div>
-        {dataLecon.description}
+        {dataLecon.describe}
         <div className="caderCours-btn">
           <button className="btn">
             <Link href={`/student/cours/${dataLecon.id}`}>
@@ -15,7 +15,7 @@ const CadreCours = ({ dataLecon }) => {
           </button>
 
           <button className="btn">
-            <Link href="/student/tests">
+            <Link href={`/student/cours/tests/${dataLecon.id}`}>
               <a>Faire Test</a>
             </Link>
           </button>

@@ -61,8 +61,8 @@ class Cours extends Component {
             className="form-select custom-select d-flex justify-content-center"
           >
             <option>Sélectionner une matiere</option>
-            {this.state.matiere.map((mat) => (
-              <option key={mat.id} value={mat.id}>
+            {this.state.matiere.map((mat, index) => (
+              <option key={index} value={mat.id}>
                 {mat.matter}
               </option>
             ))}
@@ -79,9 +79,9 @@ class Cours extends Component {
           </div>
         ) : (
           <div className="cader">
-            {this.state.allLecon.map((lecon) => (
-              <CadreCours dataLecon={lecon} />
-            ))}
+            {this.state.allLecon.map((lecon) => {
+              if (lecon.status == true) return <CadreCours dataLecon={lecon} />;
+            })}
           </div>
         )}
       </LayoutS>

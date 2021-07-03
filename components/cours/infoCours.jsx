@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 const InfoCours = ({ dataCours }) => {
   const { id, title, status, course_day, limit_day } = dataCours;
   const [val, setVal] = useState(null);
+
   const handleChange = (e) => {
     setVal(e.target.checked);
     axios.get(`api/school/active_or_desactive/${id}`).then(() => {
@@ -15,6 +16,7 @@ const InfoCours = ({ dataCours }) => {
       else toast.warning(`Leçon désactivée`);
     });
   };
+
   return (
     <>
       <tr>

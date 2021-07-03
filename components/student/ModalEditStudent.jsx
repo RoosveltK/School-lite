@@ -8,6 +8,7 @@ export default class ModalEditStudent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: false,
       show: false,
       first_name: this.props.eleve.first_name,
       username: this.props.eleve.username,
@@ -52,6 +53,7 @@ export default class ModalEditStudent extends React.Component {
 
   handleModif = async (event) => {
     event.preventDefault();
+    this.setState({ isLoading: true });
     const data = {
       first_name: this.state.first_name,
       username: this.state.username,
@@ -70,11 +72,10 @@ export default class ModalEditStudent extends React.Component {
         this.setState({ show: false });
       })
       .catch((err) => {
-        if (err.response != undefined) toast.error(err.response.data.message);
-        else
-          toast.error(
-            "Echec lors de la modification des informations de l'élève"
-          );
+        toast.error(
+          "Erreur lors de la modification des informations de l'élève"
+        );
+        this.setState({ isLoading: false });
       });
   };
 
@@ -194,14 +195,25 @@ export default class ModalEditStudent extends React.Component {
             <Button variant="secondary" onClick={this.handleClose}>
               Fermer
             </Button>
-            <Button
-              variant="primary"
-              type="submit"
-              onClick={this.handleModif}
-              className="color-titre-ajout"
-            >
-              Valider
-            </Button>
+            {this.state.isLoading == true ? (
+              <Button
+                variant="primary"
+                type="submit"
+                disabled
+                className="color-titre-ajout"
+              >
+                Patienter ...{" "}
+              </Button>
+            ) : (
+              <Button
+                variant="primary"
+                type="submit"
+                onClick={this.handleModif}
+                className="color-titre-ajout"
+              >
+                Valider
+              </Button>
+            )}
           </Modal.Footer>
         </Modal>
       </>

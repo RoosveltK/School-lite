@@ -8,6 +8,7 @@ export default class ModalAddStudent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: false,
       show: false,
       first_name: "",
       username: "",
@@ -18,7 +19,6 @@ export default class ModalAddStudent extends React.Component {
       classe: null,
       matiereE: null,
       classeDispo: this.props.classes,
-      password: "",
       tabClasse: [],
       levels: [
         { value: "0", name: "Terminale" },
@@ -54,6 +54,7 @@ export default class ModalAddStudent extends React.Component {
 
   handleCreate = async (event) => {
     event.preventDefault();
+    this.setState({ isLoading: true });
     const data = {
       first_name: this.state.first_name,
       username: this.state.username,
@@ -74,8 +75,8 @@ export default class ModalAddStudent extends React.Component {
         this.setState({ show: false });
       })
       .catch((err) => {
-        if (err.response != undefined) toast.error(err.response.data.message);
-        else toast.error("Echec lors de la création de l'élève");
+        toast.error("Erreur lors de la création de l'élève");
+        this.setState({ isLoading: false });
       });
   };
 
@@ -198,13 +199,23 @@ export default class ModalAddStudent extends React.Component {
                   >
                     Fermer
                   </button>
-                  <button
-                    onClick={this.handleCreate}
-                    type="submit"
-                    className="btn color-titre-ajout"
-                  >
-                    Valider
-                  </button>
+                  {this.state.isLoading == true ? (
+                    <button
+                      disabled
+                      type="submit"
+                      className="btn color-titre-ajout"
+                    >
+                      Patienter...
+                    </button>
+                  ) : (
+                    <button
+                      onClick={this.handleCreate}
+                      type="submit"
+                      className="btn color-titre-ajout"
+                    >
+                      Valider
+                    </button>
+                  )}
                 </div>
               </form>
             </div>

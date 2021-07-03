@@ -19,6 +19,7 @@ class Cours extends React.Component {
       isLoading: true,
       classes: null,
       chapitre: null,
+      sendCours: false,
     };
   }
 
@@ -32,6 +33,7 @@ class Cours extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    this.setState({ sendCours: true });
     const data = {
       content: this.state.content,
       program: parseInt(this.state.chapitre.id),
@@ -39,11 +41,15 @@ class Cours extends React.Component {
 
     axios
       .post(`api/school/lecon`, data)
-      .then(() => toast.success("Cours ajouté avec succès"))
+      .then(() => {
+        this.setState({ content: "" });
+        toast.success("Cours ajouté avec succès");
+      })
       .catch((err) => {
         if (err.response != undefined) toast.error(err.response.data.error);
         else toast.error("Echec lors  de la publication de la leçon");
-      });
+      })
+      .finally(() => this.setState({ sendCours: false }));
   };
 
   handleChange = (content, editor) => {
@@ -107,12 +113,18 @@ class Cours extends React.Component {
                       <br />
                       <div className="col-12 header-card">
                         <span></span>
-                        <button
-                          type="submit"
-                          className="btn boutonT bntTeacher"
-                        >
-                          Publier
-                        </button>
+                        {this.state.sendCours == true ? (
+                          <button disabled className="btn boutonT bntTeacher">
+                            Patienter...
+                          </button>
+                        ) : (
+                          <button
+                            type="submit"
+                            className="btn boutonT bntTeacher"
+                          >
+                            Publier
+                          </button>
+                        )}
                       </div>
                     </form>
                   </div>
