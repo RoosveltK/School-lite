@@ -56,12 +56,13 @@ class Programme extends React.Component {
           dateLimite: "",
           duree: 0,
           temps: 0,
+          isLoading: false,
         });
       })
       .catch((err) => {
         toast.error("Erreur lors de la mise à jour du programme");
-      })
-      .finally(() => this.setState({ isLoading: false }));
+        this.setState({ isLoading: false });
+      });
   };
   getInfo = (classes, matiere) => {
     this.setState({

@@ -22,7 +22,7 @@ export default class ModalSelect extends React.Component {
   };
 
   componentDidMount() {
-    const tab = this.props.classes;
+    const tab = [...this.props.classes];
 
     tab.forEach((elt) => {
       classeDispo.forEach((element) => {

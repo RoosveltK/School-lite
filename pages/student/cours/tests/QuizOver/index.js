@@ -19,7 +19,7 @@ const QuizOver = React.forwardRef((props, ref) => {
   useEffect(() => {
     setAsked(ref.current);
     sendScore();
-  }, [ref]);
+  }, [ref, realScore]);
 
   const sendScore = () => {
     let realScore = (score * 20) / maxQuestion;
@@ -39,16 +39,17 @@ const QuizOver = React.forwardRef((props, ref) => {
         else
           toast.success(`Félicitation ${userInfo.first_name} continuez ainsi`);
       })
-      .catch(() =>
-        toast.warning(
-          `Vous avez déja un score qu'on ne peut changer mais continuez à vous exercer`
-        )
+      .catch((err) =>
+        // toast.warning(
+        //   `Vous avez déja un score qu'on ne peut changer mais continuez à vous exercer`
+        // )
+        console.log(err)
       );
   };
 
-  if (score < maxQuestion / 2) {
-    setTimeout(() => loadNextLevel(0), 5000);
-  }
+  // if (score < maxQuestion / 2) {
+  //   setTimeout(() => loadNextLevel(0), 5000);
+  // }
 
   const decision =
     score >= maxQuestion / 2 ? (
@@ -61,7 +62,7 @@ const QuizOver = React.forwardRef((props, ref) => {
         <div className="percentage">
           <div className="progressPercent">Réussite : {percent}%</div>
           <div className="progressPercent">
-            Note : {realScore}/{20}
+            Note : {(score * 20) / maxQuestion}/20
           </div>
         </div>
       </Fragment>
@@ -74,7 +75,7 @@ const QuizOver = React.forwardRef((props, ref) => {
         <div className="percentage">
           <div className="progressPercent">Réussite : {percent}%</div>
           <div className="progressPercent">
-            Note : {realScore}/{20}
+            Note : {(score * 20) / maxQuestion}/20
           </div>
         </div>
       </Fragment>

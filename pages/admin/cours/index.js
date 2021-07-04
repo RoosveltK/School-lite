@@ -13,6 +13,7 @@ import { Dropdown } from "react-bootstrap";
 import Loader from "../../../components/Loader/LoaderWait";
 import Router from "next/router";
 import Head from "next/head";
+import ModalAddMatter from "../../../components/cours/ModalAddMatter";
 
 class Cours extends React.Component {
   state = {
@@ -76,6 +77,7 @@ class Cours extends React.Component {
                       </Dropdown.Toggle>
                       <Dropdown.Menu className="options">
                         <ModalCreateClass />
+                        <ModalAddMatter  />
                       </Dropdown.Menu>
                     </Dropdown>
                   </div>
