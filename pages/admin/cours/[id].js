@@ -1,4 +1,4 @@
-import LayoutS from "../../../components/LayoutS";
+import Layout from "../../../components/Layout";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ReactHtmlParser from "react-html-parser";
@@ -8,7 +8,7 @@ function CoursPerso({ post, program }) {
 
   return (
     <>
-      <LayoutS title="Lecons">
+      <Layout title="Lecons">
         <div className="container-fluid">
           <div className="mainCardLesson">
             {post == "" ? (
@@ -41,11 +41,11 @@ function CoursPerso({ post, program }) {
             )}
           </div>
         </div>
-      </LayoutS>
+      </Layout>
     </>
   );
 }
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   try {
     const res = await axios.get(`api/school/lecon_by_program/${params.id}`);
     const prog = await axios.get(`api/school/program/${params.id}`);
@@ -57,17 +57,6 @@ export async function getStaticProps({ params }) {
   } catch (err) {
     console.log(err);
     return { props: { post: "", program: "" } };
-  }
-}
-
-export async function getStaticPaths() {
-  const res = await axios.get(`api/school/program`);
-  const posts = res.data;
-  try {
-    const paths = posts.map((post) => `/admin/cours/${post.id}`);
-    return { paths, fallback: false };
-  } catch (err) {
-    console.log(err);
   }
 }
 export default CoursPerso;

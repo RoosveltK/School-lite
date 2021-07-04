@@ -53,7 +53,7 @@ function TestPerso({ recuperation }) {
     </>
   );
 }
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   try {
     const recup = await axios.get(`api/school/lecon_test/${params.id}`);
     const recuperation = recup.data;
@@ -66,17 +66,6 @@ export async function getStaticProps({ params }) {
         recuperation: [],
       },
     };
-  }
-}
-
-export async function getStaticPaths() {
-  const res = await axios.get(`api/school/program`);
-  const posts = res.data;
-  try {
-    const paths = posts.map((post) => `/admin/cours/test/${post.id}`);
-    return { paths, fallback: false };
-  } catch (err) {
-    console.log(err);
   }
 }
 
