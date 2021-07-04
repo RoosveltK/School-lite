@@ -55,6 +55,7 @@ export default class ModalAddStudent extends React.Component {
   handleCreate = async (event) => {
     event.preventDefault();
     this.setState({ isLoading: true });
+
     const data = {
       first_name: this.state.first_name,
       username: this.state.username,
@@ -67,6 +68,7 @@ export default class ModalAddStudent extends React.Component {
       password: this.state.first_name + "12345",
       departement: "stud",
     };
+    console.log(data);
     axios
       .post(`api/user/`, data)
       .then(() => {

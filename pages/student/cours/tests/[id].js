@@ -3,7 +3,7 @@ import LayoutS from "../../../../components/LayoutS";
 import Quizz from "./Quizz";
 import axios from "axios";
 
-const Test = ({ program, quiz }) => {
+const Test = ({ lecon, quiz }) => {
   return (
     <LayoutS title="Test">
       <div className="container-fluid">
@@ -13,7 +13,7 @@ const Test = ({ program, quiz }) => {
               TEST PAS ENCORE DISPONIBLE
             </div>
           ) : (
-            <Quizz quiz={quiz} />
+            <Quizz quiz={quiz} lecon={lecon} />
           )}
         </div>
       </div>
@@ -23,16 +23,19 @@ const Test = ({ program, quiz }) => {
 
 export async function getStaticProps({ params }) {
   try {
-    const prog = await axios.get(`api/school/program/${params.id}`);
     const res = await axios.get(`api/school/lecon_test/${params.id}`);
-
+    const les = await axios.get(`api/school/lecon`);
+    let lecon = null;
     const quiz = res.data;
-    const program = prog.data;
 
-    return { props: { quiz, program } };
+    les.data.forEach((element) => {
+      if (element.program == params.id) lecon = element;
+    });
+
+    return { props: { quiz, lecon } };
   } catch (err) {
     console.log(err);
-    return { props: { quiz: "", program: "" } };
+    return { props: { quiz: "", lecon: "" } };
   }
 }
 

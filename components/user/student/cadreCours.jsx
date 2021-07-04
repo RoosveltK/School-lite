@@ -6,7 +6,9 @@ const CadreCours = ({ dataLecon }) => {
     <div className="caderCours">
       <header>{dataLecon.title}</header>
       <div>
-        {dataLecon.describe}
+        {dataLecon.describe.length > 100
+          ? dataLecon.describe.slice(0, 100)
+          : dataLecon.describe}
         <div className="caderCours-btn">
           <button className="btn">
             <Link href={`/student/cours/${dataLecon.id}`}>

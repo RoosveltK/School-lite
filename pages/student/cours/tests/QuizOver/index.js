@@ -1,13 +1,50 @@
 import React, { Fragment, useEffect, useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const QuizOver = React.forwardRef((props, ref) => {
-  const { levelNames, score, maxQuestion, quizLevel, percent, loadNextLevel } =
-    props;
+  const {
+    levelNames,
+    score,
+    maxQuestion,
+    quizLevel,
+    percent,
+    loadNextLevel,
+    userInfo,
+    leconInfo,
+  } = props;
   const [asked, setAsked] = useState([]);
+  const [realScore, setRealScore] = useState(null);
 
   useEffect(() => {
     setAsked(ref.current);
+    sendScore();
   }, [ref]);
+
+  const sendScore = () => {
+    let realScore = (score * 20) / maxQuestion;
+    setRealScore(setRealScore);
+    const data = {
+      note: realScore,
+      lesson: leconInfo.id,
+      student: userInfo.id,
+    };
+    axios
+      .post(`api/school/test/result`, data)
+      .then(() => {
+        if (score < maxQuestion / 2)
+          toast.warning(
+            `Vous devez encore fournir des efforts ${userInfo.first_name}`
+          );
+        else
+          toast.success(`Félicitation ${userInfo.first_name} continuez ainsi`);
+      })
+      .catch(() =>
+        toast.warning(
+          `Vous avez déja un score qu'on ne peut changer mais continuez à vous exercer`
+        )
+      );
+  };
 
   if (score < maxQuestion / 2) {
     setTimeout(() => loadNextLevel(0), 5000);
@@ -24,7 +61,7 @@ const QuizOver = React.forwardRef((props, ref) => {
         <div className="percentage">
           <div className="progressPercent">Réussite : {percent}%</div>
           <div className="progressPercent">
-            Note : {score}/{maxQuestion}
+            Note : {realScore}/{20}
           </div>
         </div>
       </Fragment>
@@ -37,7 +74,7 @@ const QuizOver = React.forwardRef((props, ref) => {
         <div className="percentage">
           <div className="progressPercent">Réussite : {percent}%</div>
           <div className="progressPercent">
-            Note : {score}/{maxQuestion}
+            Note : {realScore}/{20}
           </div>
         </div>
       </Fragment>

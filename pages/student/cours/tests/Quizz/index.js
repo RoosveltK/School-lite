@@ -23,6 +23,7 @@ class Quiz extends Component {
       score: 0,
       welcomeMsg: false,
       quizPartEnd: false,
+      user: null,
     };
     this.state = this.initialState;
     this.completQuiz = React.createRef();
@@ -53,6 +54,8 @@ class Quiz extends Component {
 
   componentDidMount() {
     this.loadQuestion();
+    let users = JSON.parse(localStorage.getItem("studentInfo"));
+    this.setState({ user: users });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -183,6 +186,8 @@ class Quiz extends Component {
         quizLevel={this.state.quizLevel}
         percent={this.state.percent}
         loadNextLevel={this.loadNextLevel}
+        userInfo={this.state.user}
+        leconInfo={this.props.lecon}
       />
     ) : (
       <div>

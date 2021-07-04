@@ -18,7 +18,7 @@ const departement = [
 ];
 class Cours extends Component {
   state = {
-    allLecon: [],
+    allLecon: null,
     matiere: [],
     matiereSelect: null,
     user: null,
@@ -71,7 +71,7 @@ class Cours extends Component {
             ))}
           </select>
         </div>
-        {this.state.allLecon.length == 0 ? (
+        {this.state.allLecon == null ? (
           <div className="firstCader">
             <div className="container-fluid">
               <div className="mainCard textCours text-secondary">
@@ -81,11 +81,24 @@ class Cours extends Component {
             </div>
           </div>
         ) : (
-          <div className="cader">
-            {this.state.allLecon.map((lecon) => {
-              if (lecon.status == true) return <CadreCours dataLecon={lecon} />;
-            })}
-          </div>
+          <React.Fragment>
+            {this.state.allLecon.length != 0 ? (
+              <div className="cader">
+                {this.state.allLecon.map((lecon) => {
+                  if (lecon.status == true)
+                    return <CadreCours dataLecon={lecon} />;
+                })}
+              </div>
+            ) : (
+              <div className="firstCader">
+                <div className="container-fluid">
+                  <div className="mainCard textCours text-secondary">
+                    COURS PAS ENCORE DISPONIBLE
+                  </div>
+                </div>
+              </div>
+            )}
+          </React.Fragment>
         )}
       </LayoutS>
     );

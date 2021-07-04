@@ -28,7 +28,7 @@ class Eleve extends React.Component {
         searching: true,
         paging: false,
         info: false,
-        columnDefs: [{ orderable: false, targets: [2, 3, 4, 5] }],
+        columnDefs: [{ orderable: false, targets: [2, 5] }],
       });
     });
 
@@ -74,7 +74,7 @@ class Eleve extends React.Component {
                   <div className="col-12 content-card">
                     <table
                       id="datatable"
-                      className="table-responsive-sm nowrap "
+                      className="table-responsive-sm nowrap"
                       style={{
                         borderCollapse: "collapse",
                         borderSpacing: 0,
