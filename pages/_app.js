@@ -10,11 +10,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import Head from "next/head";
-import { IconContext } from "react-icons";
 import "react-toastify/dist/ReactToastify.css";
 import NextNprogress from "nextjs-progressbar";
 
 axios.defaults.baseURL = "https://school-lite-2002.herokuapp.com/";
+// axios.defaults.baseURL = "https://networkschool-api-2021.herokuapp.com"; //voila l'url ici
 
 function MyApp({ Component, pageProps }) {
   return (

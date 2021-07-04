@@ -110,7 +110,7 @@ export default class ModalAddTeacher extends React.Component {
           </Modal.Header>
           <Modal.Body>
             <div className="modal-form">
-              <form onSubmit={this.handleCreate}>
+              <form>
                 <div>
                   <label>Nom</label>
                   <input

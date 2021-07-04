@@ -1,6 +1,8 @@
 import Image from "next/image";
 import React from "react";
 import LayoutT from "../../../components/LayoutT";
+import axios from "axios";
+import CadreCoursT from "../../../components/user/teacher/cadreCoursT";
 
 const classeDispo = [
   { value: "0", name: "Terminale" },
@@ -16,6 +18,9 @@ class Compte extends React.Component {
   state = {
     user: null,
     classe: [],
+    isOk: false,
+    classMater: [],
+    programAllClass: [],
   };
 
   componentDidMount() {
@@ -36,7 +41,41 @@ class Compte extends React.Component {
       });
     });
     this.setState({ classe: tab });
+
+    infoUser.classes.map((elt, index) => {
+      let i = 0;
+
+      axios
+        .get(`api/school/classe/matter/${elt.id}`)
+        .then((res) => {
+          const matter = res.data.find(
+            (val) => infoUser.departement == val.matter
+          );
+
+          this.setState({ classMater: [...this.state.classMater, matter] });
+          const taille = infoUser.classes.length - 1;
+          if (index == taille) {
+            this.state.classMater.forEach((prog, indice) => {
+              axios
+                .get(`api/school/program/matter/${prog.id}`)
+                .then((res) => {
+                  res.data.forEach((datas) => {
+                    datas.idClasse = prog.classe;
+                    this.setState({
+                      programAllClass: [...this.state.programAllClass, datas],
+                    });
+                  });
+                  if (indice == this.state.classMater.length - 1)
+                    this.setState({ isOk: true });
+                })
+                .catch((err) => console.log(err));
+            });
+          }
+        })
+        .catch((err) => console.log(err));
+    });
   }
+
   render() {
     const couleur = {
       green: "#198754",
@@ -83,13 +122,33 @@ class Compte extends React.Component {
                     <React.Fragment>
                       <h2>
                         {info.level} - {info.speciality}
-                      </h2>
-                      <div>
-                        <button className="btn boutonStat">COURS</button>
-                        <button className="btn boutonStat" disabled>
-                          EVALUATION
-                        </button>
+                      </h2>{" "}
+                      <div className="cader">
+                        {this.state.isOk == false ? (
+                          `Patienter...`
+                        ) : (
+                          <React.Fragment>
+                            {this.state.programAllClass.map(
+                              (program, index) => {
+                                let isThere = false;
+                                if (
+                                  program.idClasse == info.id &&
+                                  program.status == true
+                                ) {
+                                  isThere = true;
+                                  return <CadreCoursT dataLecon={program} />;}
+                                // } else if (
+                                //   index ==
+                                //     this.state.programAllClass.length - 1 &&
+                                //   isThere == false
+                                // )
+                                //   return `PAS DE COURS DISPONIBLE`;
+                              }
+                            )}
+                          </React.Fragment>
+                        )}
                       </div>
+                      <hr />
                     </React.Fragment>
                   ))}
                 </React.Fragment>
@@ -102,10 +161,10 @@ class Compte extends React.Component {
     );
   }
 }
-
 export default Compte;
-        //  <div className="cader">
-        //    {this.state.allLecon.map((lecon) => {
-        //      if (lecon.status == true) return <CadreCours dataLecon={lecon} />;
-        //    })}
-        //  </div>;
+
+//  <div className="cader">
+//    {this.state.allLecon.map((lecon) => {
+//      if (lecon.status == true) return <CadreCours dataLecon={lecon} />;
+//    })}
+//  </div>;

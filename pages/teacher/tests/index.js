@@ -209,7 +209,7 @@ class Tests extends React.Component {
 
     if (this.state.lecon != null) {
       this.setState({ isLoading: true });
-      this.state.tabQuestion.forEach((element) => {
+      this.state.tabQuestion.forEach((element, index) => {
         axios
           .post(`api/school/question`, {
             lesson: this.state.lecon.id,

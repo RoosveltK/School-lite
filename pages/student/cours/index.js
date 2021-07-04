@@ -9,7 +9,7 @@ const departement = [
   { value: "chim", name: "Chimie" },
   { value: "hist", name: "Histoire" },
   { value: "geo", name: "Géographie" },
-  { value: "en", name: "Anglais" },
+  { value: "eng", name: "Anglais" },
   { value: "fr", name: "Français" },
   { value: "svt", name: "Science" },
   { value: "ecm", name: "ECM" },

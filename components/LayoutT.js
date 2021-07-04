@@ -70,13 +70,13 @@ class Layout extends React.Component {
                     PRESENCE
                   </a>
                 </Link> */}
-                <Link href="/teacher/evaluation">
+                {/* <Link href="/teacher/evaluation">
                   <a
                     className={`list-group-item list-group-item-action bg-light lastLink`}
                   >
                     EVALUATION
                   </a>
-                </Link>
+                </Link> */}
               </div>
             </div>
             <div className="flex-1" id="page-content-wrapper">

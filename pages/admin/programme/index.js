@@ -34,15 +34,6 @@ class Programme extends React.Component {
   }
   handleSubmit = (e) => {
     e.preventDefault();
-
-    const dataProgram = {
-      title: this.state.titre,
-      describe: this.state.description,
-      limit_day: this.state.dateLimite,
-      begin_time: this.state.temps,
-      duration: parseInt(this.state.duree),
-      matter: this.state.matiere.id,
-    };
     if (
       this.state.description != "" &&
       this.state.titre != "" &&
@@ -53,6 +44,15 @@ class Programme extends React.Component {
       this.state.duree >= 3
     ) {
       this.setState({ isLoading: true });
+
+      const dataProgram = {
+        title: this.state.titre,
+        describe: this.state.description,
+        limit_day: this.state.dateLimite,
+        begin_time: this.state.temps,
+        duration: parseInt(this.state.duree),
+        matter: this.state.matiere.id,
+      };
       axios
         .post(`api/school/program`, dataProgram)
         .then(() => {
@@ -70,7 +70,7 @@ class Programme extends React.Component {
         })
         .catch((err) => {
           toast.error(
-            "Erreur lors de la mise à jour du programme, cette leçon éxiste déja propablement ou vos données sont erronées"
+            "Erreur lors de la mise à jour du programme, cette leçon éxiste  propablement déja"
           );
           this.setState({ isLoading: false });
         });

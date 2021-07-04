@@ -209,7 +209,8 @@ body {
 }
 
 .panneauStyle h3 {
-  margin-left: 50px;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   flex-direction: row;
   align-items: center;
