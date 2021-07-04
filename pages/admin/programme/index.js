@@ -34,7 +34,7 @@ class Programme extends React.Component {
   }
   handleSubmit = (e) => {
     e.preventDefault();
-    this.setState({ isLoading: true });
+
     const dataProgram = {
       title: this.state.titre,
       describe: this.state.description,
@@ -43,27 +43,38 @@ class Programme extends React.Component {
       duration: parseInt(this.state.duree),
       matter: this.state.matiere.id,
     };
-    axios
-      .post(`api/school/program`, dataProgram)
-      .then(() => {
-        toast.success(
-          `Programme de ${this.state.classe.level}-${this.state.classe.speciality} mis à jour`
-        );
-        this.setState({
-          titre: "",
-          description: "",
-          dateLimite: "",
-          duree: 0,
-          temps: 0,
-          isLoading: false,
+    if (
+      this.state.description != "" &&
+      this.state.titre != "" &&
+      this.state.dateLimite != "" &&
+      this.state.temps != 0 &&
+      this.state.matiere != null &&
+      this.state.duree != 0 &&
+      this.state.duree >= 3
+    ) {
+      this.setState({ isLoading: true });
+      axios
+        .post(`api/school/program`, dataProgram)
+        .then(() => {
+          toast.success(
+            `Programme de ${this.state.classe.level}-${this.state.classe.speciality} mis à jour`
+          );
+          this.setState({
+            titre: "",
+            description: "",
+            dateLimite: "",
+            duree: 0,
+            temps: 0,
+            isLoading: false,
+          });
+        })
+        .catch((err) => {
+          toast.error(
+            "Erreur lors de la mise à jour du programme, cette leçon éxiste déja propablement ou vos données sont erronées"
+          );
+          this.setState({ isLoading: false });
         });
-      })
-      .catch((err) => {
-        toast.error(
-          "Erreur lors de la mise à jour du programme, cette leçon éxiste déja propablement ou vos données sont erronées"
-        );
-        this.setState({ isLoading: false });
-      });
+    } else toast.error("Les  données entrées  sont erronées");
   };
   getInfo = (classes, matiere) => {
     this.setState({
