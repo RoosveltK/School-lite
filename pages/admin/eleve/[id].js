@@ -38,7 +38,7 @@ function analyticPersonnel({ post }) {
     </>
   );
 }
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   try {
     const res = await axios.get(`api/user/${params.id}`);
     const post = res.data;
@@ -50,15 +50,4 @@ export async function getStaticProps({ params }) {
   }
 }
 
-export async function getStaticPaths() {
-  const res = await axios.get(`api/user`);
-  const posts = res.data;
-
-  try {
-    const paths = posts.map((post) => `/admin/eleve/${post.id}`);
-    return { paths, fallback: false };
-  } catch (err) {
-    console.log(err);
-  }
-}
 export default analyticPersonnel;
