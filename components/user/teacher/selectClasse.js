@@ -14,16 +14,17 @@ export default class ModalSelectClasse extends React.Component {
   state = {
     show: true,
     classe: [],
-    matiere: [],
+    matiere: null,
     program: [],
     selectClass: null,
     selectMatter: null,
     selectProgram: null,
+    dep: null,
   };
 
   componentDidMount() {
     const infoUser = JSON.parse(localStorage.getItem("teacherInfo"));
-
+    this.setState({ dep: infoUser.departement });
     let tab = infoUser.classes;
     tab.forEach((elt) => {
       classeDispo.forEach((element) => {
@@ -39,7 +40,10 @@ export default class ModalSelectClasse extends React.Component {
       axios
         .get(`api/school/classe/matter/${ids.id}`)
         .then((res) => {
-          this.setState({ matiere: res.data });
+          res.data.forEach((element) => {
+            if (element.matter == this.state.dep)
+              this.setState({ matiere: element, selectMatter: element.id });
+          });
         })
         .catch((err) => console.log(err));
     }
@@ -84,7 +88,7 @@ export default class ModalSelectClasse extends React.Component {
             <form>
               <div className="noticeUploadCours text-danger">
                 <strong>NB</strong>: Veuillez séléctionner dans l'ordre
-                classe-matière-chapitre en patientant 4 secondes par sélection
+                classe-\\\-chapitre en patientant 4 secondes par sélection
               </div>
               <div className="form-group">
                 <label htmlFor="niveau">Classe</label>
@@ -95,7 +99,7 @@ export default class ModalSelectClasse extends React.Component {
                   }
                   id="niveau"
                 >
-                  <option>---------------------</option>
+                  <option value={null}>---------------------</option>
                   {this.state.classe.map((clas) => (
                     <option key={clas.id} value={JSON.stringify(clas)}>
                       {clas.level}-{clas.speciality}
@@ -108,21 +112,18 @@ export default class ModalSelectClasse extends React.Component {
                 <label htmlFor="niveau">Matière</label>
                 <select
                   className="form-select"
-                  onChange={(e) =>
-                    this.setState({ selectMatter: parseInt(e.target.value) })
-                  }
+                  // onChange={(e) =>
+                  //   this.setState({ selectMatter: parseInt(e.target.value) })
+                  // }
                   id="niveau"
                 >
-                  {this.state.matiere.length != 0 ? (
-                    <option>Maintenant séléctionnez la matière </option>
-                  ) : (
-                    <option>------------------ </option>
-                  )}
-                  {this.state.matiere.map((mat) => (
-                    <option key={mat.id} value={mat.id}>
-                      {mat.matter}
+                  {this.state.matiere != null ? (
+                    <option value={this.state.matiere.id}>
+                      {this.state.matiere.matter}
                     </option>
-                  ))}
+                  ) : (
+                    <option value={null}>------------------ </option>
+                  )}
                 </select>
               </div>
 
@@ -138,7 +139,7 @@ export default class ModalSelectClasse extends React.Component {
                   {this.state.program.length != 0 ? (
                     <option>Maintenant séléctionnez le chapitre </option>
                   ) : (
-                    <option>------------------ </option>
+                    <option value={null}>------------------ </option>
                   )}
                   {this.state.program.map((prog) => (
                     <option key={prog.id} value={JSON.stringify(prog)}>

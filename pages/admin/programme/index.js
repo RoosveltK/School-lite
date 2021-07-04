@@ -43,7 +43,6 @@ class Programme extends React.Component {
       duration: parseInt(this.state.duree),
       matter: this.state.matiere.id,
     };
-    console.log(dataProgram);
     axios
       .post(`api/school/program`, dataProgram)
       .then(() => {
@@ -60,7 +59,9 @@ class Programme extends React.Component {
         });
       })
       .catch((err) => {
-        toast.error("Erreur lors de la mise à jour du programme");
+        toast.error(
+          "Erreur lors de la mise à jour du programme, cette leçon éxiste déja propablement ou vos données sont erronées"
+        );
         this.setState({ isLoading: false });
       });
   };
