@@ -32,24 +32,23 @@ const QuizOver = React.forwardRef((props, ref) => {
     axios
       .post(`api/school/test/result`, data)
       .then(() => {
-        if (score < maxQuestion / 2)
+        if (note < 10)
           toast.warning(
             `Vous devez encore fournir des efforts ${userInfo.first_name}`
           );
         else
           toast.success(`Félicitation ${userInfo.first_name} continuez ainsi`);
       })
-      .catch((err) =>
-        // toast.warning(
-        //   `Vous avez déja un score qu'on ne peut changer mais continuez à vous exercer`
-        // )
-        console.log(err)
+      .catch(() =>
+        toast.warning(
+          `Vous avez déja un score qu'on ne peut changer mais continuez à vous exercer`
+        )
       );
   };
 
-  // if (score < maxQuestion / 2) {
-  //   setTimeout(() => loadNextLevel(0), 5000);
-  // }
+  if (score < maxQuestion / 2) {
+    setTimeout(() => loadNextLevel(0), 5000);
+  }
 
   const decision =
     score >= maxQuestion / 2 ? (

@@ -4,18 +4,30 @@ import Image from "next/image";
 import { responsbar, respons } from "../scripts/form";
 import { Dropdown } from "react-bootstrap";
 import { AiOutlineMenu } from "react-icons/ai";
-import { IoMailOutline } from "react-icons/io5";
-import { IoIosNotificationsOutline } from "react-icons/io";
 import { CgLogOut } from "react-icons/cg";
 import { MdSupervisorAccount } from "react-icons/md";
 import CustomToggle from "./customToggle";
 import Link from "next/link";
 import Router from "next/router";
+import ModalHelp from "./help/ModalHelp";
 
 class LayoutS extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { user: "", active: "" };
+    this.state = {
+      user: "",
+      active: "",
+      tabHelp: [
+        {
+          id: 0,
+          msg: "Bienvenue sur School lite",
+        },
+        {
+          id: 2,
+          msg: "Pour accéder aux cours veuillez sélectionner une matière et patientew un instant",
+        },
+      ],
+    };
   }
 
   componentDidMount() {
@@ -55,13 +67,6 @@ class LayoutS extends React.Component {
                     COURS{" "}
                   </a>
                 </Link>
-                <Link href="/student/evaluation">
-                  <a
-                    className={`list-group-item list-group-item-action bg-light `}
-                  >
-                    EVALUATION{" "}
-                  </a>
-                </Link>
               </div>
             </div>
             <div className="flex-1" id="page-content-wrapper">
@@ -70,44 +75,30 @@ class LayoutS extends React.Component {
                   <div id="icon-menu">
                     <AiOutlineMenu />
                   </div>
-                  <form role="search" className="menuSearch">
-                    <input
-                      type="text"
-                      placeholder="Rechercher..."
-                      className="form-control"
-                    />
-                    <a href="/enseignant">
-                      <i className="fa fa-search"></i>
-                    </a>
-                  </form>
                 </div>
                 <div className="logo-textL">
-                  <a className="nav-link cercleNavbar">
-                    <IoMailOutline size="30px" />
-                  </a>
-                  <a className="nav-link cercleNavbar">
-                    <IoIosNotificationsOutline size="30px" />
-                  </a>
-                  <Dropdown>
+                  <Dropdown className="logoSpace">
                     <Dropdown.Toggle as={CustomToggle}>
                       <Image
                         className="img-xs image"
-                        src="/static/avatar.jpg"
+                        src="/static/student.png"
                         alt="pic profile"
                         width={40}
                         height={40}
                       />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                      {/* <Dropdown.Item>
-                        <Link href="compte">
-                          <a>
-                            <MdSupervisorAccount size="20px" />
-                            Compte
-                          </a>
-                        </Link>
+                      <ModalHelp tabHelp={this.state.tabHelp} />
+                      <Dropdown.Divider />
+                      <Dropdown.Item
+                        onClick={() => {
+                          Router.push("/student/compte");
+                        }}
+                      >
+                        <MdSupervisorAccount size="20px" />
+                        Compte
                       </Dropdown.Item>
-                      <Dropdown.Divider /> */}
+                      <Dropdown.Divider />
                       <Dropdown.Item
                         onClick={() => {
                           localStorage.clear();

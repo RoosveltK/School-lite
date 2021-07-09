@@ -207,6 +207,10 @@ class Tests extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
+    // this.state.tabQuestion.forEach((element) => {
+    //   if (element.content == 0) this.setState({ questionIsOk: true });
+    // });
+
     if (this.state.lecon != null) {
       this.setState({ isLoading: true });
       this.state.tabQuestion.forEach((element, index) => {
@@ -216,12 +220,29 @@ class Tests extends React.Component {
             content: element.question,
           })
           .then((res) => {
-            element.reponses.forEach((rep) => {
+            element.reponses.forEach((rep, indice) => {
               axios.post(`api/school/reponse`, {
                 question: res.data.id,
                 content: rep.rep,
                 verify: rep.valeur,
               });
+
+              if (
+                index == this.state.tabQuestion.length - 1 &&
+                indice == element.reponses.length - 1
+              ) {
+                const tab = this.state.tabQuestion.slice();
+
+                tab.forEach((element) => {
+                  element.question = "";
+                  element.reponses.forEach((elt) => {
+                    elt.rep = "";
+                    elt.valeur = false;
+                  });
+                });
+
+                this.setState({ tabQuestion: tab });
+              }
             });
             toast.success(`Question ${element.id} crée avec succès`);
           })
@@ -298,6 +319,7 @@ class Tests extends React.Component {
                           className="form-control"
                           placeholder={`Veuillez saisir la question`}
                           onChange={(e) => this.handleQuestion(e, index)}
+                          value={question.question}
                         />
                       </React.Fragment>
                       <div className="form-group ">
@@ -316,6 +338,7 @@ class Tests extends React.Component {
                                 }
                                 placeholder={`Reponse  ${i + 1}`}
                                 name="reponse"
+                                value={valeur.rep}
                               />
                               <input
                                 key={
@@ -326,6 +349,7 @@ class Tests extends React.Component {
                                 onChange={(e) =>
                                   this.handleReponse(e, index, i)
                                 }
+                                checked={valeur.valeur}
                               />
                             </React.Fragment>
                           ))}

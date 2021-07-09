@@ -14,6 +14,20 @@ const classeDispo = [
   { value: "6", name: "Sixième" },
 ];
 
+const departements = [
+  { value: "math", name: "Mathématique" },
+  { value: "phy", name: "Physique" },
+  { value: "chim", name: "Chimie" },
+  { value: "hist", name: "Histoire" },
+  { value: "geo", name: "Géographie" },
+  { value: "eng", name: "Anglais" },
+  { value: "fr", name: "Français" },
+  { value: "svt", name: "Science" },
+  { value: "ecm", name: "ECM" },
+  { value: "eps", name: "Sport" },
+  { value: "inf", name: "Informatique" },
+];
+
 class Compte extends React.Component {
   state = {
     user: null,
@@ -31,6 +45,7 @@ class Compte extends React.Component {
       matricule: infoUser.matricule,
       born_at: infoUser.born_at,
       email: infoUser.email,
+      departement: infoUser.departement,
     };
 
     this.setState({ user: info });
@@ -91,7 +106,7 @@ class Compte extends React.Component {
                 <div>
                   <Image
                     className="img-xs image"
-                    src="/static/avatar.jpg"
+                    src="/static/teacher.png"
                     alt="pic profile"
                     width={200}
                     height={200}
@@ -108,7 +123,10 @@ class Compte extends React.Component {
                     <span> {this.state.user.born_at}</span>
                     <span> {this.state.user.matricule}</span>
                     <span className="badge rounded-pill bg-success">
-                      {this.state.user.departement}
+                      {departements.map((elt) => {
+                        if (elt.value == this.state.user.departement)
+                          return elt.name;
+                      })}
                     </span>
                   </div>
                 ) : null}
@@ -136,13 +154,8 @@ class Compte extends React.Component {
                                   program.status == true
                                 ) {
                                   isThere = true;
-                                  return <CadreCoursT dataLecon={program} />;}
-                                // } else if (
-                                //   index ==
-                                //     this.state.programAllClass.length - 1 &&
-                                //   isThere == false
-                                // )
-                                //   return `PAS DE COURS DISPONIBLE`;
+                                  return <CadreCoursT dataLecon={program} />;
+                                }
                               }
                             )}
                           </React.Fragment>
@@ -162,9 +175,3 @@ class Compte extends React.Component {
   }
 }
 export default Compte;
-
-//  <div className="cader">
-//    {this.state.allLecon.map((lecon) => {
-//      if (lecon.status == true) return <CadreCours dataLecon={lecon} />;
-//    })}
-//  </div>;

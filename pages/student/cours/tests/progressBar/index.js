@@ -2,10 +2,8 @@ import React from "react";
 
 const ProgressBar = (props) => {
   const { idQ, max } = props;
-  const tailleBar = (total, id) => {
-    return (100 / total) * id;
-  };
-  const progression = tailleBar(max, idQ + 1);
+  const tailleBar = (total, id) => (100 / total) * id;
+  const progression = tailleBar(max, idQ);
 
   return (
     <>

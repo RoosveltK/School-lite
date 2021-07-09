@@ -30,13 +30,17 @@ function TestPerso({ recuperation }) {
                           return (
                             <h4>
                               <span>
-                                {" "}
-                                {rep.content}{" "}
+                                &nbsp; &nbsp; &nbsp;
+                                &nbsp; &nbsp; &nbsp;
                                 {rep.verify == true ? (
                                   <FcCheckmark />
                                 ) : (
                                   <GrFormClose />
-                                )}
+                                )}{" "}
+                                <span>
+                                  {rep.content}
+                                  <br />
+                                </span>
                               </span>
                             </h4>
                           );

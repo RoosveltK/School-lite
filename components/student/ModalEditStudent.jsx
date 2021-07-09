@@ -202,7 +202,7 @@ export default class ModalEditStudent extends React.Component {
                 disabled
                 className="color-titre-ajout"
               >
-                Patienter ...{" "}
+                Patienter...{" "}
               </Button>
             ) : (
               <Button
@@ -220,3 +220,31 @@ export default class ModalEditStudent extends React.Component {
     );
   }
 }
+
+//  axios
+//       .put(`api/user/${this.props.eleve.id}`, data)
+//       .then(() => {
+//         if (this.state.newClasse != null) {
+//           axios
+//             .get(
+//               `api/school/teacher/remove/class/${this.props.eleve.id}/${this.state.classe[0].id}`
+//             )
+//             .then(() => {
+//               axios
+//                 .post(`api/school/teacher/add/class`, {
+//                   user: this.props.eleve.id,
+//                   classe: parseInt(this.state.newClasse),
+//                 })
+//                 .then(() => {
+//                   toast.success("Informations modifiées avec succès");
+//                   setTimeout(() => Router.reload(), 2000);
+//                   this.setState({ show: false });
+//                 })
+//                 .catch((err) => this.setState({ show: false }));
+//             })
+//             .catch((err) => );
+//         } else {
+//           toast.success("Informations modifiées avec succès");
+//           setTimeout(() => Router.reload(), 2000);
+//           this.setState({ show: false });
+//         }

@@ -11,11 +11,12 @@ import { MdSupervisorAccount } from "react-icons/md";
 import CustomToggle from "./customToggle";
 import Link from "next/link";
 import Router from "next/router";
+import ModalHelp from "./help/ModalHelp";
 const menuItems = ["COURS", "EVALUATION", "PRESENCE", "TESTS"];
 class Layout extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { user: "", active: "" };
+    this.state = { user: "", active: "", tabHelp: [] };
   }
 
   componentDidMount() {
@@ -85,7 +86,7 @@ class Layout extends React.Component {
                   <div id="icon-menu">
                     <AiOutlineMenu />
                   </div>
-                  <form role="search" className="menuSearch">
+                  {/* <form role="search" className="menuSearch">
                     <input
                       type="text"
                       placeholder="Rechercher..."
@@ -94,26 +95,22 @@ class Layout extends React.Component {
                     <a href="/teacher/cours">
                       <i className="fa fa-search"></i>
                     </a>
-                  </form>
+                  </form> */}
                 </div>
                 <div className="logo-textL">
-                  <a className="nav-link cercleNavbar">
-                    <IoMailOutline size="30px" />
-                  </a>
-                  <a className="nav-link cercleNavbar">
-                    <IoIosNotificationsOutline size="30px" />
-                  </a>
-                  <Dropdown>
+                  <Dropdown className="logoSpace">
                     <Dropdown.Toggle as={CustomToggle}>
                       <Image
                         className="img-xs image"
-                        src="/static/avatar.jpg"
+                        src="/static/teacher.png"
                         alt="pic profile"
                         width={40}
                         height={40}
                       />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
+                      <ModalHelp tabHelp={this.state.tabHelp} />
+                      <Dropdown.Divider />
                       <Dropdown.Item
                         onClick={() => {
                           Router.push("/teacher/compte");

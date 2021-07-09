@@ -137,7 +137,11 @@ body {
   background-color: #198754;
 }
 .close {
-  font-size: 0;
+  background-color: transparent;
+  font-size: 1.5rem;
+  width: 15px;
+  overflow: hidden;
+  border: none;
 }
 .bar {
   border: 1px solid #cfcfcf;
@@ -299,9 +303,9 @@ body {
   flex-direction: column;
   margin: 0 0 0 50px;
 }
-.infoCompte span:last-child {
+/* .infoCompte span:last-child {
   width: 50%;
-}
+} */
 
 .boutonStat {
   font-family: "proxima Regular";
@@ -348,10 +352,12 @@ body {
 .caderViewTest h3 {
   text-align: center;
   font-weight: 700;
+  font-size: 20px;
 }
 .caderViewTest__response {
-  display: flex;
-  justify-content: space-between;
+  /* display: flex;
+  justify-content: space-between; */
+  font-size: 16px;
 }
 .caderCours:hover {
   box-shadow: 0 2px 10px rgb(0 0 0 /50%);
@@ -561,10 +567,18 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items:center;
+  align-items: center;
 }
 
 .custom-select {
   width: 45%;
-  margin: 20px; 
+  margin: 20px;
+}
+/* .closeR {
+  background-color: transparent;
+  border: 0;
+} */
+
+.logoSpace {
+  margin: 5px;
 }

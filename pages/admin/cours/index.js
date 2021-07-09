@@ -77,7 +77,7 @@ class Cours extends React.Component {
                       </Dropdown.Toggle>
                       <Dropdown.Menu className="options">
                         <ModalCreateClass />
-                        <ModalAddMatter  />
+                        <ModalAddMatter />
                       </Dropdown.Menu>
                     </Dropdown>
                   </div>
@@ -116,7 +116,7 @@ class Cours extends React.Component {
                           <th width="50%">Leçon</th>
                           <th width="10%">Date Début</th>
                           <th width="10%">Date Limite</th>
-                          <th width="10%" class="centerContent">
+                          <th width="10%" className="centerContent">
                             Activer
                           </th>
                           <th width="20%">Action</th>

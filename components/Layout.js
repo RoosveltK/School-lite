@@ -4,19 +4,26 @@ import Image from "next/image";
 import { responsbar, respons } from "../scripts/form";
 import { Dropdown } from "react-bootstrap";
 import { AiOutlineMenu } from "react-icons/ai";
+import { CgLogOut } from "react-icons/cg";
 import CustomToggle from "./customToggle";
 import Link from "next/link";
 import Router from "next/router";
+import ModalHelp from "./help/ModalHelp";
+import { helpAdmin } from "../lib/helpAdmin";
 
 class Layout extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { user: "" };
+    this.state = { user: "", tabHelp: [] };
   }
 
   componentDidMount() {
     responsbar();
     respons();
+    if (localStorage.getItem("adminInfo") != null)
+      this.setState({ user: JSON.parse(localStorage.getItem("adminInfo")) });
+
+    this.setState({ tabHelp: helpAdmin });
   }
 
   render() {
@@ -71,19 +78,9 @@ class Layout extends React.Component {
                   <div id="icon-menu">
                     <AiOutlineMenu />
                   </div>
-                  <form role="search" className="menuSearch">
-                    <input
-                      type="text"
-                      placeholder="Rechercher..."
-                      className="form-control"
-                    />
-                    <a href="/admin/enseignant">
-                      <i className="fa fa-search"></i>
-                    </a>
-                  </form>
                 </div>
                 <div className="logo-textL">
-                  <Dropdown>
+                  <Dropdown className="logoSpace">
                     <Dropdown.Toggle as={CustomToggle}>
                       <Image
                         className="img-xs image"
@@ -94,12 +91,15 @@ class Layout extends React.Component {
                       />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
+                      <ModalHelp tabHelp={this.state.tabHelp} />
+                      <Dropdown.Divider />
                       <Dropdown.Item
                         onClick={() => {
                           localStorage.clear();
                           Router.push("/");
                         }}
                       >
+                        <CgLogOut size="20px" />
                         Déconnexion
                       </Dropdown.Item>
                     </Dropdown.Menu>

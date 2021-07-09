@@ -25,14 +25,14 @@ const InfoPresence = ({ dataStudent }) => {
           <td>
             {first_name.toUpperCase()} {username.toUpperCase()}
           </td>
-          <td class="centerContent">
+          <td className="centerContent">
             <input
               type="checkbox"
               name="cours"
               onChange={(e) => handleNotify(e, "cours")}
             />
           </td>
-          <td class="centerContent">
+          <td className="centerContent">
             <input
               type="checkbox"
               name="tests"

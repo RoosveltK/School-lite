@@ -8,6 +8,7 @@ export default class ModalEditTeacher extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isClasseModif: false,
       isLoading: false,
       show: false,
       first_name: this.props.enseignant.first_name,
@@ -20,6 +21,7 @@ export default class ModalEditTeacher extends React.Component {
       classeDispo: this.props.classe,
       departement: this.props.enseignant.departement,
       departementDispo: [],
+      classeModify: [],
       levels: [
         { value: "0", name: "Terminale" },
         { value: "1", name: "Première" },
@@ -56,6 +58,15 @@ export default class ModalEditTeacher extends React.Component {
     });
   }
 
+  handleClassChange = (e) => {
+    this.setState({
+      classeModify: Array.from(e.target.selectedOptions).map(
+        (option) => option.value
+      ),
+      isClasseModif: true,
+    });
+  };
+
   handleModif = async (event) => {
     event.preventDefault();
     this.setState({ isLoading: true });
@@ -71,9 +82,38 @@ export default class ModalEditTeacher extends React.Component {
     axios
       .put(`api/user/${this.props.enseignant.id}`, data)
       .then(() => {
-        toast.success("Informations modifiés avec succès");
-        setTimeout(() => Router.reload(), 2000);
-        this.setState({ show: false });
+        if (this.state.classeModify.length != 0) {
+          this.state.classe.forEach((element, index) => {
+            axios
+              .get(
+                `api/school/teacher/remove/class/${this.props.enseignant.id}/${element.id}`
+              )
+              .then(() => {
+                if (index == this.state.classe.length - 1) {
+                  this.state.classeModify.forEach((addClass, indice) => {
+                    axios
+                      .post(`api/school/teacher/add/class`, {
+                        user: this.props.enseignant.id,
+                        classe: parseInt(addClass),
+                      })
+                      .then((res) => {
+                        if (indice == this.state.classeModify.length - 1) {
+                          toast.success("Informations modifiés avec succès");
+                          setTimeout(() => Router.reload(), 2000);
+                          this.setState({ show: false });
+                        }
+                      })
+                      .catch((err) => console.log(err));
+                  });
+                }
+              })
+              .catch((err) => console.log(err));
+          });
+        } else {
+          toast.success("Informations modifiés avec succès");
+          setTimeout(() => Router.reload(), 2000);
+          this.setState({ show: false });
+        }
       })
       .catch((err) => {
         toast.error(
@@ -177,15 +217,8 @@ export default class ModalEditTeacher extends React.Component {
                   <label>Classe</label>
                   <select
                     className="form-select"
-                    value={this.state.classe}
-                    onChange={(e) =>
-                      this.setState({
-                        classe: Array.from(e.target.selectedOptions).map(
-                          (option) => option.value
-                        ),
-                      })
-                    }
-                    value={this.state.classe}
+                    onChange={(e) => this.handleClassChange(e)}
+                    value={this.state.classeModify}
                     multiple
                   >
                     {this.state.tabClasse.map((info) => (

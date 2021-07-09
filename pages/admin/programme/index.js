@@ -138,8 +138,8 @@ class Programme extends React.Component {
                           <input
                             type="text"
                             className="form-control"
-                            placeholder="Durée: 3"
-                            value={this.state.duree}
+                            placeholder="Durée: 3 "
+                            // value={this.state.duree}
                             onChange={(e) =>
                               this.setState({ duree: e.target.value })
                             }

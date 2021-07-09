@@ -6,21 +6,24 @@ const index = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    /*CONNEXION*/
     const info = {
       client_id: "roosvelt", //ne change pas xa
       client_secret: "roosvelt12345", //ne change pas xa
       grant_type: "password", //ne change pas xa
-      username: "kencoorp@gmail.com", //email de l'utilisateur en esperant que le username et l'email soit identique 
-      password: "kenne12345",//mot de passe 
+      username: "alain@gmail.com", //email de l'utilisateur en esperant que le username et l'email soit identique
+      password: "kenne12345", //mot de passe
     };
+
+    /*CREATION DE COMPTE*/
     // const info = {
-    //   email: "kencoorp@gmail.com",
-    //   username: "kencoorp@gmail.com",
+    //   email: "alain@gmail.com",
+    //   username: "Alain",
     //   password: "kenne12345",
     // };
     console.log(info);
     axios
-      .post(`/auth/token/`, info)
+      .post(`/auth/token`, info)
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err));
   };

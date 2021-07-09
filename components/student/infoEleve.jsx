@@ -23,7 +23,7 @@ const InfoEleve = ({ dataEleve, classeDispo }) => {
               if (elt.value == classes[0].level) return elt.name;
             })}
           </td>{" "}
-          <td class="centerContent">{classes[0].speciality}</td>
+          <td className="centerContent">{classes[0].speciality}</td>
           <td className="contextual-menu survDropdown">
             <Link href={`/admin/eleve/${id}`} key={id}>
               <a>Afficher</a>
