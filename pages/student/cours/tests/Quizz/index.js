@@ -186,7 +186,6 @@ class Quiz extends Component {
         quizLevel={this.state.quizLevel}
         percent={this.state.percent}
         loadNextLevel={this.loadNextLevel}
-        userInfo={this.state.user}
         leconInfo={this.props.lecon}
       />
     ) : (

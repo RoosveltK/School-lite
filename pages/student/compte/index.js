@@ -30,6 +30,21 @@ const departements = [
   { value: "eps", name: "Sport" },
   { value: "inf", name: "Informatique" },
 ];
+
+const backgroundColor = [
+  "rgba(255, 99, 132)",
+  "rgba(255, 159, 64)",
+  "rgba(255, 205, 86)",
+  "rgba(75, 192, 192)",
+  "rgba(54, 162, 235)",
+  "rgba(153, 102, 255)",
+  "rgba(201, 203, 207)",
+  "rgba(200, 210, 192)",
+  "rgba(10, 51, 235)",
+  "rgba(100, 5, 255)",
+  "rgba(200, 10, 207)",
+];
+
 class Compte extends React.Component {
   state = {
     user: null,
@@ -39,8 +54,9 @@ class Compte extends React.Component {
     programAllClass: [],
     test: [],
     programWithLecon: null,
+    allMatterOfClass: null,
+    matter: [],
   };
-
   componentDidMount() {
     const infoUser = JSON.parse(localStorage.getItem("studentInfo"));
     const info = {
@@ -53,18 +69,69 @@ class Compte extends React.Component {
     };
     this.setState({ user: info });
     this.loadOtherData(infoUser.classes, infoUser.id);
+    this.getAllTestByMatter(infoUser.classes[0].id, infoUser.id);
   }
 
-  avgByMatter = (idMatter) => {
-    let moy = 0;
-    let totalOccurences = 0;
-    this.state.test.forEach((elemnt) => {
-      if (elemnt.idMatter == idMatter) {
-        moy += elemnt.note;
-        totalOccurences += 1;
-      }
+  getAllTestByMatter = (classeID, userID) => {
+    axios
+      .get(`api/school/classe/matter/${classeID}`)
+      .then((res) => {
+        let tabTestByMatter = [];
+        this.setState({ matter: res.data });
+        res.data.forEach((elt) => {
+          axios
+            .get(`api/school/user/test/matter/${userID}/${elt.id}`)
+            .then((res) => {
+              let tab = [];
+              res.data.forEach((elt) => {
+                const lecons = this.props.lecon.find(
+                  (lecon) => lecon.id == elt.lesson
+                );
+                const programs = this.props.program.find(
+                  (prog) => prog.id == lecons.program
+                );
+                tab.push({
+                  id: elt.id,
+                  note: elt.note,
+                  programTitle: programs.title,
+                  describe: programs.describe,
+                });
+              });
+              tabTestByMatter.push({ matiere: elt.matter, tests: tab });
+
+              tabTestByMatter.forEach((elt) => {
+                if (elt.tests.length != 0)
+                  elt.pourcentage = this.percentOfMatter(elt.tests);
+                else elt.pourcentage = 0;
+                departements.forEach((dep) => {
+                  if (dep.value.localeCompare(elt.matiere) == 0)
+                    elt.matiere = dep.name;
+                });
+              });
+              this.setState({ allMatterOfClass: tabTestByMatter });
+              if (
+                this.state.allMatterOfClass.length ==
+                  this.state.matter.length &&
+                this.state.matter.length != 0
+              ) {
+                this.setState({ isOk: true });
+              }
+            })
+            .catch((err) => console.log(err));
+        });
+      })
+      .catch((err) => {
+        this.setState({ allMatterOfClass: [] });
+      });
+  };
+
+  percentOfMatter = (tabTest) => {
+    let allNotes = 0;
+    tabTest.forEach((elt) => {
+      allNotes += elt.note;
     });
-    return moy / totalOccurences;
+    allNotes = allNotes / tabTest.length;
+    return (allNotes * 100) / 20;
   };
 
   loadOtherData = (classes, id) => {
@@ -76,47 +143,6 @@ class Compte extends React.Component {
       });
     });
     this.setState({ classe: tab });
-
-    axios
-      .get(`api/school/user/test/result/${id}`)
-      .then((res) => {
-        let tabProgLecon = [];
-        this.setState({ test: res.data });
-        this.props.program.forEach((prog) => {
-          this.props.lecon.forEach((lecon) => {
-            this.state.test.forEach((test) => {
-              if (lecon.program == prog.id && test.lesson == lecon.id)
-                tabProgLecon.push({
-                  idProgram: prog.id,
-                  idLecon: test.id,
-                  programTitle: prog.title,
-                  describe: prog.describe,
-                  note: test.note,
-                  matter: prog.matter,
-                  idMatter: prog.matter,
-                });
-            });
-          });
-        });
-
-        tabProgLecon.forEach((element) => {
-          this.props.matiere.forEach((clas) => {
-            departements.forEach((dep) => {
-              if (element.matter == clas.id && dep.value == clas.matter)
-                element.matter = dep.name;
-            });
-          });
-        });
-        this.setState({ programWithLecon: tabProgLecon });
-      })
-      .catch((err) => {
-        this.setState({ programWithLecon: [] });
-        console.log(err);
-      });
-  };
-
-  obtainMatter = () => {
-    // api/school/classe/matter/
   };
 
   render() {
@@ -154,11 +180,19 @@ class Compte extends React.Component {
               </div>
             </section>
             <hr />
-            <section className="row">
-              <h3>TESTS REALISES</h3>
-              {this.state.programWithLecon != null ? (
+            <section
+              className="row"
+              style={{
+                width: "400px",
+                height: "600px",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+            >
+              <h3>Taux de participation aux tests</h3>
+              {this.state.allMatterOfClass != null ? (
                 <React.Fragment>
-                  {this.state.test.length == 0 ? (
+                  {this.state.allMatterOfClass == 0 ? (
                     <h3
                       style={{
                         marginLeft: "20px",
@@ -172,14 +206,11 @@ class Compte extends React.Component {
                     </h3>
                   ) : (
                     <React.Fragment>
-                      {/* {this.state.programWithLecon.map((element) => {
-                        return (
-                          <h3>
-                            {element.programTitle} - {element.note}
-                          </h3>
-                        );
-                      })} */}
-                      {/* <VerticalBar /> */}
+                      {this.state.isOk == false ? null : (
+                        <div>
+                          <VerticalBar dataStat={this.state.allMatterOfClass} />
+                        </div>
+                      )}
                     </React.Fragment>
                   )}
                 </React.Fragment>

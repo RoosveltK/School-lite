@@ -31,6 +31,10 @@ class LayoutS extends React.Component {
   }
 
   componentDidMount() {
+    if (localStorage.getItem("studentInfo") != null)
+      this.setState({
+        user: JSON.parse(localStorage.getItem("studentInfo")),
+      });
     responsbar();
     respons();
   }
@@ -88,6 +92,16 @@ class LayoutS extends React.Component {
                       />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
+                      <Dropdown.Item>
+                        {this.state.user != "" ? (
+                          <div className="centerContent">
+                            {this.state.user.first_name.toUpperCase()}
+                            <br />
+                            <span style={{ fontSize: "11px" }}>(Élève)</span>
+                          </div>
+                        ) : null}
+                      </Dropdown.Item>
+                      <Dropdown.Divider />
                       <ModalHelp tabHelp={this.state.tabHelp} />
                       <Dropdown.Divider />
                       <Dropdown.Item

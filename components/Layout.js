@@ -91,6 +91,16 @@ class Layout extends React.Component {
                       />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
+                      <Dropdown.Item>
+                        {this.state.user != "" ? (
+                          <div className="centerContent">
+                            {this.state.user.first_name.toUpperCase()}
+                            <br />
+                            <span style={{ fontSize: "11px" }}>(Admin)</span>
+                          </div>
+                        ) : null}
+                      </Dropdown.Item>
+                      <Dropdown.Divider />
                       <ModalHelp tabHelp={this.state.tabHelp} />
                       <Dropdown.Divider />
                       <Dropdown.Item
@@ -106,6 +116,7 @@ class Layout extends React.Component {
                   </Dropdown>
                 </div>
               </nav>
+
               <div className="main" id="interface">
                 {this.props.children}
               </div>

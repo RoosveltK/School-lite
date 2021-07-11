@@ -10,7 +10,6 @@ const QuizOver = React.forwardRef((props, ref) => {
     quizLevel,
     percent,
     loadNextLevel,
-    userInfo,
     leconInfo,
   } = props;
   const [asked, setAsked] = useState([]);
@@ -18,10 +17,14 @@ const QuizOver = React.forwardRef((props, ref) => {
 
   useEffect(() => {
     setAsked(ref.current);
-    sendScore();
   }, [ref, realScore]);
 
-  const sendScore = () => {
+  useEffect(() => {
+     const userInfo = JSON.parse(localStorage.getItem("studentInfo"));
+    sendScore(userInfo);
+  }, []);
+
+  const sendScore = (userInfo) => {
     let realScore = (score * 20) / maxQuestion;
     setRealScore(setRealScore);
     const data = {

@@ -65,7 +65,7 @@ export default class ModalAddStudent extends React.Component {
       gender: this.state.gender,
       role: "stud",
       classes: [this.state.classe],
-      password: this.state.first_name + "12345",
+      password: this.state.first_name.toLowerCase() + "12345",
       departement: "stud",
     };
     console.log(data);

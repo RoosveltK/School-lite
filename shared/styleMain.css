@@ -582,3 +582,15 @@ body {
 .logoSpace {
   margin: 5px;
 }
+.data-class {
+  /* width: 200px; */
+  /* margin-left: auto;
+  margin-right: auto; */
+}
+.data-class > .tooltip-inner {
+  width: 20px;
+}
+
+/* .data-class > .tooltip-arrow {
+  ...;
+} */

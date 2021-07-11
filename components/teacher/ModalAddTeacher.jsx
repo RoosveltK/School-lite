@@ -71,7 +71,7 @@ export default class ModalAddTeacher extends React.Component {
       gender: this.state.gender,
       role: "teach",
       classes: this.state.classe,
-      password: this.state.first_name + "12345",
+      password: this.state.first_name.toLowerCase() + "12345",
     };
     axios
       .post("api/user/", data)

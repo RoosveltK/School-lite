@@ -118,8 +118,10 @@
 .main {
   padding: 20px;
   background-color: #f4f4f4;
+
   overflow-y: scroll;
 }
+
 .mainS {
   padding: 20px;
   background-color: #f4f4f4;

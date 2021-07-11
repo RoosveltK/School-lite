@@ -2,7 +2,16 @@ import React from "react";
 import { Pie } from "react-chartjs-2";
 
 const data = {
-  labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+  labels: [
+    `Red
+  bonjour 
+  salut `,
+    "Blue",
+    "Yellow",
+    "Green",
+    "Purple",
+    "Orange",
+  ],
   datasets: [
     {
       label: "# of Votes",

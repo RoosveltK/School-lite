@@ -1,0 +1,19 @@
+ID teachers
+
+Terminale C
+
+EPS (ajouter 3 lecons dans le programme et creer ses lecons avec leurs tests)
+mot de passe: mbappe12345
+email: alino@gmail.com
+
+Chimie (ajouter 3 lecons dans le programme et creer ses lecons avec leurs tests)
+mot de passe: fotso12345
+email: leaticia@gmail.com
+
+Anglais (ajouter 3 lecons dans le programme et creer ses lecons avec leurs tests)
+mot de passe: mussima12345
+email:dagobert@gmail.com
+
+FRANCAIS (ajouter 3 lecons dans le programme et creer ses lecons avec leurs tests)
+mot de passe: Astama12345
+email:amandine@gmail.com
