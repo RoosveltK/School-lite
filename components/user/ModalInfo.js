@@ -30,11 +30,19 @@ const ModalInfo = ({ info, show, changeValue }) => {
                 })}
               </React.Fragment>
             ) : null}
-            <li>
-              Pourcentage de réussite :{" "}
-              {info != null ? `${info.pourcentage} %` : null}
-            </li>
           </ul>
+          <div>
+            Pourcentage de réussite :{" "}
+            {info != null ? (
+              <React.Fragment>
+                {info.pourcentage >= 50 ? (
+                  <span className="text-success">{info.pourcentage} %</span>
+                ) : (
+                  <span className="text-danger">{info.pourcentage} %</span>
+                )}
+              </React.Fragment>
+            ) : null}
+          </div>
         </Modal.Body>
       </Modal>
     </>

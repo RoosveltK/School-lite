@@ -20,7 +20,7 @@ const QuizOver = React.forwardRef((props, ref) => {
   }, [ref, realScore]);
 
   useEffect(() => {
-     const userInfo = JSON.parse(localStorage.getItem("studentInfo"));
+    const userInfo = JSON.parse(localStorage.getItem("studentInfo"));
     sendScore(userInfo);
   }, []);
 
@@ -35,7 +35,7 @@ const QuizOver = React.forwardRef((props, ref) => {
     axios
       .post(`api/school/test/result`, data)
       .then(() => {
-        if (note < 10)
+        if (realScore < 10)
           toast.warning(
             `Vous devez encore fournir des efforts ${userInfo.first_name}`
           );

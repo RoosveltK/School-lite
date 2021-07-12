@@ -51,8 +51,6 @@ class Compte extends React.Component {
     classe: [],
     isOk: false,
     classMater: [],
-    programAllClass: [],
-    test: [],
     programWithLecon: null,
     allMatterOfClass: null,
     matter: [],
@@ -189,7 +187,7 @@ class Compte extends React.Component {
                 marginRight: "auto",
               }}
             >
-              <h3>Taux de participation aux tests</h3>
+              <h3>Taux de réussite</h3>
               {this.state.allMatterOfClass != null ? (
                 <React.Fragment>
                   {this.state.allMatterOfClass == 0 ? (

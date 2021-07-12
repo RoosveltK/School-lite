@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import CustomToggle from "../customToggle";
 import Link from "next/link";
@@ -9,6 +9,15 @@ import { BiDotsVertical } from "react-icons/bi";
 const InfoEnseignant = ({ dataEnseignant, classe }) => {
   const { id, first_name, email, matricule, departement, classes, role } =
     dataEnseignant;
+  const [classesT, setclassesT] = useState(classes);
+  useEffect(() => {
+    const saves = classes.slice();
+    saves.forEach((clas) => {
+      if (clas.level == "1") clas.level = "P";
+      if (clas.level == "0") clas.level = "T";
+    });
+    setclassesT(saves);
+  }, []);
 
   return (
     <>
@@ -19,8 +28,8 @@ const InfoEnseignant = ({ dataEnseignant, classe }) => {
           <td>{departement}</td>
           <td>{email}</td>
           <td>
-            {classes.length != 0
-              ? classes.map((clas) => clas.level + "-" + clas.speciality + "/")
+            {classesT.length != 0
+              ? classesT.map((clas) => clas.level + "-" + clas.speciality + "/")
               : null}
           </td>
           <td className="contextual-menu survDropdown">
