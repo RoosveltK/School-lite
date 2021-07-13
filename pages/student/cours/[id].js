@@ -29,14 +29,12 @@ function CoursPerso({ post, program }) {
                     ? null
                     : detailProgram.title.toUpperCase()}
                 </h2>
-                <div className="col-12 header-card">
-                  <span>
-                    <u> Description:</u>{" "}
-                    {detailProgram == null ? null : detailProgram.describe}{" "}
-                  </span>
+                <div>
+                  <u> Description:</u>{" "}
+                  {detailProgram == null ? null : detailProgram.describe}{" "}
                 </div>
                 <div className="caderScroll">
-                  {ReactHtmlParser(post.content)}
+                  <div>{ReactHtmlParser(post.content)}</div>
                   <div
                     className="caderCours-btn"
                     style={{ display: "flex", justifyContent: "flex-end" }}

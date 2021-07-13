@@ -177,11 +177,8 @@ class Compte extends React.Component {
               </div>
             </section>
             <hr />
-            <section
-              className="row"
+            <div
               style={{
-                width: "400px",
-                height: "600px",
                 marginLeft: "auto",
                 marginRight: "auto",
               }}
@@ -214,7 +211,7 @@ class Compte extends React.Component {
               ) : (
                 <div className="loader"></div>
               )}
-            </section>
+            </div>
           </div>
         </div>
       </LayoutS>
