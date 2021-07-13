@@ -36,10 +36,22 @@ class Layout extends React.Component {
           <div className="topbar"></div>
           <div className="d-flex" id="wrapper">
             <div className="bg-light border-right" id="sidebar-wrapper">
-              <div className="sidebar-heading">
+              <div className="sidebar-heading ">
                 <Link href="/admin/enseignant">
                   <a className="homeLink">SCHOOL LITE</a>
                 </Link>
+                <Link href="/student/cours">
+                  <a className="homeLink">
+                    <Image
+                      src="/static/school.png"
+                      alt="pic profile"
+                      width={30}
+                      height={30}
+                    />
+                  </a>
+                </Link>
+                <div className="bar"></div>
+                <span className="devise">Discipline - Travail - Succès</span>
               </div>
               <div className="list-group list-group-flush" id="menuLoading">
                 <Link href="/admin/cours">

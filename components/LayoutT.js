@@ -39,10 +39,12 @@ class Layout extends React.Component {
           <div className="d-flex" id="wrapper">
             <div className="bg-light border-right" id="sidebar-wrapper">
               <div className="sidebar-heading ">
-                <Link href="/">
+                <Link href="/admin/enseignant">
+                  <a className="homeLink">SCHOOL LITE</a>
+                </Link>
+                <Link href="/student/cours">
                   <a className="homeLink">
                     <Image
-                      className=""
                       src="/static/school.png"
                       alt="pic profile"
                       width={30}

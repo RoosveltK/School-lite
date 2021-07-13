@@ -66,25 +66,26 @@ class Compte extends React.Component {
           const matter = res.data.find(
             (val) => infoUser.departement == val.matter
           );
-
-          this.setState({ classMater: [...this.state.classMater, matter] });
-          const taille = infoUser.classes.length - 1;
-          if (index == taille) {
-            this.state.classMater.forEach((prog, indice) => {
-              axios
-                .get(`api/school/program/matter/${prog.id}`)
-                .then((res) => {
-                  res.data.forEach((datas) => {
-                    datas.idClasse = prog.classe;
-                    this.setState({
-                      programAllClass: [...this.state.programAllClass, datas],
+          if (matter != undefined) {
+            this.setState({ classMater: [...this.state.classMater, matter] });
+            const taille = infoUser.classes.length - 1;
+            if (index == taille) {
+              this.state.classMater.forEach((prog, indice) => {
+                axios
+                  .get(`api/school/program/matter/${prog.id}`)
+                  .then((res) => {
+                    res.data.forEach((datas) => {
+                      datas.idClasse = prog.classe;
+                      this.setState({
+                        programAllClass: [...this.state.programAllClass, datas],
+                      });
                     });
-                  });
-                  if (indice == this.state.classMater.length - 1)
-                    this.setState({ isOk: true });
-                })
-                .catch((err) => console.log(err));
-            });
+                    if (indice == this.state.classMater.length - 1)
+                      this.setState({ isOk: true });
+                  })
+                  .catch((err) => console.log(err));
+              });
+            }
           }
         })
         .catch((err) => console.log(err));
@@ -92,11 +93,6 @@ class Compte extends React.Component {
   }
 
   render() {
-    const couleur = {
-      green: "#198754",
-      red: "#dc3545",
-      blue: "#0dcaf0",
-    };
     return (
       <LayoutT title="Compte">
         <div className="container-fluid">
@@ -143,7 +139,7 @@ class Compte extends React.Component {
                       </h2>{" "}
                       <div className="cader">
                         {this.state.isOk == false ? (
-                          `Patienter...`
+                          <div className="loader"></div>
                         ) : (
                           <React.Fragment>
                             {this.state.programAllClass.map(

@@ -2,6 +2,10 @@ import React from "react";
 import LayoutT from "../../../../components/LayoutT";
 import { FcCheckmark } from "react-icons/fc";
 import { GrFormClose } from "react-icons/gr";
+import { Dropdown } from "react-bootstrap";
+import CustomToggle from "../../../../components/customToggle";
+import { BiDotsVertical } from "react-icons/bi";
+import ModalDelete from "../../../../components/ModalDelete";
 import axios from "axios";
 
 function TestPerso({ recuperation }) {
@@ -19,9 +23,26 @@ function TestPerso({ recuperation }) {
                 {recuperation.map((recup, index) => {
                   return (
                     <div className="caderViewTest">
-                      <h3>
-                        Question {index + 1}: {recup.content}
-                      </h3>
+                      <div
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
+                        <h3>
+                          Question {index + 1}: {recup.content}
+                        </h3>
+                        <span style={{ marginLeft: "30px" }}>
+                          <Dropdown>
+                            <Dropdown.Toggle as={CustomToggle}>
+                              <BiDotsVertical />
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu
+                              style={{ padding: "5px" }}
+                              className="options"
+                            >
+                              <ModalDelete id={recup.id} titre="question" />
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        </span>
+                      </div>
                       <h4>
                         <u style={{ fontWeight: 800 }}>Propositions:</u>{" "}
                       </h4>

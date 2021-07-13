@@ -9,10 +9,10 @@ export default function ModalDelete(props) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleDelete = (survid) => {
+  const handleDelete = (id) => {
     if (props.titre == "enseignant") {
       axios
-        .delete(`api/user/${survid}`)
+        .delete(`api/user/${id}`)
         .then(() => {
           toast.success("Enseignant supprimmé");
           setTimeout(() => Router.reload(), 2000);
@@ -21,9 +21,18 @@ export default function ModalDelete(props) {
     }
     if (props.titre == "eleve") {
       axios
-        .delete(`api/user/${survid}`)
+        .delete(`api/user/${id}`)
         .then(() => {
           toast.success("Elève supprimmé ");
+          setTimeout(() => Router.reload(), 2000);
+        })
+        .catch(() => toast.error("Erreur lors de la suppression "));
+    }
+    if (props.titre == "question") {
+      axios
+        .delete(`api/school/question/${id}`)
+        .then(() => {
+          toast.success("Question supprimmée ");
           setTimeout(() => Router.reload(), 2000);
         })
         .catch(() => toast.error("Erreur lors de la suppression "));
