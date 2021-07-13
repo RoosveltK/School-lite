@@ -104,7 +104,7 @@ class Cours extends React.Component {
                   <div className="col-12 content-card">
                     <table
                       id="datatable"
-                      className="table table-responsive table-striped  "
+                      className="table table-responsive table-striped"
                       style={{
                         borderCollapse: "collapse",
                         borderSpacing: 0,

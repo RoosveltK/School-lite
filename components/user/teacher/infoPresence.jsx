@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
-const InfoPresence = ({ dataStudent }) => {
+const InfoPresence = ({ dataStudent, idClasse }) => {
   const [cours, setCours] = useState(false);
   const [test, setTests] = useState(false);
-  const { id, first_name, username, email, matricule, role } = dataStudent;
+  const { id, first_name, username, email, matricule, role, classes } =
+    dataStudent;
 
   const handleNotify = (e, nom) => {
     if (nom == "cours") {
@@ -19,7 +21,7 @@ const InfoPresence = ({ dataStudent }) => {
   };
   return (
     <>
-      {role == "stud" ? (
+      {role == "stud" && classes[0].id == idClasse ? (
         <tr>
           <td>{matricule}</td>
           <td>
@@ -38,6 +40,11 @@ const InfoPresence = ({ dataStudent }) => {
               name="tests"
               onChange={(e) => handleNotify(e, "tests")}
             />
+          </td>
+          <td className="contextual-menu survDropdown">
+            <Link href={`/teacher/presence/${id}`} key={id}>
+              <a>Afficher</a>
+            </Link>
           </td>
         </tr>
       ) : null}

@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Router from "next/router";
 
 const QuizOver = React.forwardRef((props, ref) => {
   const {
@@ -50,7 +51,7 @@ const QuizOver = React.forwardRef((props, ref) => {
   };
 
   if (score < maxQuestion / 2) {
-    setTimeout(() => loadNextLevel(0), 5000);
+    setTimeout(() => Router.push(`/student/cours/${leconInfo.program}`), 3000);
   }
 
   const decision =
@@ -114,7 +115,7 @@ const QuizOver = React.forwardRef((props, ref) => {
                 <td colSpan="3">
                   <div className="loader"></div>
                   <p style={{ textAlign: "center", color: "#198754" }}>
-                    Pas de réponses
+                    Vous allez être redirigé vers le cours pour mieux réviser
                   </p>
                 </td>
               </tr>

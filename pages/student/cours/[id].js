@@ -1,7 +1,8 @@
 import LayoutS from "../../../components/LayoutS";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import ReactHtmlParser from "react-html-parser";
+import Link from "next/link";
 
 function CoursPerso({ post, program }) {
   const [detailProgram, setdetailProgram] = useState(program);
@@ -36,6 +37,16 @@ function CoursPerso({ post, program }) {
                 </div>
                 <div className="caderScroll">
                   {ReactHtmlParser(post.content)}
+                  <div
+                    className="caderCours-btn"
+                    style={{ marginRight: "auto" }}
+                  >
+                    <button className="btn">
+                      <Link href={`/student/cours/tests/${post.id}`}>
+                        <a>Faire le test maintenant &rarr;</a>
+                      </Link>
+                    </button>
+                  </div>
                 </div>
               </React.Fragment>
             )}
