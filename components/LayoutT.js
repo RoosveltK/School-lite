@@ -12,7 +12,8 @@ import CustomToggle from "./customToggle";
 import Link from "next/link";
 import Router from "next/router";
 import ModalHelp from "./help/ModalHelp";
-const menuItems = ["COURS", "EVALUATION", "PRESENCE", "TESTS"];
+import { helpTeachers } from "../lib/helpTeacher";
+
 class Layout extends React.Component {
   constructor(props) {
     super(props);
@@ -26,6 +27,7 @@ class Layout extends React.Component {
       });
     responsbar();
     respons();
+    this.setState({ tabHelp: helpTeachers });
   }
 
   render() {

@@ -10,6 +10,7 @@ import CustomToggle from "./customToggle";
 import Link from "next/link";
 import Router from "next/router";
 import ModalHelp from "./help/ModalHelp";
+import { helpStudents } from "../lib/helpStudent";
 
 class LayoutS extends React.Component {
   constructor(props) {
@@ -17,16 +18,7 @@ class LayoutS extends React.Component {
     this.state = {
       user: "",
       active: "",
-      tabHelp: [
-        {
-          id: 0,
-          msg: "Bienvenue sur School lite",
-        },
-        {
-          id: 2,
-          msg: "Pour accéder aux cours veuillez sélectionner une matière et patientew un instant",
-        },
-      ],
+      tabHelp: [],
     };
   }
 
@@ -37,6 +29,7 @@ class LayoutS extends React.Component {
       });
     responsbar();
     respons();
+    this.setState({ tabHelp: helpStudents });
   }
 
   render() {
@@ -50,7 +43,7 @@ class LayoutS extends React.Component {
           <div className="d-flex" id="wrapper">
             <div className="bg-light border-right" id="sidebar-wrapper">
               <div className="sidebar-heading ">
-               <Link href="/admin/enseignant">
+                <Link href="/admin/enseignant">
                   <a className="homeLink">SCHOOL LITE</a>
                 </Link>
                 <Link href="/student/cours">
