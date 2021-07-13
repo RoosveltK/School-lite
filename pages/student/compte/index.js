@@ -201,7 +201,13 @@ class Compte extends React.Component {
                   ) : (
                     <React.Fragment>
                       {this.state.isOk == false ? null : (
-                        <div>
+                        <div
+                          style={{
+                            marginLeft: "auto",
+                            marginRight: "auto",
+                            width: "50%",
+                          }}
+                        >
                           <VerticalBar dataStat={this.state.allMatterOfClass} />
                         </div>
                       )}
