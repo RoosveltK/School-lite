@@ -27,7 +27,9 @@ const QuizOver = React.forwardRef((props, ref) => {
 
   const sendScore = (userInfo) => {
     let realScore = (score * 20) / maxQuestion;
-    setRealScore(setRealScore);
+    realScore = parseFloat(realScore);
+    realScore.toFixed(2);
+    setRealScore(realScore);
     const data = {
       note: realScore,
       lesson: leconInfo.id,

@@ -111,7 +111,10 @@ class analyticPersonnel extends React.Component {
       allNotes += elt.note;
     });
     allNotes = allNotes / tabTest.length;
-    return (allNotes * 100) / 20;
+    let percent = (allNotes * 100) / 20;
+    percent = parseFloat(percent);
+    percent.toFixed(2);
+    return percent;
   };
 
   loadOtherData = (classes, id) => {
