@@ -81,19 +81,21 @@ class Cours extends React.Component {
                       </Dropdown.Menu>
                     </Dropdown>
                   </div>
-                  <div className="col-4 titreCours">
-                    Classe:
-                    {this.state.classe == null
-                      ? null
-                      : `${this.state.classe.level}-${this.state.classe.speciality}`}{" "}
-                    <br />
-                  </div>{" "}
-                  <div className="col-4 titreCours">
-                    Matière:
-                    {this.state.matiere == null
-                      ? null
-                      : this.state.matiere.matter}{" "}
-                    <br />
+                  <div className="row" style={{fontWeight:"700"}}>
+                    <div className="col">
+                      Classe:
+                      {this.state.classe == null
+                        ? null
+                        : `${this.state.classe.level}-${this.state.classe.speciality}`}{" "}
+                      <br />
+                    </div>{" "}
+                    <div className="col">
+                      Matière:
+                      {this.state.matiere == null
+                        ? null
+                        : this.state.matiere.matter}{" "}
+                      <br />
+                    </div>
                   </div>
                 </header>
                 <ModalSelect
@@ -101,10 +103,10 @@ class Cours extends React.Component {
                   getChapterAndClass={this.getInfo}
                 />
                 <section className="row">
-                  <div className="col-12 content-card">
+                  <div className="table-responsive ">
                     <table
                       id="datatable"
-                      className="table table-responsive table-striped"
+                      className="table table-striped"
                       style={{
                         borderCollapse: "collapse",
                         borderSpacing: 0,

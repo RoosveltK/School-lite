@@ -89,7 +89,7 @@ class Presence extends React.Component {
                   </div>
                 </header>
                 <section className="row">
-                  <div className="col-12 content-card">
+                  <div className="table-responsive ">
                     <table
                       id="datatable"
                       className="table table-responsive table-striped "

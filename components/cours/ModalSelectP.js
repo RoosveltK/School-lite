@@ -23,7 +23,7 @@ export default function ModalSelect({ recuperation, matiereNiveau }) {
         backdrop="static"
         className="modalSuppression"
       >
-        <Modal.Header className="color-titre-ajout" closeButton>
+        <Modal.Header className="color-titre-ajout">
           <Modal.Title>Selection Niveau et Matière</Modal.Title>
         </Modal.Header>
         <Modal.Body>

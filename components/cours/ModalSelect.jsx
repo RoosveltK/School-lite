@@ -64,7 +64,7 @@ export default class ModalSelect extends React.Component {
           className="modalSuppression"
           backdrop="static"
         >
-          <Modal.Header className="color-titre-ajout" closeButton>
+          <Modal.Header className="color-titre-ajout">
             <Modal.Title>Selection de la Classe</Modal.Title>
           </Modal.Header>
           <Modal.Body>
