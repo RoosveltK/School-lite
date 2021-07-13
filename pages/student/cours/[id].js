@@ -39,10 +39,10 @@ function CoursPerso({ post, program }) {
                   {ReactHtmlParser(post.content)}
                   <div
                     className="caderCours-btn"
-                    style={{ marginRight: "auto" }}
+                    style={{ display: "flex", justifyContent: "flex-end" }}
                   >
                     <button className="btn">
-                      <Link href={`/student/cours/tests/${post.id}`}>
+                      <Link href={`/student/cours/tests/${detailProgram.id}`}>
                         <a>Faire le test maintenant &rarr;</a>
                       </Link>
                     </button>
