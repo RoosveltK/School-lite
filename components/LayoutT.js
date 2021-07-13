@@ -72,13 +72,13 @@ class Layout extends React.Component {
                     COURS
                   </a>
                 </Link>{" "}
-                {/* <Link href="/teacher/presence">
+                <Link href="/teacher/presence">
                   <a
                     className={`list-group-item list-group-item-action bg-light `}
                   >
                     PRESENCE
                   </a>
-                </Link> */}
+                </Link>
                 {/* <Link href="/teacher/evaluation">
                   <a
                     className={`list-group-item list-group-item-action bg-light lastLink`}
