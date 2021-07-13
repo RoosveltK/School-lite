@@ -4,7 +4,6 @@ import LayoutS from "../../../components/LayoutS";
 import axios from "axios";
 import { GrValidate } from "react-icons/gr";
 import CadreCoursT from "../../../components/user/teacher/cadreCoursT";
-import PieChart from "../../../components/graphe/PieChart";
 import VerticalBar from "../../../components/graphe/VerticalBar";
 
 const classeDispo = [
