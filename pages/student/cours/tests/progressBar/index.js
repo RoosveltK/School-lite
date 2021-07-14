@@ -10,13 +10,13 @@ const ProgressBar = (props) => {
       <div className="percentage">
         <div className="progressPercent">{`Question : ${idQ + 1}/${max}`}</div>
         <div className="progressPercent">
-          {`Progression ${progression.toFixed(2)} %`}{" "}
+          {`Progression ${parseInt(progression)} %`}{" "}
         </div>
       </div>
       <div className="progressBar">
         <div
           className="progressBarChange"
-          style={{ width: `${progression}%` }}
+          style={{ width: `${parseInt(progression)}%` }}
         ></div>
       </div>
     </>
