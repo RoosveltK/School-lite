@@ -19,8 +19,8 @@ const InfoCours = ({ dataCours }) => {
     <>
       <tr>
         <td>{title}</td>
-        <td align="center">{course_day}</td>
         <td>{limit_day}</td>
+        <td align="center">{course_day}</td>
         <td className="centerContent">
           <input
             type="checkbox"
