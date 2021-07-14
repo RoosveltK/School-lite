@@ -43,22 +43,23 @@ class analyticPersonnel extends React.Component {
     user: null,
     classe: [],
     isOk: false,
-    classMater: [],
-    programWithLecon: null,
-    allMatterOfClass: null,
-    matter: [],
+    allMatterOfClass: [],
+    matter: null,
   };
+
   componentDidMount() {
     this.loadOtherData(this.props.post.classes, this.props.post.id);
     this.getAllTestByMatter(this.props.post.classes[0].id, this.props.post.id);
   }
+
   getAllTestByMatter = (classeID, userID) => {
     axios
       .get(`api/school/classe/matter/${classeID}`)
       .then((res) => {
         let tabTestByMatter = [];
         this.setState({ matter: res.data });
-        res.data.forEach((elt) => {
+        if (this.state.matter.length == 0) this.setState({ isOk: true });
+        res.data.forEach((elt, indexMatter) => {
           axios
             .get(`api/school/user/test/matter/${userID}/${elt.id}`)
             .then((res) => {
@@ -70,9 +71,10 @@ class analyticPersonnel extends React.Component {
                 const programs = this.props.program.find(
                   (prog) => prog.id == lecons.program
                 );
+                let nots = parseFloat(elt.note);
                 tab.push({
                   id: elt.id,
-                  note: elt.note,
+                  note: nots.toFixed(2),
                   programTitle: programs.title,
                   describe: programs.describe,
                 });
@@ -88,16 +90,17 @@ class analyticPersonnel extends React.Component {
                     elt.matiere = dep.name;
                 });
               });
+
               this.setState({ allMatterOfClass: tabTestByMatter });
-              if (
-                this.state.allMatterOfClass.length ==
-                  this.state.matter.length &&
-                this.state.matter.length != 0
-              ) {
+              if (indexMatter == this.state.matter.length - 1) {
                 this.setState({ isOk: true });
               }
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+              if (indexMatter == this.state.matter.length - 1) {
+                this.setState({ isOk: true });
+              }
+            });
         });
       })
       .catch((err) => {
@@ -108,13 +111,12 @@ class analyticPersonnel extends React.Component {
   percentOfMatter = (tabTest) => {
     let allNotes = 0;
     tabTest.forEach((elt) => {
-      allNotes += elt.note;
+      allNotes += parseFloat(elt.note);
     });
     allNotes = allNotes / tabTest.length;
     let percent = (allNotes * 100) / 20;
     percent = parseFloat(percent);
-    percent.toFixed(2);
-    return percent;
+    return percent.toFixed(2);
   };
 
   loadOtherData = (classes, id) => {
@@ -140,7 +142,7 @@ class analyticPersonnel extends React.Component {
               </header>
               <section className="row" style={{ height: "800px" }}>
                 <div className="col-12 content-card">
-                  {this.state.isOk == true ? (
+                  {this.state.isOk != false ? (
                     <InfoPerso
                       dataStat={this.state.allMatterOfClass}
                       datas={this.props.post}

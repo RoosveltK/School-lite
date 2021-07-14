@@ -28,8 +28,7 @@ const QuizOver = React.forwardRef((props, ref) => {
   const sendScore = (userInfo) => {
     let realScore = (score * 20) / maxQuestion;
     realScore = parseFloat(realScore);
-    realScore.toFixed(2);
-    setRealScore(realScore);
+    setRealScore(realScore.toFixed(2));
     const data = {
       note: realScore,
       lesson: leconInfo.id,
@@ -67,7 +66,7 @@ const QuizOver = React.forwardRef((props, ref) => {
         <div className="percentage">
           <div className="progressPercent">Réussite : {percent}%</div>
           <div className="progressPercent">
-            Note : {(score * 20) / maxQuestion}/20
+            Note : {((score * 20) / maxQuestion).toFixed(2)}/20
           </div>
         </div>
       </Fragment>
@@ -80,7 +79,7 @@ const QuizOver = React.forwardRef((props, ref) => {
         <div className="percentage">
           <div className="progressPercent">Réussite : {percent}%</div>
           <div className="progressPercent">
-            Note : {(score * 20) / maxQuestion}/20
+            Note :{((score * 20) / maxQuestion).toFixed(2)}/20
           </div>
         </div>
       </Fragment>

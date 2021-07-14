@@ -87,9 +87,11 @@ class Compte extends React.Component {
                 const programs = this.props.program.find(
                   (prog) => prog.id == lecons.program
                 );
+                let nots = parseFloat(elt.note);
+
                 tab.push({
                   id: elt.id,
-                  note: elt.note,
+                  note: nots.toFixed(2),
                   programTitle: programs.title,
                   describe: programs.describe,
                 });
@@ -125,13 +127,12 @@ class Compte extends React.Component {
   percentOfMatter = (tabTest) => {
     let allNotes = 0;
     tabTest.forEach((elt) => {
-      allNotes += elt.note;
+      allNotes += parseFloat(elt.note);
     });
     allNotes = allNotes / tabTest.length;
     let percent = (allNotes * 100) / 20;
     percent = parseFloat(percent);
-    percent.toFixed(2);
-    return percent;
+    return percent.toFixed(2);
   };
 
   loadOtherData = (classes, id) => {

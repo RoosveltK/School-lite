@@ -54,8 +54,8 @@ const InfoPerso = ({ datas, dataStat }) => {
       </table>
       <div
         style={{
-          width: "400px",
-          height: "200px",
+          width: "50%",
+          height: "auto",
           marginLeft: "auto",
           marginRight: "auto",
         }}

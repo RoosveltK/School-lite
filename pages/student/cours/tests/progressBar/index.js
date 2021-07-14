@@ -9,7 +9,9 @@ const ProgressBar = (props) => {
     <>
       <div className="percentage">
         <div className="progressPercent">{`Question : ${idQ + 1}/${max}`}</div>
-        <div className="progressPercent">{`Progression ${progression} %`} </div>
+        <div className="progressPercent">
+          {`Progression ${progression.toFixed(2)} %`}{" "}
+        </div>
       </div>
       <div className="progressBar">
         <div

@@ -206,11 +206,6 @@ class Tests extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-
-    // this.state.tabQuestion.forEach((element) => {
-    //   if (element.content == 0) this.setState({ questionIsOk: true });
-    // });
-
     if (this.state.lecon != null) {
       this.setState({ isLoading: true });
       this.state.tabQuestion.forEach((element, index) => {
