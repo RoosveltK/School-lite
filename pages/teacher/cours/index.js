@@ -98,7 +98,7 @@ class Cours extends React.Component {
                     <div></div>
                     <form onSubmit={this.handleSubmit}>
                       <Editor
-                        apiKey="0p57wtq8ihmq5rdl86lg5w6ph4kamw3z10pscm7wvic034n2"
+                        apiKey="7a5ja2byh3ehu7usewaip3no50pe930m5a6xcxge8am0ew0t"
                         init={{
                           selector: "textarea",
                           menubar: false,
