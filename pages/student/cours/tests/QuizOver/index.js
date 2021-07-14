@@ -65,7 +65,7 @@ const QuizOver = React.forwardRef((props, ref) => {
         </div>
         <div className="percentage">
           <div className="progressPercent">
-            Réussite : {percent.toFixed(2)}%
+            Réussite : {parseFloat(percent).toFixed(2)}%
           </div>
           <div className="progressPercent">
             Note : {((score * 20) / maxQuestion).toFixed(2)}/20
@@ -80,7 +80,7 @@ const QuizOver = React.forwardRef((props, ref) => {
 
         <div className="percentage">
           <div className="progressPercent">
-            Réussite : {percent.toFixed(2)}%
+            Réussite : {parseFloat(percent).toFixed(2)}%
           </div>
           <div className="progressPercent">
             Note :{((score * 20) / maxQuestion).toFixed(2)}/20
